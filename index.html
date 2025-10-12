@@ -14,13 +14,17 @@
             background-color: #111827; /* Dark blue-gray background */
             color: #d1d5db; /* Light gray text */
         }
-        #particles-js {
+        #vanta-bg {
             position: fixed;
             width: 100%;
             height: 100%;
             top: 0;
             left: 0;
-            z-index: -1; /* Place it behind all content */
+            z-index: 0; /* Behind content */
+        }
+        .content-wrapper {
+            position: relative;
+            z-index: 10;
         }
         .timeline-item .icon-container {
             position: relative;
@@ -107,10 +111,10 @@
     </style>
 </head>
 <body class="antialiased">
-    <!-- Particle background container -->
-    <div id="particles-js"></div>
+    <!-- Vanta.js background container -->
+    <div id="vanta-bg"></div>
 
-    <div class="container mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-12 sm:py-16 relative z-10">
+    <div class="content-wrapper container mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
 
         <!-- Header Section -->
         <header class="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-12">
@@ -168,7 +172,7 @@
 
             <!-- Projects & Publications Section -->
             <section id="projects-publications">
-                <h2 class="text-2xl font-bold text-white mb-8">Work Showcase</h2>
+                <h2 class="text-2xl font-bold text-white mb-8">Projects & Publications</h2>
                 <div class="showcase-container relative">
                     <!-- Left Arrow -->
                     <button id="scroll-left-btn" class="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 z-20 bg-gray-800/60 hover:bg-gray-700 rounded-full p-2 transition-colors">
@@ -297,7 +301,7 @@
                         <img src="https://placehold.co/600x400/1f2937/FFFFFF?text=YC+AI+SUS" alt="YC AI Startup School" class="w-full h-48 object-cover">
                         <div class="p-6">
                             <h3 class="font-semibold text-lg text-white">YC AI Startup School (SF)</h3>
-                            <p class="text-sm text-gray-400 mt-1">An exclusive social event with speeches from industry leaders and networking with top CS students.</p>
+                            <p class="text-sm text-gray-400 mt-1">An exclusive social event with speeches from well-known AI figures and networking with top CS students.</p>
                             <a href="javascript:void(0)" onclick="toggleContent('com1', this, '[Learn more]', '[Show less]')" class="text-blue-400 text-sm hover:underline font-semibold mt-2 inline-block">[Learn more]</a>
                             <div id="com1" class="hidden details-content mt-2 text-gray-400 text-sm">
                                 <p>Selected to attend YC's exclusive AI Startup School with airfare grants.</p>
@@ -381,8 +385,10 @@
 
     </div>
 
-    <!-- Particle.js library -->
-    <script src="https://cdn.jsdelivr.net/npm/tsparticles-slim@2.12.0/tsparticles.slim.bundle.min.js"></script>
+    <!-- Vanta.js and its dependencies -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r121/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.4.0/lib/p5.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.topology.min.js"></script>
     
     <script>
         function toggleContent(id, element, showText, hideText) {
@@ -479,6 +485,21 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
+            // Vanta.js background initialization
+            VANTA.TOPOLOGY({
+                el: "#vanta-bg",
+                mouseControls: true,
+                touchControls: true,
+                gyroControls: true,
+                minHeight: 200.00,
+                minWidth: 200.00,
+                scale: 1.00,
+                scaleMobile: 1.00,
+                color: 0x003268, //0x000068, //0x027768,      // A harmonious light blue
+                backgroundColor: 0x141826 // Your site's deep blue #141826
+            });
+
+
             // Showcase Slider Logic
             renderShowcaseItems();
 
@@ -531,53 +552,6 @@
             window.addEventListener('resize', () => updateCarousel(currentIndex, true));
             
             startAutoScroll();
-
-            // Particle Background Logic
-            tsParticles.load("particles-js", {
-                fpsLimit: 60,
-                particles: {
-                    number: {
-                        value: 100,
-                        density: {
-                            enable: true,
-                            area: 800 // Corrected property name
-                        }
-                    },
-                    color: {
-                        value: "#374151"
-                    },
-                    shape: {
-                        type: "circle",
-                    },
-                    opacity: {
-                        value: 0.2,
-                        random: true,
-                    },
-                    size: {
-                        value: 2,
-                        random: true,
-                    },
-                    move: {
-                        enable: true,
-                        speed: 0.5,
-                        direction: "none",
-                        random: true,
-                        straight: false,
-                        outModes: "out",
-                    }
-                },
-                interactivity: {
-                    events: {
-                        onHover: {
-                            enable: false,
-                        },
-                        onClick: {
-                            enable: false,
-                        },
-                    },
-                },
-                detectRetina: true,
-            });
         });
     </script>
 </body>
