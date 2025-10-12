@@ -14,6 +14,14 @@
             background-color: #111827; /* Dark blue-gray background */
             color: #d1d5db; /* Light gray text */
         }
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1; /* Place it behind all content */
+        }
         .timeline-item .icon-container {
             position: relative;
         }
@@ -99,7 +107,10 @@
     </style>
 </head>
 <body class="antialiased">
-    <div class="container mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
+    <!-- Particle background container -->
+    <div id="particles-js"></div>
+
+    <div class="container mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-12 sm:py-16 relative z-10">
 
         <!-- Header Section -->
         <header class="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-12">
@@ -184,10 +195,7 @@
                     <div class="timeline-item flex space-x-6">
                         <div class="icon-container flex-shrink-0 w-12 text-center">
                             <a href="https://www.caltech.edu/" target="_blank" rel="noopener noreferrer" class="group">
-                                 <img 
-                                    src="data:image/png;base64,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" 
-                                    alt="Caltech Logo" 
-                                    class="rounded-lg w-12 h-12 mx-auto object-contain transition-transform duration-300 group-hover:scale-110 bg-white">
+                                 <img src="https://media.licdn.com/dms/image/v2/C510BAQFCGqEmSwrc4w/company-logo_100_100/company-logo_100_100/0/1631338994369?e=1762992000&v=beta&t=k9OokSIh-iDRd6V9Uc0SYpOnTRX7r1aYR5WJIFlSu4Y" alt="Caltech Logo" class="rounded-lg w-12 h-12 mx-auto object-contain transition-transform duration-300 group-hover:scale-110 bg-white">
                             </a>
                         </div>
                         <div class="flex-grow pt-1">
@@ -207,10 +215,7 @@
                     <div class="timeline-item flex space-x-6">
                         <div class="icon-container flex-shrink-0 w-12 text-center">
                             <a href="https://www.northwestern.edu/" target="_blank" rel="noopener noreferrer" class="group">
-                                <img 
-                                    src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAFTSURBVHhe7dJBDQAgEMCwA/+eg5A+sSWk1AV8zcy73gYQgADBAAIQghkEIAQzCEAIZhCAEMwgACGYQQBCMIMAhGAGAQjBDAIQghkEIAQzCEAIZhCAEMwgACGYQQBCMIMAhGAGAQjBDAIQghkEIAQzCEAIZhCAEMwgACGYQQBCMIMAhGAGAQjBDAIQghkEIAQzCEAIZhCAEMwgACGYQQBCMIMAhGAGAQjBDAIQghkEIAQzCEAIZhCAEMwgACGYQQBCMIMAhGAGAQjBDAIQghkEIAQzCEAIZhCAEMwgACGYQQBCMIMAhGAGAQjBDAIQghkEIAQzCEAIZhCAEMwgACGYQQBCMIMAhGAGAQjBDAIQghkEIAQzCEAIZhCAEMwgACGYQQBCMIMAhGAGAQjBDAIQghkEIAQzCEAIZhCAEMwgACGYQQBCMIMAhGAGAQjBDAIQghkEIAQzCEAIZhCAEMwgACGYQQBCMIMAhGAGAQjBDAIQghkEIAQzCOAPE/wZLsN+u15aAAAAAElFTSuQmCC" 
-                                    alt="Northwestern Logo" 
-                                    class="rounded-lg w-12 h-12 mx-auto object-contain transition-transform duration-300 group-hover:scale-110">
+                                <img src="https://media.licdn.com/dms/image/v2/C4E0BAQH-sXOOSUF3aA/company-logo_100_100/company-logo_100_100/0/1631319371681?e=1762992000&v=beta&t=k2KCzM5yyyO_PSJpghNjT9x5KQnDRvxw4lzVqSwgtxU" alt="Northwestern Logo" class="rounded-lg w-12 h-12 mx-auto object-contain transition-transform duration-300 group-hover:scale-110">
                             </a>
                         </div>
                         <div class="flex-grow pt-1">
@@ -230,10 +235,7 @@
                     <div class="timeline-item flex space-x-6">
                         <div class="icon-container flex-shrink-0 w-12 text-center">
                             <a href="https://gammaparadigm.com/" target="_blank" rel="noopener noreferrer" class="group">
-                                <img 
-                                    src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAANiSURBVHhe7dqxTQMhEATRnf+WNoeUj7II0vX4Yd/uPc/zvP/gEwAIYwMAQIwhAEAoGAAAKGAZAIBAZgAAgp0BABAAmQEAQJgBAECYAYAAZAYAAOEyAAAAAECYAYAAZAYAAOEyAAAAAECYAYAAZAYAAOEyAAAAAECYAYAAZAYAAOEyAAAAAECYAYAAZAYAAOEyAAAAAECYAYAAZAYAAOEyAAAAAECYAYAAZAYAAOEyAAAAAECYAYAAZAYAAOEyAAAAAECYAYAAZAYAAOEyAAAAAECYAYAAZAYAAOEyAAAAAECYAYAAZAYAAOEyAAAAAECYAYAAZAYAAOEyAAAAAECYAYAAZAYAAOEyAAAAAECYAYAAZAYAAOEyAAAAAECYAYAAZAYAAOEyAAAAAECYAYAAZAYAAOEyAAAAAECYAYAAZAYAAOEyAAAAAECYAYAAZAYAAOEyAAAAAECYAYAAZAYAAOEyAAAAAECYAYAAZAYAAOEyAAAAAECYAYAAZAYAAOEyAAAAAECYAYAAZAYAAOEyAAAAAECYAYAAZAYAAOEyAAAAAECYAYAAZAYAAOEyAAAAAECYAYAAZAYAAOEyAAAAAECYAYAAZAYAAOEyAAAAAECYAYAAZAYAAOEyAAAAAECYAYAAZAYAAOEyAAAAAECYAYAAZAYAAOEyAAAAAECYAYAAZAYAAOEyAAAAAECYAYAAZAYAAOEyAAAAAECYAYAAZAYAAOEyAAAAAECYAYAAZAYAAOEyAAAAAECYAYAAZAYAAOEyAAAAAECYAYAAZAYAAOEyAAAAAECYAYAAZAYAAOEyAAAAAECYAYAAZAYAAOEyAAAAAECYAYAAZAYAAOEyAAAAAECYAYAAZAYAAOEyAAAAAECYAYAAZAYAAOEyAAAAAECYAYAAZAYAAOEyAAAAAECYAYAAZAYAAOEyAAAAAECYAYAAZAYAAOEyAAAAAECYAYAAZAYAAOEyAAAAAECYAYAAZAYAAOEyAAAAAECYAYAAZAYAAOEyAAAAAECYAYAAZAYAAOEyAAAAAECYAYAAZAYAAOEyAAAAAECYAYAAZAYAAOEyAAAAAECYAYAAZAYAAOEyAAAAAECYAYAAZAYAAOEyAAAAAECYAYAAZAYAAOEyAAAAAECYAYAAZAYAAOEyAAAAAECYAYAAZAYAAOEyAAAAAECYAYAAZAYAAOEyAAAAAECYAYAAZAYAAOEyAAAAAECYAYAAZAYAAOEyAAAAAECYAYAAZAYAAOEyAAAAAECYAYAAZAYAAOEyAAAAAECYAYAAZAYAAOEyAAAAAECYAYAAZAYAAOEyAAAAAECYAYAAZAYAAOEyAAAAAECYAYAAZAYAAOEyAAAAAECYAYAAZAYAAOEyAAAAAECYAYAAZAYAAOEyAAAAAECYAYAAZAYAAOEyAIBe/wFh2RGp0H8A2wAAAABJRU5ErkJggg==" 
-                                    alt="Gamma Paradigm Capital Logo" 
-                                    class="rounded-lg w-12 h-12 mx-auto object-contain transition-transform duration-300 group-hover:scale-110">
+                                <img src="https://media.licdn.com/dms/image/v2/C4D0BAQEfIYMsq0Jgjg/company-logo_100_100/company-logo_100_100/0/1653123622160/gamma_paradigm_research_logo?e=1762992000&v=beta&t=JDISg3nNv6IAhlkXUzC53UEJmQ2-vWsdRX_tgAKgvIA" alt="Gamma Paradigm Capital Logo" class="rounded-lg w-12 h-12 mx-auto object-contain transition-transform duration-300 group-hover:scale-110">
                             </a>
                         </div>
                         <div class="flex-grow pt-1">
@@ -260,10 +262,7 @@
                     <div class="timeline-item flex space-x-6">
                         <div class="icon-container flex-shrink-0 w-12 text-center">
                              <a href="https://www.washington.edu/" target="_blank" rel="noopener noreferrer" class="group">
-                                <img 
-                                    src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAYdEVYdFNvZnR3YXJlAHBhaW50Lm5ldCA0LjEuNWRHWFIAAAKUSURBVHhe7dixTsNAEEDRZ8lVwEE4AlIioo7gEkq6Ak5BQnAQKk7ABYriIEgVlFwoOSBw4A8W2s1Mzq/N7fUv/dP3svs2t/d224bhePL/e/4dAMhCGAQAhGEQAAYAhGEQAAaAIAwCAADCEAgAwwCAIAwCAAACEIZBAABhGAQAgCAIAwAAwhAIgAFAQBgEAAGCMAgAAAhDIACMACCMggCAACMAAADCGAgAAAgDIACMACCMggCAACMAAADCGAgAAAgDIACMACCMggCAACMAAADCGAgAAAgDIACMACCMggCAACMAAADCGAgAAAgDIACMACCMggCAACMAAADCGAgAAAgDIACMACCMggCAACMAAADCGAgAAAgDIACMACCMggCAACMAAADCGAgAAAgDIACMACCMggCAACMAAADCGAgAAAgDIACMACCMggCAACMAAADCGAgAAAgDIACMACCMggCAACMAAADCGAgAAAgDIACMACCMggCAACMAAADCGAgAAAgDIACMACCMggCAACMAAADCGAgAAAgDIACMACCMggCAACMAAADCGAgAAAgDIACMACCMggCAACMAAADCGAgAAAgDIACMACCMggCAACMAAADCGAgAAAgDIACMACCMggCAACMAAADCGAgAAAgDIACMACCMggCAACMAAADCGAgAAAgDIACMACCMggCAACMAAADCGAgAAAgDIACMACCMggCAACMAAADCGAgAAAgDIACMACCMggCAACMAAADCGAgAAAgDIACMACCMggCAACMAAADCGAgAAAgDIACMACCMggCAACMAAADCGAgAAAgDIACMACCMggCAACMAAADCGAgAAAgDIACMACCMggCAACMAAADCGAgAAAgDIACMACCMggCAACMAAADCGAgAAAgDIACMACCMggCAACMAAADCGAgAAAgDIACMACCMggCAACMAAADCGAgAAAgDIACMACCMggCAACMAAADCGAgAAAgDIACMACCMggCAACMAAADCGAgAAAgDIACMACCMggCAACMAAADCGAgAAAhD+B8x+w1f5Bv7jwAAAABJRU5ErkJggg==" 
-                                    alt="UW Logo" 
-                                    class="rounded-lg w-12 h-12 mx-auto object-contain transition-transform duration-300 group-hover:scale-110">
+                                <img src="https://media.licdn.com/dms/image/v2/C4D0BAQEMmhF9TqUCgA/company-logo_100_100/company-logo_100_100/0/1630545704089/university_of_washington_logo?e=1762992000&v=beta&t=gwqrftKE3AfHtG5qZEUFhWKy2LfRsvnv6wroqYOKXSQ" alt="UW Logo" class="rounded-lg w-12 h-12 mx-auto object-contain transition-transform duration-300 group-hover:scale-110">
                             </a>
                         </div>
                         <div class="flex-grow pt-1">
@@ -276,10 +275,7 @@
                     <div class="timeline-item flex space-x-6">
                         <div class="icon-container flex-shrink-0 w-12 text-center">
                             <a href="https://www.ntu.edu.tw/english/" target="_blank" rel="noopener noreferrer" class="group">
-                                <img 
-                                    src="data:image/png;base64,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" 
-                                    alt="NTU Logo" 
-                                    class="rounded-lg w-12 h-12 mx-auto object-contain transition-transform duration-300 group-hover:scale-110">
+                                <img src="https://media.licdn.com/dms/image/v2/C560BAQGAh08jkWo23Q/company-logo_100_100/company-logo_100_100/0/1679904708552/national_taiwan_university_logo?e=1762992000&v=beta&t=xMy8ql0w_5Ni_4qURYwqph6A42s_vRVCcvk5AZNTv9s" alt="NTU Logo" class="rounded-lg w-12 h-12 mx-auto object-contain transition-transform duration-300 group-hover:scale-110">
                             </a>
                         </div>
                         <div class="flex-grow pt-1">
@@ -385,6 +381,9 @@
 
     </div>
 
+    <!-- Particle.js library -->
+    <script src="https://cdn.jsdelivr.net/npm/tsparticles-slim@2.12.0/tsparticles.slim.bundle.min.js"></script>
+    
     <script>
         function toggleContent(id, element, showText, hideText) {
             const contentElement = document.getElementById(id);
@@ -480,66 +479,104 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
+            // Showcase Slider Logic
             renderShowcaseItems();
 
             const scroller = document.getElementById('showcase-scroller');
             const leftBtn = document.getElementById('scroll-left-btn');
             const rightBtn = document.getElementById('scroll-right-btn');
             let autoScrollInterval;
-            let currentIndex = 0; // State for the current item
+            let currentIndex = 0; 
 
-            const updateCarousel = (newIndex, behavior = 'smooth') => {
-                const itemCount = showcaseData.length;
-                if (!scroller || scroller.children.length === 0) return;
+            function updateCarousel(newIndex, isInstant = false) {
+                const itemCount = scroller.children.length;
+                if (itemCount === 0) return;
 
                 currentIndex = (newIndex + itemCount) % itemCount;
+                const card = scroller.children[currentIndex];
+                const scrollLeft = card.offsetLeft - (scroller.offsetWidth - card.offsetWidth) / 2;
                 
-                const targetCard = scroller.children[currentIndex];
-                if (targetCard) {
-                    const scrollLeft = targetCard.offsetLeft - (scroller.offsetWidth - targetCard.offsetWidth) / 2;
-                    
-                    scroller.scrollTo({
-                        left: scrollLeft,
-                        behavior: behavior
-                    });
-                }
-            };
+                scroller.scrollTo({
+                    left: scrollLeft,
+                    behavior: isInstant ? 'auto' : 'smooth'
+                });
+            }
             
-            const startAutoScroll = () => {
-                clearInterval(autoScrollInterval); // Clear existing interval
+            function startAutoScroll() {
+                clearInterval(autoScrollInterval);
                 autoScrollInterval = setInterval(() => {
                     updateCarousel(currentIndex + 1);
-                }, 10000); // 10 seconds
-            };
+                }, 10000);
+            }
 
-            const stopAutoScroll = () => {
+            function stopAutoScroll() {
                 clearInterval(autoScrollInterval);
-            };
-
-            const resetAutoScroll = () => {
-                stopAutoScroll();
-                startAutoScroll();
-            };
+            }
 
             leftBtn.addEventListener('click', () => {
                 updateCarousel(currentIndex - 1);
-                resetAutoScroll();
+                stopAutoScroll();
+                startAutoScroll();
             });
 
             rightBtn.addEventListener('click', () => {
                 updateCarousel(currentIndex + 1);
-                resetAutoScroll();
+                stopAutoScroll();
+                startAutoScroll();
             });
 
-            // Pause on hover
             scroller.addEventListener('mouseenter', stopAutoScroll);
             scroller.addEventListener('mouseleave', startAutoScroll);
 
+            window.addEventListener('resize', () => updateCarousel(currentIndex, true));
+            
             startAutoScroll();
 
-            // Adjust on resize to keep it centered
-            window.addEventListener('resize', () => {
-                updateCarousel(currentIndex, 'auto'); // 'auto' for instant snap on resize
+            // Particle Background Logic
+            tsParticles.load("particles-js", {
+                fpsLimit: 60,
+                particles: {
+                    number: {
+                        value: 100,
+                        density: {
+                            enable: true,
+                            area: 800 // Corrected property name
+                        }
+                    },
+                    color: {
+                        value: "#374151"
+                    },
+                    shape: {
+                        type: "circle",
+                    },
+                    opacity: {
+                        value: 0.2,
+                        random: true,
+                    },
+                    size: {
+                        value: 2,
+                        random: true,
+                    },
+                    move: {
+                        enable: true,
+                        speed: 0.5,
+                        direction: "none",
+                        random: true,
+                        straight: false,
+                        outModes: "out",
+                    }
+                },
+                interactivity: {
+                    events: {
+                        onHover: {
+                            enable: false,
+                        },
+                        onClick: {
+                            enable: false,
+                        },
+                    },
+                },
+                detectRetina: true,
             });
         });
     </script>
