@@ -117,14 +117,12 @@
         }
 
         /* Custom cursor - hide default */
-        /* Temporarily disabled for debugging
         body {
             cursor: none;
         }
         a, button, [onclick] {
             cursor: none;
         }
-        */
 
         /* Custom cursor elements */
         #cursor-glow {
@@ -137,7 +135,7 @@
             z-index: 9999;
             transform: translate(-50%, -50%);
             box-shadow: 0 0 30px rgba(59, 130, 246, 0.6), 0 0 60px rgba(37, 99, 235, 0.3);
-            transition: transform 0.1s ease-out;
+            will-change: left, top;
         }
         
         #cursor-core {
@@ -150,6 +148,7 @@
             z-index: 10000;
             transform: translate(-50%, -50%);
             box-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
+            will-change: left, top;
         }
     </style>
 </head>
@@ -563,17 +562,36 @@
                 backgroundColor: 0x141826
             });
 
-            // Simple cursor tracking
+            // Ultra-fast cursor tracking with requestAnimationFrame
             const cursorGlow = document.getElementById('cursor-glow');
             const cursorCore = document.getElementById('cursor-core');
+            let mouseX = 0;
+            let mouseY = 0;
+            let isMoving = false;
             
             // Track mouse position
             document.addEventListener('mousemove', (e) => {
-                cursorGlow.style.left = e.clientX + 'px';
-                cursorGlow.style.top = e.clientY + 'px';
-                cursorCore.style.left = e.clientX + 'px';
-                cursorCore.style.top = e.clientY + 'px';
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+                if (!isMoving) {
+                    isMoving = true;
+                    updateCursor();
+                }
             });
+            
+            function updateCursor() {
+                cursorGlow.style.left = mouseX + 'px';
+                cursorGlow.style.top = mouseY + 'px';
+                cursorCore.style.left = mouseX + 'px';
+                cursorCore.style.top = mouseY + 'px';
+                
+                requestAnimationFrame(() => {
+                    if (isMoving) {
+                        isMoving = false;
+                        updateCursor();
+                    }
+                });
+            }
 
             // Showcase Slider Logic - 5 sets with smooth scrolling
             renderShowcaseItems();
