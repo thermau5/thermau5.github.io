@@ -20,7 +20,7 @@
             height: 100%;
             top: 0;
             left: 0;
-            z-index: 0; /* Behind content */
+            z-index: -1; /* Behind everything */
         }
         .content-wrapper {
             position: relative;
@@ -64,6 +64,8 @@
         .showcase-card {
             scroll-snap-align: center;
             overflow: hidden; /* For rounded corners on child elements */
+            position: relative;
+            z-index: 1;
         }
         .gradient-bg {
             background-size: 200% 200%;
@@ -91,7 +93,7 @@
             top: 0;
             bottom: 0;
             width: 2.5rem; /* 40px */
-            z-index: 5;
+            z-index: 2;
             pointer-events: none;
         }
         .showcase-container::before {
@@ -102,11 +104,62 @@
             right: 0;
             background: linear-gradient(to left, #111827, transparent);
         }
+
+        /* Fade-in animation for sections */
+        .fade-in-section {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .fade-in-section.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Custom cursor - hide default */
+        /* Temporarily disabled for debugging
+        body {
+            cursor: none;
+        }
+        a, button, [onclick] {
+            cursor: none;
+        }
+        */
+
+        /* Custom cursor elements */
+        #cursor-glow {
+            position: fixed;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.8) 0%, rgba(37, 99, 235, 0.4) 40%, transparent 70%);
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 30px rgba(59, 130, 246, 0.6), 0 0 60px rgba(37, 99, 235, 0.3);
+            transition: transform 0.1s ease-out;
+        }
+        
+        #cursor-core {
+            position: fixed;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.95);
+            pointer-events: none;
+            z-index: 10000;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
+        }
     </style>
 </head>
 <body class="antialiased">
     <!-- Vanta.js background container -->
     <div id="vanta-bg"></div>
+
+    <!-- Black hole cursor effect -->
+    <div id="cursor-glow"></div>
+    <div id="cursor-core"></div>
 
     <div class="content-wrapper container mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
 
@@ -132,7 +185,7 @@
         <main class="space-y-16">
 
             <!-- About Section -->
-            <section id="about">
+            <section id="about" class="fade-in-section">
                 <h2 class="text-2xl font-bold text-white mb-6">About Me</h2>
                 <div class="text-gray-300 leading-relaxed space-y-4">
                     <p>I lived my whole life in Taiwan and took a rare opportunity transferring to a U.S. college at 20.</p>
@@ -165,7 +218,7 @@
             </section>
 
             <!-- Projects & Publications Section -->
-            <section id="projects-publications">
+            <section id="projects-publications" class="fade-in-section">
                 <h2 class="text-2xl font-bold text-white mb-8">Projects & Publications</h2>
                 <div class="showcase-container relative">
                     <!-- Left Arrow -->
@@ -186,7 +239,7 @@
             </section>
             
             <!-- Experience Section -->
-            <section id="experience" class="timeline-group">
+            <section id="experience" class="timeline-group fade-in-section">
                 <h2 class="text-2xl font-bold text-white mb-8">Experience</h2>
                 <div class="space-y-8">
                     <!-- Caltech -->
@@ -253,7 +306,7 @@
             </section>
 
             <!-- Education Section -->
-            <section id="education" class="timeline-group">
+            <section id="education" class="timeline-group fade-in-section">
                 <h2 class="text-2xl font-bold text-white mb-8">Education</h2>
                 <div class="space-y-8">
                      <!-- University of Washington -->
@@ -287,7 +340,7 @@
 
 
             <!-- Ventures & Community Section -->
-            <section id="community">
+            <section id="community" class="fade-in-section">
                 <h2 class="text-2xl font-bold text-white mb-6">Ventures & Community</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <!-- YC AI SUS -->
@@ -403,18 +456,27 @@
                 title: 'Decoupled Diffusion Inverse Solver (DDIS)',
                 description: 'A SOTA generative model for solving inverse PDEs with sparse data, developed at Caltech.',
                 badges: ['Project', 'Research'],
-                hashtags: ['#GenerativeAI', '#DiffusionModels', '#Physics'],
-                linkText: 'Launch Interactive Demo',
+                hashtags: ['#GenerativeAI', '#AI4Science', '#PDEs'],
+                linkText: 'Interactive Demo',
                 linkUrl: '#'
             },
             {
+                type: 'Project',
+                title: 'VibeVest',
+                description: 'An agentic crowdfunding platform that autogenerates viral TikTok/Reels videos for your startup.',
+                badges: ['Startup', 'Project'],
+                hashtags: ['#AI Agent', '#SocialMedia', '#Crowdfunding'],
+                linkText: 'Website',
+                linkUrl: 'https://vibevest.netlify.app'
+            },
+            {
                 type: 'Publication',
-                title: 'Latent Variable Estimation in Bayesian Black-Litterman Models',
+                title: 'Latent Variable Black-Litterman Models',
                 description: 'Thomas Y.L. Lin, Jerry Yao-Chieh Hu, Paul W. Chiou, Peter Lin.',
                 badges: ['Publication', 'ICML \'25'],
-                hashtags: ['#QuantFinance', '#BayesianML', '#Portfolio'],
+                hashtags: ['#Finance', '#BayesianML', '#Portfolio'],
                 linkText: 'Read Paper',
-                linkUrl: '#'
+                linkUrl: 'https://arxiv.org/pdf/2505.02185'
             },
             {
                 type: 'Publication',
@@ -423,7 +485,7 @@
                 badges: ['Publication', 'ICML \'24'],
                 hashtags: ['#MLTheory', '#Complexity', '#Algorithms'],
                 linkText: 'Read Paper',
-                linkUrl: 'https://arxiv.org/abs/2310.02229'
+                linkUrl: 'https://arxiv.org/pdf/2402.04520'
             },
             {
                 type: 'Project',
@@ -431,7 +493,7 @@
                 description: 'Implemented and backtested novel portfolio strategies at Gamma Paradigm Capital.',
                 badges: ['Project', 'Internship'],
                 hashtags: ['#QuantFinance', '#Optimization', '#Risk'],
-                linkText: 'View Visualization',
+                linkText: 'Project Page',
                 linkUrl: '#'
             },
         ];
@@ -440,7 +502,15 @@
             const scroller = document.getElementById('showcase-scroller');
             scroller.innerHTML = ''; // Clear existing items
 
-            showcaseData.forEach((item, index) => {
+            // 5 duplicates for smooth scrolling
+            const itemsToRender = [];
+            for (let i = 0; i < 5; i++) {
+                itemsToRender.push(...showcaseData);
+            }
+
+            itemsToRender.forEach((item, globalIndex) => {
+                const actualIndex = globalIndex % showcaseData.length;
+                console.log('Rendering card:', item.title, 'Link:', item.linkUrl); // Debug
                 const badgeColors = {
                     'Publication': 'bg-green-500/20 text-green-300',
                     'Project': 'bg-blue-500/20 text-blue-300',
@@ -458,7 +528,7 @@
                 ).join(' &middot; ');
 
                 const cardHTML = `
-                    <div class="showcase-card flex-shrink-0 w-full rounded-2xl p-8 flex flex-col relative text-white gradient-bg" id="card-bg-${index % 5}">
+                    <div class="showcase-card flex-shrink-0 w-full rounded-2xl p-8 flex flex-col relative text-white gradient-bg" id="card-bg-${actualIndex % 5}">
                         <div class="flex-grow">
                             <div class="flex items-center flex-wrap gap-2 mb-4">
                                 ${badgesHTML}
@@ -469,7 +539,7 @@
                                 ${hashtagsHTML}
                             </div>
                         </div>
-                        <a href="${item.linkUrl}" target="_blank" rel="noopener noreferrer" class="mt-6 inline-block bg-white/90 hover:bg-white text-gray-900 font-bold text-center py-2.5 px-5 rounded-lg transition-all duration-300 w-full sm:w-auto self-start">
+                        <a href="${item.linkUrl}" target="_blank" rel="noopener noreferrer" style="pointer-events: auto !important;" class="mt-6 inline-block bg-white/90 hover:bg-white text-gray-900 font-bold text-center py-2.5 px-5 rounded-lg transition-all duration-300 w-full sm:w-auto self-start relative z-10">
                             ${item.linkText}
                         </a>
                     </div>
@@ -493,21 +563,34 @@
                 backgroundColor: 0x141826
             });
 
+            // Simple cursor tracking
+            const cursorGlow = document.getElementById('cursor-glow');
+            const cursorCore = document.getElementById('cursor-core');
+            
+            // Track mouse position
+            document.addEventListener('mousemove', (e) => {
+                cursorGlow.style.left = e.clientX + 'px';
+                cursorGlow.style.top = e.clientY + 'px';
+                cursorCore.style.left = e.clientX + 'px';
+                cursorCore.style.top = e.clientY + 'px';
+            });
 
-            // Showcase Slider Logic
+            // Showcase Slider Logic - 5 sets with smooth scrolling
             renderShowcaseItems();
 
             const scroller = document.getElementById('showcase-scroller');
             const leftBtn = document.getElementById('scroll-left-btn');
             const rightBtn = document.getElementById('scroll-right-btn');
             let autoScrollInterval;
-            let currentIndex = 0; 
+            const totalCards = scroller.children.length; // 25 cards total
+            let currentIndex = Math.floor(totalCards / 2); // Start at card 12-13 (middle)
 
             function updateCarousel(newIndex, isInstant = false) {
-                const itemCount = scroller.children.length;
-                if (itemCount === 0) return;
+                if (totalCards === 0) return;
 
-                currentIndex = (newIndex + itemCount) % itemCount;
+                // Clamp to bounds (no wrapping)
+                currentIndex = Math.max(0, Math.min(newIndex, totalCards - 1));
+                
                 const card = scroller.children[currentIndex];
                 const scrollLeft = card.offsetLeft - (scroller.offsetWidth - card.offsetWidth) / 2;
                 
@@ -545,7 +628,26 @@
 
             window.addEventListener('resize', () => updateCarousel(currentIndex, true));
             
+            // Initialize to middle
+            updateCarousel(currentIndex, true);
             startAutoScroll();
+
+            // Fade-in observer for sections
+            const fadeInObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                    }
+                });
+            }, {
+                threshold: 0.15, // Trigger when 15% of the section is visible
+                rootMargin: '0px 0px -50px 0px' // Start animation slightly before the section enters viewport
+            });
+
+            // Observe all sections with fade-in-section class
+            document.querySelectorAll('.fade-in-section').forEach(section => {
+                fadeInObserver.observe(section);
+            });
         });
     </script>
 </body>
