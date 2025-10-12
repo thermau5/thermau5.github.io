@@ -63,32 +63,17 @@
         }
         .showcase-card {
             scroll-snap-align: center;
-            overflow: hidden; /* For rounded corners on child elements */
+            overflow: hidden;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
+            background-color: rgba(31, 41, 55, 0.5); /* Semi-transparent background */
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
         .showcase-card:hover {
             transform: scale(1.03); /* Swell effect */
             box-shadow: 0 25px 30px -10px rgba(0, 0, 0, 0.5), 0 15px 15px -10px rgba(0, 0, 0, 0.3);
         }
-
-        .gradient-bg {
-            background-size: 200% 200%;
-            animation: gradient-animation 15s ease infinite;
-        }
-
-        @keyframes gradient-animation {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        /* Unique gradients for each card - more subtle and harmonious */
-        #card-bg-0 { background-image: linear-gradient(-45deg, #1e3a8a, #312e81, #4c1d95); }
-        #card-bg-1 { background-image: linear-gradient(-45deg, #0f766e, #134e4a, #115e59); } /* Darker Teal */
-        #card-bg-2 { background-image: linear-gradient(-45deg, #6d28d9, #5b21b6, #4c1d95); } /* Deep Indigo/Purple */
-        #card-bg-3 { background-image: linear-gradient(-45deg, #334155, #475569, #64748b); }
-        #card-bg-4 { background-image: linear-gradient(-45deg, #1f2937, #111827, #374151); }
-
 
         /* Immersive fade effect for scroller */
         .showcase-container::before, .showcase-container::after {
@@ -387,7 +372,7 @@
 
     <!-- Vanta.js and its dependencies -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r121/three.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/p5@1.4.0/lib/p5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.1.9/p5.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.topology.min.js"></script>
     
     <script>
@@ -464,7 +449,7 @@
                 ).join(' &middot; ');
 
                 const cardHTML = `
-                    <div class="showcase-card flex-shrink-0 w-full rounded-2xl p-8 flex flex-col relative text-white gradient-bg" id="card-bg-${index % 5}">
+                    <div class="showcase-card flex-shrink-0 w-full rounded-2xl p-8 flex flex-col relative text-white">
                         <div class="flex-grow">
                             <div class="flex items-center flex-wrap gap-2 mb-4">
                                 ${badgesHTML}
@@ -490,13 +475,13 @@
                 el: "#vanta-bg",
                 mouseControls: true,
                 touchControls: true,
-                gyroControls: true,
+                gyroControls: false,
                 minHeight: 200.00,
                 minWidth: 200.00,
                 scale: 1.00,
                 scaleMobile: 1.00,
-                color: 0x003268, //0x000068, //0x027768,      // A harmonious light blue
-                backgroundColor: 0x141826 // Your site's deep blue #141826
+                color: 0x1e40af,      // A darker, more subtle blue
+                backgroundColor: 0x111827 // Your site's deep blue
             });
 
 
