@@ -135,7 +135,6 @@
             z-index: 9999;
             transform: translate(-50%, -50%);
             box-shadow: 0 0 30px rgba(59, 130, 246, 0.6), 0 0 60px rgba(37, 99, 235, 0.3);
-            will-change: left, top;
         }
         
         #cursor-core {
@@ -148,7 +147,168 @@
             z-index: 10000;
             transform: translate(-50%, -50%);
             box-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
-            will-change: left, top;
+        }
+
+        /* Moon cursor variant - simple white point */
+        #cursor-glow.moon {
+            display: none;
+        }
+        
+        #cursor-core.moon {
+            width: 8px;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
+        }
+
+        /* Black hole cursor variant */
+        #cursor-glow.blackhole {
+            background: radial-gradient(circle, transparent 0%, transparent 40%, rgba(255, 140, 0, 0.7) 50%, rgba(255, 120, 0, 0.5) 60%, transparent 75%);
+            box-shadow: 0 0 20px rgba(255, 140, 0, 0.6), 0 0 40px rgba(255, 100, 0, 0.3);
+            width: 30px;
+            height: 30px;
+        }
+        
+        #cursor-core.blackhole {
+            background: rgba(0, 0, 0, 1);
+            box-shadow: 0 0 8px rgba(255, 140, 0, 0.7), 0 0 16px rgba(255, 100, 0, 0.4);
+            width: 18px;
+            height: 18px;
+        }
+
+        /* Cursor selector floating bar */
+        .cursor-selector {
+            position: fixed;
+            top: 50%;
+            right: 1.5rem;
+            transform: translateY(-50%);
+            background: rgba(31, 41, 55, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(75, 85, 99, 0.5);
+            border-radius: 1rem;
+            padding: 0.75rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            z-index: 9998;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            cursor: auto !important;
+        }
+
+        .cursor-option {
+            width: 3rem;
+            height: 3rem;
+            border-radius: 0.5rem;
+            border: 2px solid transparent;
+            background: rgba(55, 65, 81, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer !important;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .cursor-option:hover {
+            background: rgba(75, 85, 99, 0.7);
+            transform: translateY(-2px);
+        }
+
+        .cursor-option.active {
+            border-color: #3b82f6;
+            background: rgba(59, 130, 246, 0.2);
+        }
+
+        .cursor-option-preview {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Preview styles */
+        .preview-normal {
+            width: 0;
+            height: 0;
+            border-left: 5px solid transparent;
+            border-right: 5px solid transparent;
+            border-bottom: 14px solid #f3f4f6;
+            transform: rotate(-45deg);
+            filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3));
+        }
+
+        .preview-neutron {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.8) 0%, rgba(37, 99, 235, 0.4) 40%, transparent 70%);
+            box-shadow: 0 0 10px rgba(59, 130, 246, 0.6);
+        }
+
+        .preview-neutron::after {
+            content: '';
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: white;
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .preview-moon {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: white;
+            box-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
+        }
+
+        .preview-blackhole {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: radial-gradient(circle, transparent 0%, transparent 35%, rgba(255, 140, 0, 0.8) 50%, rgba(255, 120, 0, 0.6) 60%, transparent 75%);
+            box-shadow: 0 0 8px rgba(255, 140, 0, 0.6);
+        }
+
+        .preview-blackhole::after {
+            content: '';
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: black;
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 4px rgba(255, 140, 0, 0.7);
+        }
+
+        /* Hide custom cursor when in normal mode */
+        body.cursor-normal #cursor-glow,
+        body.cursor-normal #cursor-core {
+            display: none;
+        }
+
+        body.cursor-normal,
+        body.cursor-normal a,
+        body.cursor-normal button,
+        body.cursor-normal [onclick] {
+            cursor: auto;
+        }
+
+        /* Always show normal cursor on the selector bar */
+        .cursor-selector,
+        .cursor-selector * {
+            cursor: auto !important;
+        }
+        
+        .cursor-option {
+            cursor: pointer !important;
         }
     </style>
 </head>
@@ -159,6 +319,30 @@
     <!-- Black hole cursor effect -->
     <div id="cursor-glow"></div>
     <div id="cursor-core"></div>
+
+    <!-- Cursor Selector Floating Bar -->
+    <div class="cursor-selector">
+        <div class="cursor-option active" data-cursor="normal" title="Normal Cursor">
+            <div class="cursor-option-preview">
+                <div class="preview-normal"></div>
+            </div>
+        </div>
+        <div class="cursor-option" data-cursor="moon" title="Moon">
+            <div class="cursor-option-preview">
+                <div class="preview-moon"></div>
+            </div>
+        </div>
+        <div class="cursor-option" data-cursor="neutron" title="Neutron Star">
+            <div class="cursor-option-preview">
+                <div class="preview-neutron"></div>
+            </div>
+        </div>
+        <div class="cursor-option" data-cursor="blackhole" title="Black Hole">
+            <div class="cursor-option-preview">
+                <div class="preview-blackhole"></div>
+            </div>
+        </div>
+    </div>
 
     <div class="content-wrapper container mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
 
@@ -562,36 +746,69 @@
                 backgroundColor: 0x141826
             });
 
-            // Ultra-fast cursor tracking with requestAnimationFrame
+            // Cursor Style Selector Logic
             const cursorGlow = document.getElementById('cursor-glow');
             const cursorCore = document.getElementById('cursor-core');
-            let mouseX = 0;
-            let mouseY = 0;
-            let isMoving = false;
+            const cursorOptions = document.querySelectorAll('.cursor-option');
+            let currentCursorStyle = 'normal'; // Default to normal
             
-            // Track mouse position
-            document.addEventListener('mousemove', (e) => {
-                mouseX = e.clientX;
-                mouseY = e.clientY;
-                if (!isMoving) {
-                    isMoving = true;
-                    updateCursor();
-                }
+            // Load saved cursor preference
+            const savedCursorStyle = localStorage.getItem('cursorStyle');
+            if (savedCursorStyle) {
+                currentCursorStyle = savedCursorStyle;
+                setCursorStyle(currentCursorStyle);
+            }
+
+            // Cursor option click handlers
+            cursorOptions.forEach(option => {
+                option.addEventListener('click', () => {
+                    const cursorType = option.getAttribute('data-cursor');
+                    currentCursorStyle = cursorType;
+                    setCursorStyle(cursorType);
+                    localStorage.setItem('cursorStyle', cursorType);
+                    
+                    // Update active state
+                    cursorOptions.forEach(opt => opt.classList.remove('active'));
+                    option.classList.add('active');
+                });
             });
-            
-            function updateCursor() {
-                cursorGlow.style.left = mouseX + 'px';
-                cursorGlow.style.top = mouseY + 'px';
-                cursorCore.style.left = mouseX + 'px';
-                cursorCore.style.top = mouseY + 'px';
+
+            function setCursorStyle(style) {
+                // Remove all cursor classes from body
+                document.body.classList.remove('cursor-normal', 'cursor-moon', 'cursor-neutron', 'cursor-blackhole');
+                cursorGlow.classList.remove('moon', 'blackhole');
+                cursorCore.classList.remove('moon', 'blackhole');
                 
-                requestAnimationFrame(() => {
-                    if (isMoving) {
-                        isMoving = false;
-                        updateCursor();
+                // Apply new cursor style
+                if (style === 'normal') {
+                    document.body.classList.add('cursor-normal');
+                } else if (style === 'moon') {
+                    cursorGlow.classList.add('moon');
+                    cursorCore.classList.add('moon');
+                } else if (style === 'neutron') {
+                    // Default neutron star style (no extra classes needed)
+                } else if (style === 'blackhole') {
+                    cursorGlow.classList.add('blackhole');
+                    cursorCore.classList.add('blackhole');
+                }
+
+                // Update active button
+                cursorOptions.forEach(opt => {
+                    if (opt.getAttribute('data-cursor') === style) {
+                        opt.classList.add('active');
+                    } else {
+                        opt.classList.remove('active');
                     }
                 });
             }
+
+            // Ultra-fast cursor tracking - direct position updates
+            document.addEventListener('mousemove', (e) => {
+                cursorGlow.style.left = e.clientX + 'px';
+                cursorGlow.style.top = e.clientY + 'px';
+                cursorCore.style.left = e.clientX + 'px';
+                cursorCore.style.top = e.clientY + 'px';
+            });
 
             // Showcase Slider Logic - 5 sets with smooth scrolling
             renderShowcaseItems();
