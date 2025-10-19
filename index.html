@@ -180,47 +180,88 @@
             height: 16px;
         }
 
-        /* Cursor selector floating bar */
+        /* Cursor selector floating bar - collapsible slide-in */
         .cursor-selector {
             position: fixed;
             top: 50%;
-            right: 1.5rem;
+            right: 0.5rem;
             transform: translateY(-50%);
-            background: rgba(31, 41, 55, 0.95);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(75, 85, 99, 0.5);
-            border-radius: 1rem;
-            padding: 0.75rem;
+            background: rgba(31, 41, 55, 0.6);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(75, 85, 99, 0.3);
+            border-radius: 0.75rem;
+            padding: 0.5rem;
             display: flex;
             flex-direction: column;
-            gap: 0.5rem;
+            gap: 0.4rem;
             z-index: 9998;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
             cursor: auto !important;
+            /* Collapsed state */
+            width: 0.4rem;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .cursor-selector::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 3px;
+            height: 60px;
+            background: linear-gradient(to bottom, 
+                rgba(59, 130, 246, 0.3), 
+                rgba(59, 130, 246, 0.8), 
+                rgba(59, 130, 246, 0.3));
+            border-radius: 2px;
+            opacity: 1;
+            transition: opacity 0.3s ease;
+        }
+
+        .cursor-selector:hover {
+            width: auto;
+            padding: 0.5rem;
+            background: rgba(31, 41, 55, 0.9);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .cursor-selector:hover::before {
+            opacity: 0;
         }
 
         .cursor-option {
-            width: 3rem;
-            height: 3rem;
-            border-radius: 0.5rem;
-            border: 2px solid transparent;
-            background: rgba(55, 65, 81, 0.5);
+            width: 2rem;
+            height: 2rem;
+            border-radius: 0.4rem;
+            border: 1.5px solid transparent;
+            background: rgba(55, 65, 81, 0.4);
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer !important;
-            transition: all 0.3s ease;
             position: relative;
+            flex-shrink: 0;
+            opacity: 0;
+            transform: scale(0.8);
+            transition: all 0.2s ease;
+        }
+
+        .cursor-selector:hover .cursor-option {
+            opacity: 1;
+            transform: scale(1);
         }
 
         .cursor-option:hover {
-            background: rgba(75, 85, 99, 0.7);
-            transform: translateY(-2px);
+            background: rgba(75, 85, 99, 0.6);
+            transform: scale(1.1) !important;
         }
 
         .cursor-option.active {
             border-color: #3b82f6;
-            background: rgba(59, 130, 246, 0.2);
+            background: rgba(59, 130, 246, 0.25);
+            box-shadow: 0 0 8px rgba(59, 130, 246, 0.3);
         }
 
         .cursor-option-preview {
@@ -232,29 +273,29 @@
             justify-content: center;
         }
 
-        /* Preview styles */
+        /* Preview styles - scaled down */
         .preview-normal {
             width: 0;
             height: 0;
-            border-left: 5px solid transparent;
-            border-right: 5px solid transparent;
-            border-bottom: 14px solid #d1d5db;
+            border-left: 3px solid transparent;
+            border-right: 3px solid transparent;
+            border-bottom: 9px solid #d1d5db;
             transform: rotate(-45deg);
         }
 
         .preview-neutron {
-            width: 16px;
-            height: 16px;
+            width: 12px;
+            height: 12px;
             border-radius: 50%;
             background: radial-gradient(circle, rgba(59, 130, 246, 0.8) 0%, rgba(37, 99, 235, 0.4) 40%, transparent 70%);
-            box-shadow: 0 0 10px rgba(59, 130, 246, 0.6);
+            box-shadow: 0 0 6px rgba(59, 130, 246, 0.6);
         }
 
         .preview-neutron::after {
             content: '';
             position: absolute;
-            width: 4px;
-            height: 4px;
+            width: 3px;
+            height: 3px;
             background: white;
             border-radius: 50%;
             top: 50%;
@@ -263,32 +304,32 @@
         }
 
         .preview-moon {
-            width: 8px;
-            height: 8px;
+            width: 6px;
+            height: 6px;
             border-radius: 50%;
             background: white;
-            box-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
+            box-shadow: 0 0 6px rgba(255, 255, 255, 0.8);
         }
 
         .preview-blackhole {
-            width: 18px;
-            height: 18px;
+            width: 14px;
+            height: 14px;
             border-radius: 50%;
             background: radial-gradient(circle, rgba(0, 0, 0, 0.9) 0%, rgba(255, 140, 0, 0.8) 30%, rgba(255, 165, 0, 0.6) 50%, transparent 70%);
-            box-shadow: 0 0 12px rgba(255, 140, 0, 0.8);
+            box-shadow: 0 0 8px rgba(255, 140, 0, 0.8);
         }
 
         .preview-blackhole::after {
             content: '';
             position: absolute;
-            width: 9px;
-            height: 9px;
+            width: 7px;
+            height: 7px;
             background: black;
             border-radius: 50%;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            box-shadow: 0 0 4px rgba(255, 140, 0, 0.9);
+            box-shadow: 0 0 3px rgba(255, 140, 0, 0.9);
         }
 
         /* Hide custom cursor when in normal mode */
@@ -582,7 +623,7 @@
                         <img src="https://placehold.co/600x400/1f2937/FFFFFF?text=ABC+Lab" alt="NTU ABC Lab" class="w-full h-48 object-cover">
                         <div class="p-6">
                             <h3 class="font-semibold text-lg text-white">NTU ABC Lab & Prof. Liao</h3>
-                            <p class="text-sm text-gray-400 mt-1">Two years at the biggest crypto lab in Taiwan with the legendary Prof. Yun-Nung (Vivian) Liao.</p>
+                            <p class="text-sm text-gray-400 mt-1">Two years at the biggest crypto lab in Taiwan with the legendary Prof. Shih-wei Liao.</p>
                              <a href="javascript:void(0)" onclick="toggleContent('com5-details', this, '[Learn more]', '[Show less]')" class="text-blue-400 text-sm hover:underline font-semibold mt-2 inline-block">[Learn more]</a>
                              <div id="com5-details" class="hidden details-content mt-2 text-gray-400 text-sm">
                                 <p>I stayed for two years as the TA for multiple 150-person courses and as a social assistant to Prof. Liao.
@@ -810,16 +851,11 @@
                 const x = e.clientX;
                 const y = e.clientY;
                 
-                // Calculate center offsets based on cursor dimensions
-                // glow: 30px (all styles), core varies by style
-                const glowOffset = 15; // 30px / 2
-                let coreOffset = 3; // default: 6px / 2
-                
-                if (cursorCore.classList.contains('blackhole')) {
-                    coreOffset = 8; // blackhole core: 12px / 2
-                } else if (cursorCore.classList.contains('moon')) {
-                    coreOffset = 4; // moon core: 8px / 2
-                }
+                // Calculate offsets based on cursor element sizes
+                // Glow: 30px default, 35px for blackhole
+                const glowOffset = cursorGlow.classList.contains('blackhole') ? 17.5 : 15;
+                const coreOffset = cursorGlow.classList.contains('blackhole') ? 10.5 : 
+                                   cursorCore.classList.contains('moon') ? 4 : 3;
                 
                 cursorGlow.style.transform = `translate(${x - glowOffset}px, ${y - glowOffset}px)`;
                 cursorCore.style.transform = `translate(${x - coreOffset}px, ${y - coreOffset}px)`;
