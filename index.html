@@ -137,6 +137,8 @@
             z-index: 9999;
             box-shadow: 0 0 30px rgba(59, 130, 246, 0.6), 0 0 60px rgba(37, 99, 235, 0.3);
             will-change: transform;
+            opacity: 0;
+            transition: opacity 0.2s ease;
         }
         
         #cursor-core {
@@ -151,6 +153,8 @@
             z-index: 10000;
             box-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
             will-change: transform;
+            opacity: 0;
+            transition: opacity 0.2s ease;
         }
 
         /* Moon cursor variant - simple white point */
@@ -796,6 +800,63 @@
             const cursorOptions = document.querySelectorAll('.cursor-option');
             let currentCursorStyle = 'normal'; // Default to normal
             
+            // Ultra-fast cursor tracking using transform for hardware acceleration
+            let mouseX = 0;
+            let mouseY = 0;
+            let glowOffset = 15;
+            let coreOffset = 3;
+            let rafId = null;
+            let cursorInitialized = false;
+            
+            // Cache cursor offsets to avoid DOM queries on mousemove
+            function updateCursorOffsets() {
+                if (cursorGlow.classList.contains('blackhole')) {
+                    glowOffset = 15; // 30px / 2
+                    coreOffset = 8; // 16px / 2
+                } else if (cursorCore.classList.contains('moon')) {
+                    glowOffset = 15; // Not visible but keep consistent
+                    coreOffset = 4; // 8px / 2
+                } else {
+                    glowOffset = 15; // 30px / 2
+                    coreOffset = 3; // 6px / 2
+                }
+            }
+
+            function setCursorStyle(style) {
+                // Remove all cursor classes from body
+                document.body.classList.remove('cursor-normal', 'cursor-moon', 'cursor-neutron', 'cursor-blackhole');
+                cursorGlow.classList.remove('moon', 'blackhole');
+                cursorCore.classList.remove('moon', 'blackhole');
+                
+                // Apply new cursor style
+                if (style === 'normal') {
+                    document.body.classList.add('cursor-normal');
+                    // Hide custom cursors in normal mode
+                    cursorGlow.style.opacity = '0';
+                    cursorCore.style.opacity = '0';
+                } else if (style === 'moon') {
+                    cursorGlow.classList.add('moon');
+                    cursorCore.classList.add('moon');
+                } else if (style === 'neutron') {
+                    // Default neutron star style (no extra classes needed)
+                } else if (style === 'blackhole') {
+                    cursorGlow.classList.add('blackhole');
+                    cursorCore.classList.add('blackhole');
+                }
+
+                // Update active button
+                cursorOptions.forEach(opt => {
+                    if (opt.getAttribute('data-cursor') === style) {
+                        opt.classList.add('active');
+                    } else {
+                        opt.classList.remove('active');
+                    }
+                });
+                
+                // Update cached cursor offsets after style change
+                updateCursorOffsets();
+            }
+            
             // Load saved cursor preference
             const savedCursorStyle = localStorage.getItem('cursorStyle');
             if (savedCursorStyle) {
@@ -816,50 +877,35 @@
                     option.classList.add('active');
                 });
             });
-
-            function setCursorStyle(style) {
-                // Remove all cursor classes from body
-                document.body.classList.remove('cursor-normal', 'cursor-moon', 'cursor-neutron', 'cursor-blackhole');
-                cursorGlow.classList.remove('moon', 'blackhole');
-                cursorCore.classList.remove('moon', 'blackhole');
+            
+            // Update cursor position using requestAnimationFrame
+            function updateCursorPosition() {
+                cursorGlow.style.transform = `translate(${mouseX - glowOffset}px, ${mouseY - glowOffset}px)`;
+                cursorCore.style.transform = `translate(${mouseX - coreOffset}px, ${mouseY - coreOffset}px)`;
                 
-                // Apply new cursor style
-                if (style === 'normal') {
-                    document.body.classList.add('cursor-normal');
-                } else if (style === 'moon') {
-                    cursorGlow.classList.add('moon');
-                    cursorCore.classList.add('moon');
-                } else if (style === 'neutron') {
-                    // Default neutron star style (no extra classes needed)
-                } else if (style === 'blackhole') {
-                    cursorGlow.classList.add('blackhole');
-                    cursorCore.classList.add('blackhole');
+                // Show cursor on first movement (unless in normal mode)
+                if (!cursorInitialized && !document.body.classList.contains('cursor-normal')) {
+                    cursorGlow.style.opacity = '1';
+                    cursorCore.style.opacity = '1';
+                    cursorInitialized = true;
                 }
-
-                // Update active button
-                cursorOptions.forEach(opt => {
-                    if (opt.getAttribute('data-cursor') === style) {
-                        opt.classList.add('active');
-                    } else {
-                        opt.classList.remove('active');
-                    }
-                });
+                
+                rafId = null;
             }
-
-            // Ultra-fast cursor tracking using transform for hardware acceleration
+            
+            // Mousemove handler - just update coordinates
             document.addEventListener('mousemove', (e) => {
-                const x = e.clientX;
-                const y = e.clientY;
+                mouseX = e.clientX;
+                mouseY = e.clientY;
                 
-                // Calculate offsets based on cursor element sizes
-                // Glow: 30px default, 35px for blackhole
-                const glowOffset = cursorGlow.classList.contains('blackhole') ? 17.5 : 15;
-                const coreOffset = cursorGlow.classList.contains('blackhole') ? 10.5 : 
-                                   cursorCore.classList.contains('moon') ? 4 : 3;
-                
-                cursorGlow.style.transform = `translate(${x - glowOffset}px, ${y - glowOffset}px)`;
-                cursorCore.style.transform = `translate(${x - coreOffset}px, ${y - coreOffset}px)`;
+                // Only request a new frame if one isn't already pending
+                if (!rafId) {
+                    rafId = requestAnimationFrame(updateCursorPosition);
+                }
             }, { passive: true });
+            
+            // Initialize offsets
+            updateCursorOffsets();
 
             // Showcase Slider Logic - 5 sets with smooth scrolling
             renderShowcaseItems();
