@@ -398,7 +398,7 @@
         <header class="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-12">
             <div>
                 <h1 class="text-4xl font-bold text-white">Thomas Y.L. Lin</h1>
-                <p class="mt-2 text-lg text-gray-400">Diffusing across the frontiers of Physics, AI, and Entrepreneurship</p>
+                <p class="mt-2 text-lg text-gray-400">21, human, bridging physics and AI, pursuing an "experience machine."</p>
             </div>
             <div class="flex space-x-4 mt-4 sm:mt-0">
                 <a href="mailto:thermaus@uw.edu" class="text-gray-400 hover:text-white transition-colors">
@@ -418,27 +418,11 @@
             <!-- About Section -->
             <section id="about" class="fade-in-section">
                 <h2 class="text-2xl font-bold text-white mb-6">About Me</h2>
-                
-                <!-- Short Summary -->
-                <p class="text-center text-lg md:text-xl text-gray-200 font-medium mb-6 leading-relaxed">
-                    21, human, bridging physics and AI, pursuing an "experience machine."
-                </p>
-                
-                <!-- Toggle Button -->
-                <div class="text-center mb-6">
-                    <button id="toggle-about" class="text-blue-400 hover:text-blue-300 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50 rounded px-2 py-1" aria-expanded="false" aria-controls="full-about">
-                        Read more ↓
-                    </button>
-                </div>
-                
-                <!-- Full About Content (Collapsible) -->
-                <div id="full-about" class="overflow-hidden transition-all duration-500 ease-in-out" style="max-height: 0; opacity: 0;">
-                    <div class="text-gray-300 leading-relaxed space-y-4 pt-2">
-                        <p>I grew up in Taiwan and bootstrapped my way into a U.S. college at 20. By "bootstrapping," I mean there was never a fixed checklist of goals or a predictable process; rather I see my journey as a jump diffusion, driven by curiosity, a pursuit of impact, and a fear of mediocrity.</p>
-                        <p>Through science-fiction films and games, I developed a fascination with "simulation" long before formal study, which eventually led me to study physics in a selective national high school science program. Beyond this elite path, however, I also founded—perhaps "faked" in the Silicon Valley sense—a national representative team for the European Physics Olympiad, where I won medals and earned early, test-free admission to National Taiwan University.</p>
-                        <p>The year I entered college, ChatGPT emerged and prompted me to shift from physics to AI and machine learning research. I was fortunate to work with Northwestern University (MAGICS Lab), Gamma Paradigm Capital, and Caltech (AI4Science Lab). Through research, I attended top conferences and met some of the most brilliant minds in the field. It became apparent that what truly mattered to me was finding a path to the US. I later left NTU, applied for transfer, and made it to the University of Washington. </p>
-                        <p>My ultimate vision is to create an "experience machine" that empowers every individual with the right to choose an ego-centric, reversible, and eternal second life. I would bet with Robert Nozick that such choices would converge into a mixed strategy—some people would plug in, and some would not—rather than a purely homogeneous "no."</p>
-                    </div>
+                <div class="text-gray-300 text-sm leading-relaxed space-y-4">
+                    <p>I grew up in Taiwan and bootstrapped my way into a U.S. college at 20. By "bootstrapping," I mean there was never a fixed checklist of goals or a predictable process; rather I see my journey as a jump diffusion, driven by curiosity, a pursuit of impact, and a fear of mediocrity.</p>
+                    <p>Through science-fiction films and games, I developed a fascination with "simulation" long before formal study, which eventually led me to study physics in a selective national high school science program. Beyond this elite path, however, I also founded—perhaps "faked" in the Silicon Valley sense—a national representative team for the European Physics Olympiad, where I won medals and earned early, test-free admission to National Taiwan University.</p>
+                    <p>The year I entered college, ChatGPT emerged and prompted me to shift from physics to AI and machine learning research. I was fortunate to work with Northwestern University (MAGICS Lab), Gamma Paradigm Capital, and Caltech (AI4Science Lab). Through research, I attended top conferences and met some of the most brilliant minds in the field. It became apparent that what truly mattered to me was finding a path to the US. I later left NTU, applied for transfer, and made it to the University of Washington. </p>
+                    <p>My ultimate vision is to create an "experience machine" that empowers every individual with the right to choose an ego-centric, reversible, and eternal second life. I would bet with Robert Nozick that such choices would converge into a mixed strategy—some people would plug in, and some would not—rather than a purely homogeneous "no."</p>
                 </div>
             </section>
 
@@ -774,36 +758,6 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
-            // About Me Toggle Logic
-            const toggleBtn = document.getElementById('toggle-about');
-            const fullAbout = document.getElementById('full-about');
-            let isExpanded = false;
-
-            toggleBtn.addEventListener('click', () => {
-                isExpanded = !isExpanded;
-                
-                if (isExpanded) {
-                    // Expand
-                    fullAbout.style.maxHeight = fullAbout.scrollHeight + 'px';
-                    fullAbout.style.opacity = '1';
-                    toggleBtn.textContent = 'Read less ↑';
-                    toggleBtn.setAttribute('aria-expanded', 'true');
-                } else {
-                    // Collapse
-                    fullAbout.style.maxHeight = '0';
-                    fullAbout.style.opacity = '0';
-                    toggleBtn.textContent = 'Read more ↓';
-                    toggleBtn.setAttribute('aria-expanded', 'false');
-                }
-            });
-
-            // Keyboard accessibility (Enter key)
-            toggleBtn.addEventListener('keydown', (e) => {
-                if (e.key === 'Enter') {
-                    toggleBtn.click();
-                }
-            });
-
             // Vanta.js background initialization
             VANTA.TOPOLOGY({
                 el: "#vanta-bg",
