@@ -398,7 +398,7 @@
         <header class="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-12">
             <div>
                 <h1 class="text-4xl font-bold text-white">Thomas Y.L. Lin</h1>
-                <p class="mt-2 text-lg text-gray-400">AI & Physics Researcher</p>
+                <p class="mt-2 text-lg text-gray-400">Diffusing across the frontiers of Physics, AI, and Entrepreneurship</p>
             </div>
             <div class="flex space-x-4 mt-4 sm:mt-0">
                 <a href="mailto:thermaus@uw.edu" class="text-gray-400 hover:text-white transition-colors">
@@ -418,33 +418,27 @@
             <!-- About Section -->
             <section id="about" class="fade-in-section">
                 <h2 class="text-2xl font-bold text-white mb-6">About Me</h2>
-                <div class="text-gray-300 leading-relaxed space-y-4">
-                    <p>I lived my whole life in Taiwan and took a rare opportunity transferring to a U.S. college at 20.</p>
-                    <div>
-                        <p>
-                            I’ve always been deeply passionate about “simulation.” That passion came before everything else—physics, economics, or AI/ML—when I solve my teenage existential crisis through dystopian movies and games.
-                           <a href="javascript:void(0)" onclick="toggleContent('story1', this, '[Read the story]', '[Show less]')" class="text-blue-400 hover:underline ml-2 font-semibold">[Read the story]</a>
-                        </p>
-                        <div id="story1" class="hidden details-content mt-4 p-4 bg-gray-800/50 rounded-lg text-gray-400">
-                             <p>
-                                At 13, just after deciding to leave a strict, Asian-type, dogmatic but locally prestigious private school, I suddenly lost all my friends and spent three months locked in my room. Isolated from both family and the outside world, I fell into an existential crisis, unable to find purpose in anything. What eventually saved me were movies and games that delivered philosophy through extreme settings—Detroit: Become Human, Watch Dogs 2, Black Mirror, Fight Club, Interstellar, Joker. They taught me that my greatest fear isn’t suffering—it’s boredom. A perfectly ordered, predictable life felt more dystopian than chaos itself.
-                            </p>
-                        </div>
+                
+                <!-- Short Summary -->
+                <p class="text-center text-lg md:text-xl text-gray-200 font-medium mb-6 leading-relaxed">
+                    21, human, bridging physics and AI, pursuing an "experience machine."
+                </p>
+                
+                <!-- Toggle Button -->
+                <div class="text-center mb-6">
+                    <button id="toggle-about" class="text-blue-400 hover:text-blue-300 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50 rounded px-2 py-1" aria-expanded="false" aria-controls="full-about">
+                        Read more ↓
+                    </button>
+                </div>
+                
+                <!-- Full About Content (Collapsible) -->
+                <div id="full-about" class="overflow-hidden transition-all duration-500 ease-in-out" style="max-height: 0; opacity: 0;">
+                    <div class="text-gray-300 leading-relaxed space-y-4 pt-2">
+                        <p>I grew up in Taiwan and bootstrapped my way into a U.S. college at 20. By "bootstrapping," I mean there was never a fixed checklist of goals or a predictable process; rather I see my journey as a jump diffusion, driven by curiosity, a pursuit of impact, and a fear of mediocrity.</p>
+                        <p>Through science-fiction films and games, I developed a fascination with "simulation" long before formal study, which eventually led me to study physics in a selective national high school science program. Beyond this elite path, however, I also founded—perhaps "faked" in the Silicon Valley sense—a national representative team for the European Physics Olympiad, where I won medals and earned early, test-free admission to National Taiwan University.</p>
+                        <p>The year I entered college, ChatGPT emerged and prompted me to shift from physics to AI and machine learning research. I was fortunate to work with Northwestern University (MAGICS Lab), Gamma Paradigm Capital, and Caltech (AI4Science Lab). Through research, I attended top conferences and met some of the most brilliant minds in the field. It became apparent that what truly mattered to me was finding a path to the US. I later left NTU, applied for transfer, and made it to the University of Washington. </p>
+                        <p>My ultimate vision is to create an "experience machine" that empowers every individual with the right to choose an ego-centric, reversible, and eternal second life. I would bet with Robert Nozick that such choices would converge into a mixed strategy—some people would plug in, and some would not—rather than a purely homogeneous "no."</p>
                     </div>
-                    <div>
-                        <p>
-                           Driven by the instinct to escape mediocrity and live a story worth telling, I’ve realized my superpower is creating reality out of imagination—they mostly failed, but I only need one big win to cover all the other loss. This earned me early admission to National Taiwan University, the top university in my country.
-                           <a href="javascript:void(0)" onclick="toggleContent('story2', this, '[How I did it]', '[Show less]')" class="text-blue-400 hover:underline ml-2 font-semibold">[How I did it]</a>
-                        </p>
-                        <div id="story2" class="hidden details-content mt-4 p-4 bg-gray-800/50 rounded-lg text-gray-400">
-                            <p>
-                                At 17, after being eliminated from the national physics olympiad team, I was at risk of losing my college admission, having sacrificed all my coursework for physics. By chance, I discovered that my country hadn’t registered for the European Physics Olympiad, so I decided to register it myself. I gathered my high school classmates, hired an authorized leader for translation, and wrote proposals to fundraise our trip. We kept everything secret—took leave from school, skipped a midterm and a mandatory project presentation—and flew to Slovenia as a self-organized national team. We won two silvers and two bronzes, and no one there could tell we had built the team from scratch.
-                            </p>
-                        </div>
-                    </div>
-                    <p>The year I entered college, ChatGPT came out. That moment marked my transition from physics to AI/ML research. Through this shift, I attended top conferences and met some of the most brilliant minds on Earth—realizing that what truly mattered was finding a way to the U.S., where the frontier was being built. I eventually dropped out of NTU, applied for transfer, and finally made it to the University of Washington in Seattle.</p>
-                    <p>Now in the U.S., closer to the epicenter of today’s technological revolutions—AI, frontier research, and the people building the future—I can see how those sci-fi visions might soon materialize through VR and robotics.</p>
-                    <p>I’m a blend of scientist and strategist—driven to break down problems for insight, while always searching for opportunities and leverage to maximize impact.</p>
                 </div>
             </section>
 
@@ -780,6 +774,36 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
+            // About Me Toggle Logic
+            const toggleBtn = document.getElementById('toggle-about');
+            const fullAbout = document.getElementById('full-about');
+            let isExpanded = false;
+
+            toggleBtn.addEventListener('click', () => {
+                isExpanded = !isExpanded;
+                
+                if (isExpanded) {
+                    // Expand
+                    fullAbout.style.maxHeight = fullAbout.scrollHeight + 'px';
+                    fullAbout.style.opacity = '1';
+                    toggleBtn.textContent = 'Read less ↑';
+                    toggleBtn.setAttribute('aria-expanded', 'true');
+                } else {
+                    // Collapse
+                    fullAbout.style.maxHeight = '0';
+                    fullAbout.style.opacity = '0';
+                    toggleBtn.textContent = 'Read more ↓';
+                    toggleBtn.setAttribute('aria-expanded', 'false');
+                }
+            });
+
+            // Keyboard accessibility (Enter key)
+            toggleBtn.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    toggleBtn.click();
+                }
+            });
+
             // Vanta.js background initialization
             VANTA.TOPOLOGY({
                 el: "#vanta-bg",
