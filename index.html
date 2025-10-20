@@ -418,11 +418,25 @@
             <!-- About Section -->
             <section id="about" class="fade-in-section">
                 <h2 class="text-2xl font-bold text-white mb-6">About Me</h2>
-                <div class="text-gray-300 text-sm leading-relaxed space-y-4">
-                    <p>I grew up in Taiwan and bootstrapped my way into a U.S. college at 20. By "bootstrapping," I mean there was never a fixed checklist of goals or a predictable process; rather I see my journey as a <a href="https://en.wikipedia.org/wiki/Jump_diffusion" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:text-blue-300 hover:underline">jump diffusion</a>, driven by curiosity, a pursuit of impact, and a fear of mediocrity.</p>
-                    <p>Through science-fiction films and games, I developed a fascination with "simulation" long before formal study, which eventually led me to study physics in a selective national high school science program. Beyond this elite path, however, I also founded—perhaps "faked" in the Silicon Valley sense—a national representative team for the <a href="https://eupho.ee/eupho-2022/" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:text-blue-300 hover:underline">European Physics Olympiad</a>, where I won medals and earned early, test-free admission to National Taiwan University.</p>
-                    <p>The year I entered college, ChatGPT emerged and prompted me to shift from physics to AI and machine learning research. I was fortunate to work with <a href="https://magics.cs.northwestern.edu/index.html" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:text-blue-300 hover:underline">Northwestern University (MAGICS Lab)</a>, <a href="https://gammaparadigm.com/" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:text-blue-300 hover:underline">Gamma Paradigm Capital</a>, and <a href="https://www.ai4science.caltech.edu/" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:text-blue-300 hover:underline">Caltech (AI4Science Lab)</a>. Through research, I attended top conferences and met some of the most brilliant minds in the field. It became apparent that what truly mattered to me was finding a path to the US. I later left NTU, applied for transfer, and made it to the University of Washington. </p>
-                    <p>My ultimate vision is to create an <a href="https://en.wikipedia.org/wiki/Experience_machine" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:text-blue-300 hover:underline">"experience machine"</a> that empowers every individual with the right to choose an ego-centric, reversible, and eternal second life. I would bet with Robert Nozick that such choices would converge into a mixed strategy—some people would plug in, and some would not—rather than a purely homogeneous "no."</p>
+                <div class="text-gray-300 text-sm leading-relaxed">
+                    <p class="mb-4">I grew up in Taiwan and bootstrapped my way into a U.S. college at 20. By "bootstrapping," I mean there was never a fixed checklist of goals or a predictable process; rather I see my journey as a <a href="https://en.wikipedia.org/wiki/Jump_diffusion" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:text-blue-300 hover:underline">jump diffusion</a>, driven by curiosity, a pursuit of impact, and a fear of mediocrity.</p>
+                    
+                    <!-- Collapsible content -->
+                    <div id="about-expandable" class="overflow-hidden transition-all duration-700 ease-in-out" style="max-height: 0; opacity: 0;">
+                        <p class="mb-4">Through science-fiction films and games, I developed a fascination with "simulation" long before formal study, which eventually led me to study physics in a selective national high school science program. Beyond this elite path, however, I also founded—perhaps "faked" in the Silicon Valley sense—a national representative team for the <a href="https://eupho.ee/eupho-2022/" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:text-blue-300 hover:underline">European Physics Olympiad</a>, where I won medals and earned early, test-free admission to National Taiwan University.</p>
+                        <p class="mb-4">The year I entered college, ChatGPT emerged and prompted me to shift from physics to AI and machine learning research. I was fortunate to work with <a href="https://magics.cs.northwestern.edu/index.html" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:text-blue-300 hover:underline">Northwestern University (MAGICS Lab)</a>, <a href="https://gammaparadigm.com/" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:text-blue-300 hover:underline">Gamma Paradigm Capital</a>, and <a href="https://www.ai4science.caltech.edu/" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:text-blue-300 hover:underline">Caltech (AI4Science Lab)</a>. Through research, I attended top conferences and met some of the most brilliant minds in the field. It became apparent that what truly mattered to me was finding a path to the US. I later transferred to the University of Washington. </p>
+                        <p class="mb-4">My ultimate vision is to create an <a href="https://en.wikipedia.org/wiki/Experience_machine" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:text-blue-300 hover:underline">"experience machine"</a> that empowers every individual with the right to choose an ego-centric, reversible, and eternal second life. I would bet with Robert Nozick that such choices would converge into a mixed strategy—some people would plug in, and some would not—rather than a purely homogeneous "no."</p>
+                    </div>
+                    
+                    <!-- Toggle Button -->
+                    <div class="text-center -mt-2">
+                        <button id="toggle-about-btn" class="text-xs text-blue-400/70 hover:text-blue-300 transition-colors focus:outline-none focus:ring-1 focus:ring-blue-400/30 rounded px-3 py-1 inline-flex items-center gap-1" aria-expanded="false" aria-controls="about-expandable">
+                            <span id="toggle-about-text">Read more</span>
+                            <svg id="toggle-about-arrow" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transition-transform duration-300">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </button>
+                    </div>
                 </div>
             </section>
 
@@ -758,6 +772,48 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
+            // About Me Toggle Logic
+            const toggleBtn = document.getElementById('toggle-about-btn');
+            const toggleBtnContainer = toggleBtn.parentElement;
+            const expandableContent = document.getElementById('about-expandable');
+            const toggleText = document.getElementById('toggle-about-text');
+            const toggleArrow = document.getElementById('toggle-about-arrow');
+            let isExpanded = false;
+
+            toggleBtn.addEventListener('click', () => {
+                isExpanded = !isExpanded;
+                
+                if (isExpanded) {
+                    // Expand
+                    expandableContent.style.maxHeight = expandableContent.scrollHeight + 'px';
+                    expandableContent.style.opacity = '1';
+                    toggleText.textContent = 'Read less';
+                    toggleArrow.style.transform = 'rotate(180deg)';
+                    toggleBtn.setAttribute('aria-expanded', 'true');
+                    // Add spacing when expanded
+                    toggleBtnContainer.classList.remove('-mt-2');
+                    toggleBtnContainer.classList.add('mt-2');
+                } else {
+                    // Collapse
+                    expandableContent.style.maxHeight = '0';
+                    expandableContent.style.opacity = '0';
+                    toggleText.textContent = 'Read more';
+                    toggleArrow.style.transform = 'rotate(0deg)';
+                    toggleBtn.setAttribute('aria-expanded', 'false');
+                    // Keep tight spacing when collapsed
+                    toggleBtnContainer.classList.remove('mt-2');
+                    toggleBtnContainer.classList.add('-mt-2');
+                }
+            });
+
+            // Keyboard accessibility
+            toggleBtn.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    toggleBtn.click();
+                }
+            });
+
             // Vanta.js background initialization
             VANTA.TOPOLOGY({
                 el: "#vanta-bg",
