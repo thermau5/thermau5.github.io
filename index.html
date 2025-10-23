@@ -1211,11 +1211,13 @@
             
             // Render visitor map using Leaflet
             function renderVisitorMap(visitorData) {
+                console.log('Rendering map with data:', visitorData);
                 const summaryEl = document.getElementById('visitor-summary');
                 
                 // Update summary text
                 const totalVisitors = visitorData.totalVisits;
                 const totalCountries = Object.keys(visitorData.countries).length;
+                console.log('Total visitors:', totalVisitors, 'Total countries:', totalCountries);
                 summaryEl.textContent = `${totalVisitors.toLocaleString()} visitors from ${totalCountries} countries have visited this page (since Oct 22, 2025)`;
                 
                 // Initialize map
