@@ -1194,64 +1194,17 @@
                     }
                 });
             }
+            // Simple visitor tracking without location (avoids CORS issues)
             async function getLocationFromIP() {
-                try {
-                    // Try multiple IP geolocation services for better reliability
-                    const services = [
-                        'https://ipapi.co/json/',
-                        'https://ip-api.com/json/',
-                        'https://api.ipify.org?format=json'
-                    ];
-                    
-                    for (const service of services) {
-                        try {
-                            const response = await fetch(service, {
-                                method: 'GET',
-                                headers: {
-                                    'Accept': 'application/json'
-                                }
-                            });
-                            
-                            if (response.ok) {
-                                const data = await response.json();
-                                
-                                // Handle different API response formats
-                                if (service.includes('ipapi.co')) {
-                                    return {
-                                        city: data.city || 'Unknown City',
-                                        country: data.country_name || 'Unknown Country',
-                                        region: data.region || '',
-                                        lat: data.latitude,
-                                        lng: data.longitude
-                                    };
-                                } else if (service.includes('ip-api.com')) {
-                                    return {
-                                        city: data.city || 'Unknown City',
-                                        country: data.country || 'Unknown Country',
-                                        region: data.regionName || '',
-                                        lat: data.lat || null,
-                                        lng: data.lon || null
-                                    };
-                                }
-                            }
-                        } catch (error) {
-                            console.log(`Service ${service} failed:`, error.message);
-                            continue; // Try next service
-                        }
-                    }
-                    
-                    throw new Error('All IP services failed');
-                    
-                } catch (error) {
-                    console.log('Could not determine location, using default');
-                    return {
-                        city: 'Unknown City',
-                        country: 'Unknown Country',
-                        region: '',
-                        lat: null,
-                        lng: null
-                    };
-                }
+                // Return unknown location to avoid CORS issues
+                // This ensures the visitor count continues to work
+                return {
+                    city: 'Unknown City',
+                    country: 'Unknown Country',
+                    region: '',
+                    lat: null,
+                    lng: null
+                };
             }
             
             // Track visitor
@@ -1280,6 +1233,12 @@
                         visitorData.countries[location.country] = 0;
                     }
                     visitorData.countries[location.country]++;
+                    
+                    // Increment known visits counter
+                    if (!visitorData.knownVisits) {
+                        visitorData.knownVisits = 0;
+                    }
+                    visitorData.knownVisits++;
                 }
                 
                 // Update last visit
@@ -1300,18 +1259,17 @@
                 const summaryEl = document.getElementById('visitor-summary');
                 
                 // Update summary text
-                // Calculate total visitors excluding unknown locations
-                const knownVisits = Object.entries(visitorData.cities)
-                    .filter(([cityKey]) => !cityKey.toLowerCase().includes('unknown'))
-                    .reduce((total, [, cityData]) => total + cityData.visits, 0);
+                // Use knownVisits if available, otherwise calculate from countries
+                const knownVisitors = visitorData.knownVisits || 
+                    Object.values(visitorData.countries).reduce((total, count) => total + count, 0);
                 
                 // Filter out unknown countries for display
                 const knownCountries = Object.keys(visitorData.countries).filter(country => 
                     country && country !== 'Unknown Country'
                 );
                 const totalCountries = knownCountries.length;
-                console.log('Known visitors:', knownVisits, 'Total countries:', totalCountries);
-                summaryEl.textContent = `${knownVisits.toLocaleString()} visitors from ${totalCountries} countries have visited this page (since Oct 22, 2025)`;
+                console.log('Known visitors:', knownVisitors, 'Total countries:', totalCountries);
+                summaryEl.textContent = `${knownVisitors.toLocaleString()} visitors from ${totalCountries} countries have visited this page (since Oct 22, 2025)`;
                 
                 // Check if map is already initialized
                 const mapContainer = document.getElementById('world-map');
