@@ -1078,11 +1078,62 @@
             const LAUNCH_DATE = new Date('2025-10-22');
             const STORAGE_KEY = 'visitor_data';
             
-            // NOTE: Currently using localStorage - each browser shows different stats
-            // To make universal, you need a backend service like Firebase, Supabase, or GitHub Gist
+            // Universal data storage using JSONBin.io (free service)
+            // You need to create a free account at jsonbin.io and get your API key
+            const JSONBIN_BIN_ID = '68f9810cae596e708f253832';
+            const JSONBIN_API_KEY = '$2a$10$J0HWtT4BzUpmr5FkKRpFk.ixuGHcUBBteaVe9p45e7/fsk3c.xZD.'; // Replace with your actual API key
+            const JSONBIN_URL = `https://api.jsonbin.io/v3/b/${JSONBIN_BIN_ID}`;
             
-            // Get visitor data from localStorage
-            function getVisitorData() {
+            // Get universal visitor data from JSONBin
+            async function getUniversalVisitorData() {
+                try {
+                    const response = await fetch(`${JSONBIN_URL}/latest`, {
+                        headers: {
+                            'X-Master-Key': JSONBIN_API_KEY
+                        }
+                    });
+                    
+                    if (response.ok) {
+                        const data = await response.json();
+                        return data.record || {
+                            totalVisits: 0,
+                            countries: {},
+                            cities: {},
+                            lastVisit: null
+                        };
+                    }
+                } catch (error) {
+                    console.log('Could not fetch universal data:', error);
+                }
+                
+                // Fallback to local storage if universal data fails
+                return getLocalVisitorData();
+            }
+            
+            // Save universal visitor data to JSONBin
+            async function saveUniversalVisitorData(data) {
+                try {
+                    const response = await fetch(JSONBIN_URL, {
+                        method: 'PUT',
+                        headers: {
+                            'X-Master-Key': JSONBIN_API_KEY,
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(data)
+                    });
+                    
+                    if (!response.ok) {
+                        throw new Error('Failed to save to universal storage');
+                    }
+                } catch (error) {
+                    console.log('Could not save to universal storage:', error);
+                    // Fallback to local storage
+                    saveLocalVisitorData(data);
+                }
+            }
+            
+            // Get visitor data from localStorage (fallback)
+            function getLocalVisitorData() {
                 const data = localStorage.getItem(STORAGE_KEY);
                 if (data) {
                     const parsed = JSON.parse(data);
@@ -1099,8 +1150,8 @@
                 };
             }
             
-            // Save visitor data to localStorage
-            function saveVisitorData(data) {
+            // Save visitor data to localStorage (fallback)
+            function saveLocalVisitorData(data) {
                 localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
             }
             
@@ -1130,7 +1181,7 @@
             
             // Track visitor
             async function trackVisitor() {
-                const visitorData = getVisitorData();
+                const visitorData = await getUniversalVisitorData();
                 const location = await getLocationFromIP();
                 
                 // Increment total visits
@@ -1157,8 +1208,8 @@
                 // Update last visit
                 visitorData.lastVisit = new Date().toISOString();
                 
-                // Save data to localStorage
-                saveVisitorData(visitorData);
+                // Save data to universal storage
+                await saveUniversalVisitorData(visitorData);
                 
                 return visitorData;
             }
@@ -1317,13 +1368,17 @@
             // Initialize visitor tracking
             async function initializeVisitorMap() {
                 try {
-                    // Track the current visitor and display results
-                    const visitorData = await trackVisitor();
-                    renderVisitorMap(visitorData);
+                    // First load existing universal data to display
+                    const existingData = await getUniversalVisitorData();
+                    renderVisitorMap(existingData);
+                    
+                    // Then track the current visitor and update
+                    const updatedData = await trackVisitor();
+                    renderVisitorMap(updatedData);
                 } catch (error) {
                     console.log('Error initializing visitor map:', error);
                     // Fallback to local data
-                    const localData = getVisitorData();
+                    const localData = getLocalVisitorData();
                     renderVisitorMap(localData);
                 }
             }
