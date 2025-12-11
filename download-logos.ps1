@@ -44,3 +44,4 @@ foreach ($logo in $logos) {
 Write-Host "`nAll downloads completed!" -ForegroundColor Cyan
 Write-Host "Now update index.html to use local image paths." -ForegroundColor Yellow
 
+

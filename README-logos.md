@@ -51,3 +51,4 @@ Then run the script again to download fresh images.
 - Logo files should be PNG format for best quality
 - Recommended size: 100x100 pixels (as LinkedIn provides)
 
+
