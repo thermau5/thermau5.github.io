@@ -479,9 +479,11 @@
                             <a href="javascript:void(0)" onclick="toggleContent('exp1', this, '[Show details]', '[Hide details]')" class="text-blue-400 text-sm hover:underline font-semibold mt-1 inline-block">[Show details]</a>
                             <div id="exp1" class="hidden details-content mt-2 text-gray-400 text-sm space-y-2">
                                 <ul class="list-disc pl-5">
-                                    <li>Researched diffusion-based generative models for inverse PDEs with sparse observations. Built Decoupled Diffusion Inverse Solver (DDIS) to address over-smoothing and failure under sparse observation in existing state-of-the-art solvers.</li>
-                                    <li>DDIS achieves new SOTA performance on inverse Helmholtz and Poisson problems with 25% and 33% improvements, and shows superior data-efficiency and resolution-invariance in both the training and inference stages.</li>
+                                    <li>Developed Decoupled Diffusion Inverse Solver (DDIS), a physics-aware, data-efficient generative framework for PDE inverse problems that decouples coefficient prior learning from physics enforcement via neural operators.</li>
+                                    <li>Theoretically identified and proved a "guidance attenuation" failure mode in joint-embedding diffusion models under limited paired data, motivating a decoupled design with stronger generalization in scarce-supervision regimes.</li>
+                                    <li>Achieved state-of-the-art performance under data scarcity, improving reconstruction error by 11% (L2) and 54% (spectral) over prior best solvers on inverse Helmholtz, Poisson, and Navier–Stokes problems with 1% paired data.</li>
                                 </ul>
+                                <p class="text-gray-500 text-xs mt-2 italic">Intern at AI4Science Lab. Advised by Prof. Anima Anandkumar and PhD student Jiachen Yao.</p>
                             </div>
                         </div>
                     </div>
@@ -502,6 +504,7 @@
                                     <li>Researched computational hardness by fine-grained complexity analysis of modern Hopfield models; developed efficient approximation algorithms within controllable error, reducing the time complexity from subquadratic to almost linear. Presented at ICML 2024.</li>
                                     <li>Researched latent Bayesian network for portfolio optimization; developed a data-driven Black-Litterman model by learning investor views as latent variables from market data. Presented at ICML 2025.</li>
                                 </ul>
+                                <p class="text-gray-500 text-xs mt-2 italic">Intern at MAGICS Lab, Dept. of CS. Advised by Prof. Han Liu and PhD candidate Jerry Hu.</p>
                             </div>
                         </div>
                     </div>
