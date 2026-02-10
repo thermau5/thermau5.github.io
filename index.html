@@ -731,18 +731,21 @@
                 description: 'A SOTA generative model for solving inverse PDEs with sparse data, developed at Caltech.',
                 badges: ['Project', 'Research'],
                 hashtags: ['#GenerativeAI', '#AI4Science', '#PDEs'],
-                linkText: 'Ongoing Work',
-                linkUrl: 'https://www.dropbox.com/scl/fi/kepsdyqts0kh7yalqy5e9/DDIS_phys_aware_diffusion.pdf?rlkey=czpyxzxn3krscets658kksi83&st=tjzls1bh&dl=0'
+                links: [
+                    { text: 'Read Paper', url: 'https://arxiv.org/abs/2601.23280' },
+                    { text: 'X', url: 'https://x.com/thermau5/status/2019620085007294531' },
+                    { text: 'LinkedIn', url: 'https://www.linkedin.com/posts/anima-anandkumar_physics-and-data-priors-for-inverse-problems-activity-7426973966285692928-wNgw' }
+                ]
             },
-            {
-                type: 'Project',
-                title: 'VibeVest — Speedrun your American Dream',
-                description: 'Agents that help marketplace startups breaking into US markets.',
-                badges: ['Startup', 'Project'],
-                hashtags: ['#AI Agent', '#SocialMedia', '#Crowdfunding'],
-                linkText: 'Website',
-                linkUrl: 'https://vibevest.us'
-            },
+            // {
+            //     type: 'Project',
+            //     title: 'VibeVest — Speedrun your American Dream',
+            //     description: 'Agents that help marketplace startups breaking into US markets.',
+            //     badges: ['Startup', 'Project'],
+            //     hashtags: ['#AI Agent', '#SocialMedia', '#Crowdfunding'],
+            //     linkText: 'Website',
+            //     linkUrl: 'https://vibevest.us'
+            // },
             {
                 type: 'Publication',
                 title: 'Latent Variable Black-Litterman Models',
@@ -784,7 +787,6 @@
 
             itemsToRender.forEach((item, globalIndex) => {
                 const actualIndex = globalIndex % showcaseData.length;
-                console.log('Rendering card:', item.title, 'Link:', item.linkUrl); // Debug
                 const badgeColors = {
                     'Publication': 'bg-green-500/20 text-green-300',
                     'Project': 'bg-blue-500/20 text-blue-300',
@@ -801,6 +803,12 @@
                     `<span class="text-sm text-gray-300/80">${tag}</span>`
                 ).join(' &middot; ');
 
+                const linksHTML = item.links
+                    ? item.links.map(link => `<a href="${link.url}" target="_blank" rel="noopener noreferrer" style="pointer-events: auto !important;" class="inline-block bg-white/90 hover:bg-white text-gray-900 font-bold text-center py-2.5 px-5 rounded-lg transition-all duration-300 relative z-10">${link.text}</a>`).join('\n                            ')
+                    : `<a href="${item.linkUrl}" target="_blank" rel="noopener noreferrer" style="pointer-events: auto !important;" class="mt-6 inline-block bg-white/90 hover:bg-white text-gray-900 font-bold text-center py-2.5 px-5 rounded-lg transition-all duration-300 w-full sm:w-auto self-start relative z-10">${item.linkText}</a>`;
+
+                const buttonsWrapperClass = item.links ? 'mt-6 flex flex-wrap gap-3' : '';
+
                 const cardHTML = `
                     <div class="showcase-card flex-shrink-0 w-full rounded-2xl p-8 flex flex-col relative text-white gradient-bg" id="card-bg-${actualIndex % 5}">
                         <div class="flex-grow">
@@ -813,9 +821,9 @@
                                 ${hashtagsHTML}
                             </div>
                         </div>
-                        <a href="${item.linkUrl}" target="_blank" rel="noopener noreferrer" style="pointer-events: auto !important;" class="mt-6 inline-block bg-white/90 hover:bg-white text-gray-900 font-bold text-center py-2.5 px-5 rounded-lg transition-all duration-300 w-full sm:w-auto self-start relative z-10">
-                            ${item.linkText}
-                        </a>
+                        <div class="${buttonsWrapperClass}">
+                            ${linksHTML}
+                        </div>
                     </div>
                 `;
                 scroller.innerHTML += cardHTML;
