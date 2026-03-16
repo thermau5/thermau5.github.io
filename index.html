@@ -729,10 +729,10 @@
 
         const showcaseData = [
             {
-                type: 'Project',
+                type: 'Research',
                 title: 'Decoupled Diffusion Inverse Solver (DDIS)',
                 description: 'A SOTA generative model for solving inverse PDEs with sparse data, developed at Caltech.',
-                badges: ['Project', 'Research'],
+                badges: ['Publicaition', 'ICLR \'26 AI\&PDE Oral'],
                 hashtags: ['#GenerativeAI', '#AI4Science', '#PDEs'],
                 links: [
                     { text: 'Read Paper', url: 'https://arxiv.org/abs/2601.23280' },
@@ -741,7 +741,7 @@
                 ]
             },
             // {
-            //     type: 'Project',
+            //     type: 'Startup',
             //     title: 'VibeVest — Speedrun your American Dream',
             //     description: 'Agents that help marketplace startups breaking into US markets.',
             //     badges: ['Startup', 'Project'],
@@ -750,7 +750,7 @@
             //     linkUrl: 'https://vibevest.us'
             // },
             {
-                type: 'Publication',
+                type: 'Research',
                 title: 'Latent Variable Black-Litterman Models',
                 description: 'Thomas Y.L. Lin, Jerry Yao-Chieh Hu, Paul W. Chiou, Peter Lin.',
                 badges: ['Publication', 'ICML \'25'],
@@ -759,7 +759,7 @@
                 linkUrl: 'https://arxiv.org/pdf/2505.02185'
             },
             {
-                type: 'Publication',
+                type: 'Research',
                 title: 'On Computational Limits of Modern Hopfield Models',
                 description: 'Jerry Yao-Chieh Hu*, Thomas Lin*, Zhao Song, Han Liu. (*Equal Contribution)',
                 badges: ['Publication', 'ICML \'24'],
@@ -776,6 +776,15 @@
             //     linkText: 'Project Page',
             //     linkUrl: '#'
             // },
+            {
+                type: 'Startup',
+                title: 'Veridyne',
+                description: 'Real-time collateral auditor for supply chain finance.',
+                badges: ['Startup', 'Project', 'Innovex 2026'],
+                hashtags: ['#AI Agent', '#Perception', '#SupplyChainFinance'],
+                linkText: 'Website',
+                linkUrl: 'https://veridyne.ai'
+            },
         ];
 
         function renderShowcaseItems() {
@@ -1286,17 +1295,16 @@
                 const summaryEl = document.getElementById('visitor-summary');
                 
                 // Update summary text
-                // Use knownVisits if available, otherwise calculate from countries
-                const knownVisitors = visitorData.knownVisits || 
-                    Object.values(visitorData.countries).reduce((total, count) => total + count, 0);
+                // Use totalVisits to ensure the displayed count never decreases
+                const totalVisitors = visitorData.totalVisits || 0;
                 
                 // Filter out unknown countries for display
                 const knownCountries = Object.keys(visitorData.countries).filter(country => 
                     country && country !== 'Unknown Country'
                 );
                 const totalCountries = knownCountries.length;
-                console.log('Known visitors:', knownVisitors, 'Total countries:', totalCountries);
-                summaryEl.textContent = `${knownVisitors.toLocaleString()} visitors from ${totalCountries} countries have visited this page (since Oct 22, 2025)`;
+                console.log('Total visitors:', totalVisitors, 'Total countries:', totalCountries);
+                summaryEl.textContent = `${totalVisitors.toLocaleString()} visitors from ${totalCountries} countries have visited this page (since Oct 22, 2025)`;
                 
                 // Check if map is already initialized
                 const mapContainer = document.getElementById('world-map');
