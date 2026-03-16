@@ -1093,78 +1093,8 @@
             // Visitor Map Logic
             const LAUNCH_DATE = new Date('2025-10-22');
             
-            // Universal data storage using JSONBin.io ONLY
-            const JSONBIN_BIN_ID = '68f98838d0ea881f40b47c96';
-            const JSONBIN_API_KEY = '$2a$10$J0HWtT4BzUpmr5FkKRpFk.ixuGHcUBBteaVe9p45e7/fsk3c.xZD.';
-            const JSONBIN_URL = `https://api.jsonbin.io/v3/b/${JSONBIN_BIN_ID}`;
-            
             // Store map reference for updates
             let mapInstance = null;
-            
-            // Get universal visitor data from JSONBin
-            async function getUniversalVisitorData() {
-                try {
-                    const response = await fetch(`${JSONBIN_URL}/latest`, {
-                        headers: {
-                            'X-Master-Key': JSONBIN_API_KEY
-                        }
-                    });
-                    
-                    if (response.ok) {
-                        const data = await response.json();
-                        console.log('Successfully loaded from JSONBin:', data.record);
-                        return data.record || {
-                            totalVisits: 0,
-                            countries: {},
-                            cities: {},
-                            lastVisit: null
-                        };
-                    } else {
-                        console.log('JSONBin response not OK:', response.status, response.statusText);
-                        // Return empty data if bin doesn't exist
-                        return {
-                            totalVisits: 0,
-                            countries: {},
-                            cities: {},
-                            lastVisit: null
-                        };
-                    }
-                } catch (error) {
-                    console.log('Could not fetch universal data:', error);
-                    // Return empty data if there's an error
-                    return {
-                        totalVisits: 0,
-                        countries: {},
-                        cities: {},
-                        lastVisit: null
-                    };
-                }
-            }
-            
-            // Save universal visitor data to JSONBin
-            async function saveUniversalVisitorData(data) {
-                try {
-                    const response = await fetch(JSONBIN_URL, {
-                        method: 'PUT',
-                        headers: {
-                            'X-Master-Key': JSONBIN_API_KEY,
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify(data)
-                    });
-                    
-                    if (!response.ok) {
-                        console.log('Failed to save to JSONBin:', response.status, response.statusText);
-                        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-                    }
-                    
-                    console.log('Successfully saved to JSONBin:', data);
-                    return true;
-                } catch (error) {
-                    console.log('Could not save to universal storage:', error);
-                    return false;
-                }
-            }
             
             // Update map data without re-initializing
             function updateMapData(visitorData) {
@@ -1238,55 +1168,43 @@
                 }
             }
             
-            // Track visitor
+            // Track visitor via serverless API (Vercel)
             async function trackVisitor() {
-                const visitorData = await getUniversalVisitorData();
                 const location = await getLocationFromIP();
-                
                 console.log('Location detected:', location);
-                
-                // Increment total visits
-                visitorData.totalVisits++;
-                
-                // Track city visits
-                const cityKey = `${location.city}, ${location.country}`;
-                if (!visitorData.cities[cityKey]) {
-                    visitorData.cities[cityKey] = {
-                        visits: 0,
-                        lat: location.lat,
-                        lng: location.lng,
-                        region: location.region
+
+                try {
+                    const response = await fetch('/api/track-visit', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            city: location.city,
+                            country: location.country,
+                            region: location.region,
+                            lat: location.lat,
+                            lng: location.lng
+                        })
+                    });
+
+                    if (!response.ok) {
+                        console.log('track-visit API error:', response.status, response.statusText);
+                        throw new Error('Failed to update visitor data');
+                    }
+
+                    const visitorData = await response.json();
+                    return visitorData;
+                } catch (error) {
+                    console.log('Error calling track-visit API:', error);
+                    // Fallback empty data if API fails
+                    return {
+                        totalVisits: 0,
+                        countries: {},
+                        cities: {},
+                        lastVisit: null
                     };
                 }
-                visitorData.cities[cityKey].visits++;
-                
-                // Track country visits for summary (only count known countries)
-                if (location.country && location.country !== 'Unknown Country') {
-                    if (!visitorData.countries[location.country]) {
-                        visitorData.countries[location.country] = 0;
-                    }
-                    visitorData.countries[location.country]++;
-                    
-                    // Increment known visits counter
-                    if (!visitorData.knownVisits) {
-                        visitorData.knownVisits = 0;
-                    }
-                    visitorData.knownVisits++;
-                    console.log('Known visitor detected from:', location.country);
-                } else {
-                    console.log('Unknown visitor detected');
-                }
-                
-                // Update last visit
-                visitorData.lastVisit = new Date().toISOString();
-                
-                // Save data universally
-                const saveSuccess = await saveUniversalVisitorData(visitorData);
-                if (!saveSuccess) {
-                    console.log('Failed to save visitor data to universal storage');
-                }
-                
-                return visitorData;
             }
             
             // Render visitor map using Leaflet
