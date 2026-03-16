@@ -1375,15 +1375,6 @@
                 }
             });
             
-            // Clear any existing localStorage data to ensure clean universal start
-            localStorage.removeItem('visitor_data');
-            
-            // Debug: Test JSONBin connection
-            console.log('Testing JSONBin connection...');
-            console.log('Bin ID:', JSONBIN_BIN_ID);
-            console.log('API Key:', JSONBIN_API_KEY.substring(0, 10) + '...');
-            console.log('URL:', JSONBIN_URL);
-            
             // Initialize visitor tracking
             async function initializeVisitorMap() {
                 try {
