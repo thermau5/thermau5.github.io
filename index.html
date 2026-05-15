@@ -236,8 +236,10 @@
         }
 
         .cursor-option {
+            appearance: none;
             width: 2rem;
             height: 2rem;
+            padding: 0;
             border-radius: 0.4rem;
             border: 1.5px solid transparent;
             background: rgba(55, 65, 81, 0.4);
@@ -370,26 +372,26 @@
 
     <!-- Cursor Selector Floating Bar -->
     <div class="cursor-selector">
-        <div class="cursor-option active" data-cursor="normal" title="Normal Cursor">
+        <button type="button" class="cursor-option active" data-cursor="normal" title="Normal Cursor" aria-label="Use normal cursor">
             <div class="cursor-option-preview">
                 <div class="preview-normal"></div>
             </div>
-        </div>
-        <div class="cursor-option" data-cursor="moon" title="Moon">
+        </button>
+        <button type="button" class="cursor-option" data-cursor="moon" title="Moon" aria-label="Use moon cursor">
             <div class="cursor-option-preview">
                 <div class="preview-moon"></div>
             </div>
-        </div>
-        <div class="cursor-option" data-cursor="neutron" title="Neutron Star">
+        </button>
+        <button type="button" class="cursor-option" data-cursor="neutron" title="Neutron Star" aria-label="Use neutron star cursor">
             <div class="cursor-option-preview">
                 <div class="preview-neutron"></div>
             </div>
-        </div>
-        <div class="cursor-option" data-cursor="blackhole" title="Black Hole">
+        </button>
+        <button type="button" class="cursor-option" data-cursor="blackhole" title="Black Hole" aria-label="Use black hole cursor">
             <div class="cursor-option-preview">
                 <div class="preview-blackhole"></div>
             </div>
-        </div>
+        </button>
     </div>
 
     <div class="content-wrapper container mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
@@ -398,16 +400,16 @@
         <header class="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-12">
             <div>
                 <h1 class="text-4xl font-bold text-white">Thomas Y.L. Lin</h1>
-                <p class="mt-2 text-lg text-gray-400">21, human, bridging physics and AI, building toward an “experience machine.”</p>
+                <p class="mt-2 text-lg text-gray-400">21, human, bridging physics and AI, building toward an "experience machine."</p>
             </div>
             <div class="flex space-x-4 mt-4 sm:mt-0">
-                <a href="mailto:thermaus@uw.edu" class="text-gray-400 hover:text-white transition-colors">
+                <a href="mailto:thermaus@uw.edu" class="text-gray-400 hover:text-white transition-colors" aria-label="Email Thomas Lin">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
                 </a>
-                <a href="https://www.linkedin.com/in/thomaslin0908" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white transition-colors">
+                <a href="https://www.linkedin.com/in/thomaslin0908" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white transition-colors" aria-label="Thomas Lin on LinkedIn">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
                 </a>
-                <a href="https://scholar.google.com/citations?user=PvseS74AAAAJ" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white transition-colors">
+                <a href="https://scholar.google.com/citations?user=PvseS74AAAAJ" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white transition-colors" aria-label="Thomas Lin on Google Scholar">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6"><path d="M5.242 13.769L0 9.5L12 0l12 9.5l-5.242 4.269C17.548 11.249 14.978 9 12 9s-5.548 2.249-6.758 4.769zM12 10c-1.381 0-2.5 1.119-2.5 2.5s1.119 2.5 2.5 2.5s2.5-1.119 2.5-2.5s-1.119-2.5-2.5-2.5zM12 15c-2.223 0-4.157 1.21-5.185 3h10.37C16.157 16.21 14.223 15 12 15zm-8.242 4.769L12 24l8.242-4.231C18.452 22.751 15.478 24 12 24s-6.452-1.249-8.242-3.231z"/></svg>
                 </a>
             </div>
@@ -445,7 +447,7 @@
                 <h2 class="text-2xl font-bold text-white mb-8">Projects & Publications</h2>
                 <div class="showcase-container relative">
                     <!-- Left Arrow -->
-                    <button id="scroll-left-btn" class="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 z-20 bg-gray-800/60 hover:bg-gray-700 rounded-full p-2 transition-colors">
+                    <button id="scroll-left-btn" type="button" aria-label="Show previous project" class="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 z-20 bg-gray-800/60 hover:bg-gray-700 rounded-full p-2 transition-colors">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white"><polyline points="15 18 9 12 15 6"></polyline></svg>
                     </button>
 
@@ -455,7 +457,7 @@
                     </div>
 
                     <!-- Right Arrow -->
-                    <button id="scroll-right-btn" class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 z-20 bg-gray-800/60 hover:bg-gray-700 rounded-full p-2 transition-colors">
+                    <button id="scroll-right-btn" type="button" aria-label="Show next project" class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 z-20 bg-gray-800/60 hover:bg-gray-700 rounded-full p-2 transition-colors">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white"><polyline points="9 18 15 12 9 6"></polyline></svg>
                     </button>
                 </div>
@@ -481,7 +483,7 @@
                                 <ul class="list-disc pl-5">
                                     <li>Developed Decoupled Diffusion Inverse Solver (DDIS), a physics-aware, data-efficient generative framework for PDE inverse problems that decouples coefficient prior learning from physics enforcement via neural operators.</li>
                                     <li>Theoretically identified and proved a "guidance attenuation" failure mode in joint-embedding diffusion models under limited paired data, motivating a decoupled design with stronger generalization in scarce-supervision regimes.</li>
-                                    <li>Achieved state-of-the-art performance under data scarcity, improving reconstruction error by 11% (L2) and 54% (spectral) over prior best solvers on inverse Helmholtz, Poisson, and Navier–Stokes problems with 1% paired data.</li>
+                                    <li>Achieved state-of-the-art performance under data scarcity, improving reconstruction error by 11% (L2) and 54% (spectral) over prior best solvers on inverse Helmholtz, Poisson, and Navier-Stokes problems with 1% paired data.</li>
                                 </ul>
                                 <p class="text-gray-500 text-xs mt-2 italic">Intern at AI4Science Lab. Advised by Prof. Anima Anandkumar and PhD student Jiachen Yao.</p>
                             </div>
@@ -732,7 +734,7 @@
                 type: 'Research',
                 title: 'Decoupled Diffusion Inverse Solver (DDIS)',
                 description: 'A SOTA generative model for solving inverse PDEs with sparse data, developed at Caltech.',
-                badges: ['Publicaition', 'ICLR \'26 AI\&PDE Oral'],
+                badges: ['Publication', 'ICLR \'26 AI&PDE Oral'],
                 hashtags: ['#GenerativeAI', '#AI4Science', '#PDEs'],
                 links: [
                     { text: 'Read Paper', url: 'https://arxiv.org/abs/2601.23280' },
@@ -1238,6 +1240,7 @@
                     zoomControl: false,
                     attributionControl: false
                 }).setView([20, 0], 2);
+                mapInstance = map;
                 
                 // Add dark tile layer
                 L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
@@ -1398,4 +1401,3 @@
     </script>
 </body>
 </html>
-
