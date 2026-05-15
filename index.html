@@ -1176,12 +1176,18 @@
             }
             
             // Track visitor via serverless API (Vercel)
+            // GitHub Pages can't run /api/*, so cross-origin to the Vercel
+            // deployment when the page is served from thermau5.github.io.
+            const API_BASE = window.location.hostname === 'thermau5.github.io'
+                ? 'https://thermau5-github-io.vercel.app'
+                : '';
+
             async function trackVisitor() {
                 const location = await getLocationFromIP();
                 console.log('Location detected:', location);
 
                 try {
-                    const response = await fetch('/api/track-visit', {
+                    const response = await fetch(`${API_BASE}/api/track-visit`, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
