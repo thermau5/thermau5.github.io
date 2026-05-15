@@ -758,6 +758,26 @@
                 ]
             },
             {
+                title: 'Autonomous World Model (AWM)',
+                status: 'ongoing',
+                venue: 'In progress · 2026',
+                description: 'PyTorch research scaffold for horizon-conditioned one-step world models, comparing jump-prediction, flow matching, neural ODEs, and self-consistency objectives on continuous-control dynamics (pendulum, Duffing oscillator, CartPole, DM Control Suite).',
+                topics: ['World Models', 'Continuous Control', 'Generative AI'],
+                links: [
+                    { text: 'GitHub', url: 'https://github.com/thermau5/AutonomousWorldModel' }
+                ]
+            },
+            {
+                title: 'JEPA-Isotropy',
+                status: 'ongoing',
+                venue: 'In progress · 2026',
+                description: 'Empirical study of isotropy in Joint-Embedding Predictive Architectures — examining how uniform embedding-space distribution affects self-supervised learning quality and downstream world-model performance.',
+                topics: ['Self-Supervised', 'Representation Learning', 'ML Theory'],
+                links: [
+                    { text: 'GitHub', url: 'https://github.com/thermau5/JEPA-Isotropy' }
+                ]
+            },
+            {
                 title: 'Veridyne',
                 venue: 'Startup · Innovex 2026',
                 description: 'Real-time collateral auditor for supply chain finance.',
@@ -781,6 +801,10 @@
             'AI Agent': 'bg-teal-900/70 text-teal-200',
             'Perception': 'bg-fuchsia-900/70 text-fuchsia-200',
             'Supply Chain Finance': 'bg-yellow-900/70 text-yellow-200',
+            'World Models': 'bg-sky-900/70 text-sky-200',
+            'Continuous Control': 'bg-lime-900/70 text-lime-200',
+            'Self-Supervised': 'bg-pink-900/70 text-pink-200',
+            'Representation Learning': 'bg-orange-900/70 text-orange-200',
         };
 
         function renderShowcaseItems() {
@@ -802,8 +826,11 @@
                     ? `<p class="font-display-roman text-base text-gray-400 mt-1">${item.authors}</p>`
                     : '';
 
+                const ongoingDot = item.status === 'ongoing'
+                    ? '<span class="inline-block w-1.5 h-1.5 rounded-full bg-emerald-400 align-middle mr-2 animate-pulse" aria-hidden="true"></span>'
+                    : '';
                 const venueHTML = item.venue
-                    ? `<span class="text-sm text-gray-500">${item.venue}</span>`
+                    ? `<span class="text-sm text-gray-500">${ongoingDot}${item.venue}</span>`
                     : '';
 
                 const metaHTML = (item.venue || (item.topics && item.topics.length))
