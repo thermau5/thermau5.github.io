@@ -726,7 +726,7 @@
         const showcaseData = [
             {
                 title: 'Decoupled Diffusion Inverse Solver (DDIS)',
-                authors: 'Thomas Y.L. Lin*, Jiachen Yao*, Anima Anandkumar.',
+                authors: 'Thomas Y.L. Lin*, Jiachen Yao*, Lufang Chiang, Julius Berner, Anima Anandkumar.',
                 venue: 'ICLR 2026 · AI&PDE Oral',
                 description: 'A SOTA generative model for solving inverse PDEs with sparse data, developed at Caltech.',
                 topics: ['Generative AI', 'AI4Science', 'PDEs'],
@@ -773,7 +773,7 @@
                 authors: 'Thomas Y.L. Lin, Jerry Yao-Chieh Hu, Han Liu.',
                 status: 'ongoing',
                 venue: 'Under review',
-                description: 'Studies the empirical risk minimization of linear JEPA. By casting the embedding bottleneck as a rank constraint, JEPA reduces to reduced-rank regression. The analysis prescribes an isotropic regularizer that subsumes canonical JEPA isotropic embedding designs.',
+                description: 'Prescribes an isotropic regularizer for JEPA that subsumes canonical encoder-isotropy designs (VICReg, Whitening, LeJEPA) and justifies their empirical successes.',
                 topics: ['Self-Supervised', 'Representation Learning', 'ML Theory'],
                 links: [
                     { text: 'GitHub', url: 'https://github.com/thermau5/JEPA-Isotropy' }
@@ -834,13 +834,13 @@
                     ? '<span class="inline-block w-1.5 h-1.5 rounded-full bg-emerald-400 align-middle mr-2 animate-pulse" aria-hidden="true"></span>'
                     : '';
                 const venueHTML = item.venue
-                    ? `<span class="text-sm text-gray-500">${ongoingDot}${item.venue}</span>`
+                    ? `<span class="text-sm text-gray-500 whitespace-nowrap shrink-0">${ongoingDot}${item.venue}</span>`
                     : '';
 
                 const metaHTML = (item.venue || (item.topics && item.topics.length))
-                    ? `<div class="flex flex-wrap items-center gap-x-3 gap-y-2 mt-3">
+                    ? `<div class="flex items-center gap-x-3 gap-y-2 mt-3">
                             ${venueHTML}
-                            ${item.venue && item.topics && item.topics.length ? '<span class="text-gray-600">·</span>' : ''}
+                            ${item.venue && item.topics && item.topics.length ? '<span class="text-gray-600 shrink-0">·</span>' : ''}
                             <div class="flex flex-wrap gap-1.5">${topicsHTML}</div>
                        </div>`
                     : '';
