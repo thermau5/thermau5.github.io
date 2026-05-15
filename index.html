@@ -87,58 +87,6 @@
              transition: max-height 0.5s ease-in-out, padding 0.5s ease-in-out;
              overflow: hidden;
         }
-        /* Custom scrollbar hiding */
-        .scrollbar-hide::-webkit-scrollbar {
-            display: none;
-        }
-        .scrollbar-hide {
-            -ms-overflow-style: none;  /* IE and Edge */
-            scrollbar-width: none;  /* Firefox */
-        }
-        .showcase-card {
-            scroll-snap-align: center;
-            overflow: hidden; /* For rounded corners on child elements */
-            position: relative;
-            z-index: 1;
-        }
-        .gradient-bg {
-            background-size: 200% 200%;
-            animation: gradient-animation 15s ease infinite;
-        }
-
-        @keyframes gradient-animation {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        /* Unique gradients for each card - more subtle and harmonious */
-        #card-bg-0 { background-image: linear-gradient(-45deg, #1e3a8a, #312e81, #4c1d95); }
-        #card-bg-1 { background-image: linear-gradient(-45deg, #0f766e, #134e4a, #115e59); } /* Darker Teal */
-        #card-bg-2 { background-image: linear-gradient(-45deg, #6d28d9, #5b21b6, #4c1d95); } /* Deep Indigo/Purple */
-        #card-bg-3 { background-image: linear-gradient(-45deg, #334155, #475569, #64748b); }
-        #card-bg-4 { background-image: linear-gradient(-45deg, #1f2937, #111827, #374151); }
-
-
-        /* Immersive fade effect for scroller */
-        .showcase-container::before, .showcase-container::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            width: 2.5rem; /* 40px */
-            z-index: 2;
-            pointer-events: none;
-        }
-        .showcase-container::before {
-            left: 0;
-            background: linear-gradient(to right, #111827, transparent);
-        }
-        .showcase-container::after {
-            right: 0;
-            background: linear-gradient(to left, #111827, transparent);
-        }
-
         /* Fade-in animation for sections */
         .fade-in-section {
             opacity: 0;
@@ -484,21 +432,8 @@
             <!-- Projects & Publications Section -->
             <section id="projects-publications" class="fade-in-section">
                 <h2 class="font-display-italic text-4xl sm:text-5xl text-white mb-8">Projects & Publications</h2>
-                <div class="showcase-container relative">
-                    <!-- Left Arrow -->
-                    <button id="scroll-left-btn" type="button" aria-label="Show previous project" class="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 z-20 bg-gray-800/60 hover:bg-gray-700 rounded-full p-2 transition-colors">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white"><polyline points="15 18 9 12 15 6"></polyline></svg>
-                    </button>
-
-                    <!-- Scroller Container -->
-                    <div id="showcase-scroller" class="flex overflow-x-auto snap-x snap-mandatory scroll-smooth scrollbar-hide space-x-6 px-8">
-                        <!-- Cards will be injected here by JS -->
-                    </div>
-
-                    <!-- Right Arrow -->
-                    <button id="scroll-right-btn" type="button" aria-label="Show next project" class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 z-20 bg-gray-800/60 hover:bg-gray-700 rounded-full p-2 transition-colors">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                    </button>
+                <div id="showcase-list" class="space-y-5">
+                    <!-- Entries injected here -->
                 </div>
             </section>
             
@@ -765,11 +700,11 @@
 
         const showcaseData = [
             {
-                type: 'Research',
                 title: 'Decoupled Diffusion Inverse Solver (DDIS)',
+                authors: 'Thomas Y.L. Lin*, Jiachen Yao*, Anima Anandkumar.',
+                venue: 'ICLR 2026 · AI&PDE Oral',
                 description: 'A SOTA generative model for solving inverse PDEs with sparse data, developed at Caltech.',
-                badges: ['ICLR \'26 AI&PDE Oral'],
-                hashtags: ['#GenerativeAI', '#AI4Science', '#PDEs'],
+                topics: ['Generative AI', 'AI4Science', 'PDEs'],
                 links: [
                     { text: 'Read Paper', url: 'https://arxiv.org/abs/2601.23280' },
                     { text: 'GitHub', url: 'https://github.com/neuraloperator/DDIS' },
@@ -777,105 +712,93 @@
                     { text: 'X', url: 'https://x.com/thermau5/status/2019620085007294531' }
                 ]
             },
-            // {
-            //     type: 'Startup',
-            //     title: 'VibeVest — Speedrun your American Dream',
-            //     description: 'Agents that help marketplace startups breaking into US markets.',
-            //     badges: ['Startup', 'Project'],
-            //     hashtags: ['#AI Agent', '#SocialMedia', '#Crowdfunding'],
-            //     linkText: 'Website',
-            //     linkUrl: 'https://vibevest.us'
-            // },
             {
-                type: 'Research',
                 title: 'Latent Variable Black-Litterman Models',
-                description: 'Thomas Y.L. Lin, Jerry Yao-Chieh Hu, Paul W. Chiou, Peter Lin.',
-                badges: ['ICML \'25'],
-                hashtags: ['#Finance', '#BayesianML', '#Portfolio'],
-                linkText: 'Read Paper',
-                linkUrl: 'https://arxiv.org/pdf/2505.02185'
+                authors: 'Thomas Y.L. Lin, Jerry Yao-Chieh Hu, Paul W. Chiou, Peter Lin.',
+                venue: 'ICML 2025',
+                description: 'A data-driven Black-Litterman model that learns investor views as latent variables from market data, with strong improvements in Sharpe ratios over benchmarks.',
+                topics: ['Finance', 'Bayesian ML', 'Portfolio'],
+                links: [
+                    { text: 'Read Paper', url: 'https://arxiv.org/pdf/2505.02185' }
+                ]
             },
             {
-                type: 'Research',
                 title: 'On Computational Limits of Modern Hopfield Models',
-                description: 'Jerry Yao-Chieh Hu*, Thomas Lin*, Zhao Song, Han Liu. (*Equal Contribution)',
-                badges: ['ICML \'24'],
-                hashtags: ['#MLTheory', '#Complexity', '#Algorithms'],
-                linkText: 'Read Paper',
-                linkUrl: 'https://arxiv.org/pdf/2402.04520'
+                authors: 'Jerry Yao-Chieh Hu*, Thomas Lin*, Zhao Song, Han Liu.',
+                venue: 'ICML 2024',
+                description: 'Fine-grained complexity analysis of modern Hopfield models. Efficient approximation algorithms within controllable error, reducing time complexity from subquadratic to almost linear.',
+                topics: ['ML Theory', 'Complexity', 'Algorithms'],
+                links: [
+                    { text: 'Read Paper', url: 'https://arxiv.org/pdf/2402.04520' }
+                ]
             },
-            // {
-            //     type: 'Project',
-            //     title: 'Distributionally Robust Optimization',
-            //     description: 'Implemented and backtested novel portfolio strategies at Gamma Paradigm Capital.',
-            //     badges: ['Project', 'Internship'],
-            //     hashtags: ['#QuantFinance', '#Optimization', '#Risk'],
-            //     linkText: 'Project Page',
-            //     linkUrl: '#'
-            // },
             {
-                type: 'Startup',
                 title: 'Veridyne',
+                venue: 'Startup · Innovex 2026',
                 description: 'Real-time collateral auditor for supply chain finance.',
-                badges: ['Startup', 'Project', 'Innovex 2026'],
-                hashtags: ['#AI Agent', '#Perception', '#SupplyChainFinance'],
-                linkText: 'Website',
-                linkUrl: 'https://veridyne.ai'
+                topics: ['AI Agent', 'Perception', 'Supply Chain Finance'],
+                links: [
+                    { text: 'Website', url: 'https://veridyne.ai' }
+                ]
             },
         ];
 
+        const topicColors = {
+            'Generative AI': 'bg-blue-900/70 text-blue-200',
+            'AI4Science': 'bg-indigo-900/70 text-indigo-200',
+            'PDEs': 'bg-purple-900/70 text-purple-200',
+            'ML Theory': 'bg-violet-900/70 text-violet-200',
+            'Complexity': 'bg-rose-900/70 text-rose-200',
+            'Algorithms': 'bg-emerald-900/70 text-emerald-200',
+            'Bayesian ML': 'bg-cyan-900/70 text-cyan-200',
+            'Portfolio': 'bg-amber-900/70 text-amber-200',
+            'Finance': 'bg-amber-900/70 text-amber-200',
+            'AI Agent': 'bg-teal-900/70 text-teal-200',
+            'Perception': 'bg-fuchsia-900/70 text-fuchsia-200',
+            'Supply Chain Finance': 'bg-yellow-900/70 text-yellow-200',
+        };
+
         function renderShowcaseItems() {
-            const scroller = document.getElementById('showcase-scroller');
-            scroller.innerHTML = ''; // Clear existing items
+            const list = document.getElementById('showcase-list');
+            if (!list) return;
+            list.innerHTML = '';
 
-            // 5 duplicates for smooth scrolling
-            const itemsToRender = [];
-            for (let i = 0; i < 5; i++) {
-                itemsToRender.push(...showcaseData);
-            }
+            showcaseData.forEach(item => {
+                const topicsHTML = (item.topics || []).map(t => {
+                    const color = topicColors[t] || 'bg-gray-700/70 text-gray-200';
+                    return `<span class="${color} text-xs font-medium tracking-wide px-2 py-0.5 rounded">${t}</span>`;
+                }).join('');
 
-            itemsToRender.forEach((item, globalIndex) => {
-                const actualIndex = globalIndex % showcaseData.length;
-                const badgeColors = {
-                    'Publication': 'bg-green-500/20 text-green-300',
-                    'Project': 'bg-blue-500/20 text-blue-300',
-                    'Research': 'bg-purple-500/20 text-purple-300',
-                    'Internship': 'bg-yellow-500/20 text-yellow-300',
-                };
+                const linksHTML = (item.links || []).map(link =>
+                    `<a href="${link.url}" target="_blank" rel="noopener noreferrer" class="text-gray-300 hover:text-white underline-offset-4 hover:underline transition-colors">${link.text}</a>`
+                ).join('<span class="text-gray-600 mx-2">·</span>');
 
-                const badgesHTML = item.badges.map(badge => {
-                    const colorClass = badge.includes('ICML') ? 'bg-red-500/20 text-red-300' : (badgeColors[badge] || 'bg-gray-500/20 text-gray-300');
-                    return `<span class="inline-block px-2 py-1 text-xs font-semibold rounded-full ${colorClass}">${badge}</span>`;
-                }).join(' ');
+                const authorsHTML = item.authors
+                    ? `<p class="font-display-roman text-base text-gray-400 mt-1">${item.authors}</p>`
+                    : '';
 
-                const hashtagsHTML = item.hashtags.map(tag => 
-                    `<span class="text-sm text-gray-300/80">${tag}</span>`
-                ).join(' &middot; ');
+                const venueHTML = item.venue
+                    ? `<span class="text-sm text-gray-500">${item.venue}</span>`
+                    : '';
 
-                const linksHTML = item.links
-                    ? item.links.map(link => `<a href="${link.url}" target="_blank" rel="noopener noreferrer" style="pointer-events: auto !important;" class="inline-block bg-white/90 hover:bg-white text-gray-900 font-bold text-center py-2.5 px-5 rounded-lg transition-all duration-300 relative z-10">${link.text}</a>`).join('\n                            ')
-                    : `<a href="${item.linkUrl}" target="_blank" rel="noopener noreferrer" style="pointer-events: auto !important;" class="mt-6 inline-block bg-white/90 hover:bg-white text-gray-900 font-bold text-center py-2.5 px-5 rounded-lg transition-all duration-300 w-full sm:w-auto self-start relative z-10">${item.linkText}</a>`;
+                const metaHTML = (item.venue || (item.topics && item.topics.length))
+                    ? `<div class="flex flex-wrap items-center gap-x-3 gap-y-2 mt-3">
+                            ${venueHTML}
+                            ${item.venue && item.topics && item.topics.length ? '<span class="text-gray-600">·</span>' : ''}
+                            <div class="flex flex-wrap gap-1.5">${topicsHTML}</div>
+                       </div>`
+                    : '';
 
-                const buttonsWrapperClass = item.links ? 'mt-6 flex flex-wrap gap-3' : '';
-
-                const cardHTML = `
-                    <div class="showcase-card flex-shrink-0 w-full rounded-2xl p-8 flex flex-col relative text-white gradient-bg" id="card-bg-${actualIndex % 5}">
-                        <div class="flex-grow">
-                            <div class="flex items-center flex-wrap gap-2 mb-4">
-                                ${badgesHTML}
-                            </div>
-                            <h3 class="font-display-italic text-3xl sm:text-4xl mb-3 text-shadow">${item.title}</h3>
-                            <p class="font-display-roman text-lg text-gray-100/95 mb-5 leading-relaxed">${item.description}</p>
-                            <div class="text-gray-300/70 text-xs font-mono">
-                                ${hashtagsHTML}
-                            </div>
-                        </div>
-                        <div class="${buttonsWrapperClass}">
-                            ${linksHTML}
-                        </div>
-                    </div>
+                const entryHTML = `
+                    <article class="bg-[#13141a] border border-white/[0.06] hover:border-white/[0.12] rounded-xl px-6 py-6 sm:px-8 sm:py-7 transition-colors">
+                        <h3 class="font-display-italic text-2xl sm:text-3xl text-white leading-tight">${item.title}</h3>
+                        ${authorsHTML}
+                        ${metaHTML}
+                        <p class="font-display-roman text-base sm:text-lg text-gray-300 mt-4 leading-relaxed">${item.description}</p>
+                        ${linksHTML ? `<div class="mt-5 text-sm">${linksHTML}</div>` : ''}
+                    </article>
                 `;
-                scroller.innerHTML += cardHTML;
+                list.insertAdjacentHTML('beforeend', entryHTML);
             });
         }
 
@@ -1031,62 +954,8 @@
             // Initialize offsets
             updateCursorOffsets();
 
-            // Showcase Slider Logic - 5 sets with smooth scrolling
+            // Render publications/projects list
             renderShowcaseItems();
-
-            const scroller = document.getElementById('showcase-scroller');
-            const leftBtn = document.getElementById('scroll-left-btn');
-            const rightBtn = document.getElementById('scroll-right-btn');
-            let autoScrollInterval;
-            const totalCards = scroller.children.length; // 25 cards total
-            let currentIndex = Math.floor(totalCards / 2); // Start at card 12-13 (middle)
-
-            function updateCarousel(newIndex, isInstant = false) {
-                if (totalCards === 0) return;
-
-                // Clamp to bounds (no wrapping)
-                currentIndex = Math.max(0, Math.min(newIndex, totalCards - 1));
-                
-                const card = scroller.children[currentIndex];
-                const scrollLeft = card.offsetLeft - (scroller.offsetWidth - card.offsetWidth) / 2;
-                
-                scroller.scrollTo({
-                    left: scrollLeft,
-                    behavior: isInstant ? 'auto' : 'smooth'
-                });
-            }
-            
-            function startAutoScroll() {
-                clearInterval(autoScrollInterval);
-                autoScrollInterval = setInterval(() => {
-                    updateCarousel(currentIndex + 1);
-                }, 10000);
-            }
-
-            function stopAutoScroll() {
-                clearInterval(autoScrollInterval);
-            }
-
-            leftBtn.addEventListener('click', () => {
-                updateCarousel(currentIndex - 1);
-                stopAutoScroll();
-                startAutoScroll();
-            });
-
-            rightBtn.addEventListener('click', () => {
-                updateCarousel(currentIndex + 1);
-                stopAutoScroll();
-                startAutoScroll();
-            });
-
-            scroller.addEventListener('mouseenter', stopAutoScroll);
-            scroller.addEventListener('mouseleave', startAutoScroll);
-
-            window.addEventListener('resize', () => updateCarousel(currentIndex, true));
-            
-            // Initialize to middle
-            updateCarousel(currentIndex, true);
-            startAutoScroll();
 
             // Fade-in observer for sections
             const fadeInObserver = new IntersectionObserver((entries) => {
