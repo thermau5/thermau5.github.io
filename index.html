@@ -17,12 +17,23 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Inter', sans-serif;
             background-color: #111827; /* Dark blue-gray background */
             color: #d1d5db; /* Light gray text */
+        }
+        .font-display-italic {
+            font-family: 'Instrument Serif', Georgia, 'Times New Roman', serif;
+            font-style: italic;
+            font-weight: 400;
+            letter-spacing: -0.005em;
+        }
+        .font-display-roman {
+            font-family: 'Instrument Serif', Georgia, 'Times New Roman', serif;
+            font-style: normal;
+            font-weight: 400;
         }
 #vanta-bg {
             position: fixed;
@@ -410,8 +421,8 @@
         <header class="mb-20 sm:mb-24 pt-4 sm:pt-8">
             <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6 sm:gap-8">
                 <div>
-                    <h1 class="text-5xl sm:text-6xl font-light tracking-tight text-white leading-none">Thomas Y.L. Lin</h1>
-                    <p class="mt-6 text-lg sm:text-xl font-light text-gray-400 leading-relaxed max-w-2xl">21, human, bridging physics and AI, building toward an "experience machine."</p>
+                    <h1 class="font-display-italic text-6xl sm:text-7xl text-white leading-none">Thomas Y.L. Lin</h1>
+                    <p class="font-display-roman mt-6 text-xl sm:text-2xl text-gray-300 leading-snug max-w-2xl">21, human, bridging physics and AI, building toward an "experience machine."</p>
                 </div>
                 <div class="flex space-x-5 flex-shrink-0">
                     <a href="mailto:thermaus@uw.edu" class="text-gray-400 hover:text-white transition-colors" aria-label="Email Thomas Lin">
@@ -431,7 +442,7 @@
 
             <!-- About Section -->
             <section id="about" class="fade-in-section">
-                <h2 class="text-3xl sm:text-4xl font-light tracking-tight text-white mb-8">About Me</h2>
+                <h2 class="font-display-italic text-4xl sm:text-5xl text-white mb-8">About Me</h2>
                 <div class="text-gray-300 text-sm leading-relaxed">
                     <p class="mb-4">I grew up in Taiwan and bootstrapped my way to US at 20. By "bootstrapping," I mean there was never a predefined roadmap or checklist to follow. I see my journey as a <a href="https://en.wikipedia.org/wiki/Jump_diffusion" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:text-blue-300 hover:underline">jump diffusion</a>, driven by curiosity, a pursuit of impact, and a fear of mediocrity.</p>
                     
@@ -456,7 +467,7 @@
 
             <!-- Projects & Publications Section -->
             <section id="projects-publications" class="fade-in-section">
-                <h2 class="text-3xl sm:text-4xl font-light tracking-tight text-white mb-8">Projects & Publications</h2>
+                <h2 class="font-display-italic text-4xl sm:text-5xl text-white mb-8">Projects & Publications</h2>
                 <div class="showcase-container relative">
                     <!-- Left Arrow -->
                     <button id="scroll-left-btn" type="button" aria-label="Show previous project" class="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 z-20 bg-gray-800/60 hover:bg-gray-700 rounded-full p-2 transition-colors">
@@ -477,7 +488,7 @@
             
             <!-- Experience Section -->
             <section id="experience" class="timeline-group fade-in-section">
-                <h2 class="text-3xl sm:text-4xl font-light tracking-tight text-white mb-8">Experience</h2>
+                <h2 class="font-display-italic text-4xl sm:text-5xl text-white mb-8">Experience</h2>
                 <div class="space-y-8">
                     <!-- Caltech -->
                     <div class="timeline-item flex space-x-6">
@@ -547,7 +558,7 @@
 
             <!-- Education Section -->
             <section id="education" class="timeline-group fade-in-section">
-                <h2 class="text-3xl sm:text-4xl font-light tracking-tight text-white mb-8">Education</h2>
+                <h2 class="font-display-italic text-4xl sm:text-5xl text-white mb-8">Education</h2>
                 <div class="space-y-8">
                      <!-- University of Washington -->
                     <div class="timeline-item flex space-x-6">
@@ -581,7 +592,7 @@
 
             <!-- Ventures & Community Section -->
             <section id="community" class="fade-in-section">
-                <h2 class="text-3xl sm:text-4xl font-light tracking-tight text-white mb-8">Ventures & Community</h2>
+                <h2 class="font-display-italic text-4xl sm:text-5xl text-white mb-8">Ventures & Community</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <!-- YC AI SUS -->
                     <div class="community-card bg-gray-800 rounded-lg overflow-hidden">
@@ -663,7 +674,7 @@
 
         <!-- Visitor Map Section -->
         <section id="visitor-map" class="fade-in-section mt-20">
-            <h2 class="text-3xl sm:text-4xl font-light tracking-tight text-white mb-3">Global Reach</h2>
+            <h2 class="font-display-italic text-4xl sm:text-5xl text-white mb-3">Global Reach</h2>
             <p class="text-gray-400 mb-6" id="visitor-summary">Loading visitor data...</p>
             <div class="bg-gray-800/50 rounded-lg p-6 backdrop-blur-sm border border-gray-700/50">
                 <div id="world-map" class="w-full h-96 rounded-lg border border-gray-700/30"></div>
@@ -842,7 +853,7 @@
                             <div class="flex items-center flex-wrap gap-2 mb-4">
                                 ${badgesHTML}
                             </div>
-                            <h3 class="text-2xl sm:text-3xl font-light tracking-tight mb-3 text-shadow">${item.title}</h3>
+                            <h3 class="font-display-italic text-3xl sm:text-4xl mb-3 text-shadow">${item.title}</h3>
                             <p class="text-gray-200/90 mb-5 leading-relaxed">${item.description}</p>
                             <div class="text-gray-300/70 text-xs font-mono">
                                 ${hashtagsHTML}
