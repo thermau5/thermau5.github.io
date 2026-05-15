@@ -87,6 +87,25 @@
              transition: max-height 0.5s ease-in-out, padding 0.5s ease-in-out;
              overflow: hidden;
         }
+        /* Fixed-height scrollable list (Projects & Publications) */
+        .scrollable-list {
+            scrollbar-width: thin;
+            scrollbar-color: rgba(255, 255, 255, 0.12) transparent;
+        }
+        .scrollable-list::-webkit-scrollbar {
+            width: 6px;
+        }
+        .scrollable-list::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .scrollable-list::-webkit-scrollbar-thumb {
+            background-color: rgba(255, 255, 255, 0.12);
+            border-radius: 3px;
+        }
+        .scrollable-list::-webkit-scrollbar-thumb:hover {
+            background-color: rgba(255, 255, 255, 0.24);
+        }
+
         /* Fade-in animation for sections */
         .fade-in-section {
             opacity: 0;
@@ -432,8 +451,14 @@
             <!-- Projects & Publications Section -->
             <section id="projects-publications" class="fade-in-section">
                 <h2 class="font-display-italic text-4xl sm:text-5xl text-white mb-8">Projects & Publications</h2>
-                <div id="showcase-list" class="space-y-5">
-                    <!-- Entries injected here -->
+                <div class="relative">
+                    <!-- top fade -->
+                    <div class="pointer-events-none absolute inset-x-0 top-0 h-8 bg-gradient-to-b from-[#0b0b0f] to-transparent z-10 rounded-t-xl"></div>
+                    <!-- bottom fade -->
+                    <div class="pointer-events-none absolute inset-x-0 bottom-0 h-8 bg-gradient-to-t from-[#0b0b0f] to-transparent z-10 rounded-b-xl"></div>
+                    <div id="showcase-list" class="scrollable-list space-y-5 max-h-[28rem] sm:max-h-[32rem] overflow-y-auto pr-3 py-1">
+                        <!-- Entries injected here -->
+                    </div>
                 </div>
             </section>
             
