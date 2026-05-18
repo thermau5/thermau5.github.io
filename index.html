@@ -17,7 +17,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700&family=Instrument+Serif:ital@0;1&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Inter', sans-serif;
@@ -60,21 +60,21 @@
             position: relative;
             z-index: 10;
         }
-        .timeline-item .icon-container {
+        .timeline-item {
             position: relative;
         }
-        .timeline-item .icon-container::before {
+        .timeline-item::before {
             content: '';
             position: absolute;
-            left: 50%;
+            left: 24px; /* Center of the 48px logo column */
             transform: translateX(-50%);
-            top: 48px; /* Start below the icon */
-            height: calc(100% + 2rem); 
-            width: 2px;
-            background-color: #374151; /* Gray line */
+            top: 60px; /* Just below the logo (4px pt + 48px logo + 8px breath) */
+            bottom: -2.25rem; /* Reach into the 2.5rem gap, leaving a small breath above the next logo */
+            width: 1px;
+            background-color: #2a2f3a; /* Soft, muted line */
         }
-        .timeline-group:last-of-type .timeline-item:last-child .icon-container::before {
-            display: none; /* Hide line on the very last item */
+        .timeline-item:last-child::before {
+            display: none; /* No line below the final entry in each section */
         }
         .community-card {
             transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
@@ -426,7 +426,7 @@
             <!-- About Section -->
             <section id="about" class="fade-in-section">
                 <h2 class="font-display-italic text-4xl sm:text-5xl text-white mb-8">About Me</h2>
-                <div class="font-display-roman text-gray-200 text-base sm:text-lg leading-relaxed">
+                <div class="text-gray-200 text-base sm:text-lg leading-relaxed" style="font-family: 'Newsreader', Georgia, serif;">
                     <p class="mb-4">I grew up in Taiwan and bootstrapped my way to US at 20. By "bootstrapping," I mean there was never a predefined roadmap or checklist to follow. I see my journey as a <a href="https://en.wikipedia.org/wiki/Jump_diffusion" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:text-blue-300 hover:underline">jump diffusion</a>, driven by curiosity, a pursuit of impact, and a fear of mediocrity.</p>
                     
                     <!-- Collapsible content -->
@@ -465,21 +465,21 @@
             <!-- Experience Section -->
             <section id="experience" class="timeline-group fade-in-section">
                 <h2 class="font-display-italic text-4xl sm:text-5xl text-white mb-8">Experience</h2>
-                <div class="space-y-8">
+                <div class="space-y-10">
                     <!-- Caltech -->
-                    <div class="timeline-item flex space-x-6">
-                        <div class="icon-container flex-shrink-0 w-12 text-center">
-                            <a href="https://www.caltech.edu/" target="_blank" rel="noopener noreferrer" class="group">
-                                 <img src="caltech_logo.jpg" onerror="this.onerror=null; this.src='https://media.licdn.com/dms/image/v2/C510BAQFCGqEmSwrc4w/company-logo_100_100/company-logo_100_100/0/1631338994369?e=1767225600&v=beta&t=jFzx7PWKGuI35R4ntsdcxLIozGENnOwTNF4_P3JB1QA'" alt="Caltech Logo" class="rounded-lg w-12 h-12 mx-auto object-contain transition-transform duration-300 group-hover:scale-110 bg-white">
+                    <div class="timeline-item flex gap-5 sm:gap-6">
+                        <div class="icon-container flex-shrink-0 pt-1">
+                            <a href="https://www.caltech.edu/" target="_blank" rel="noopener noreferrer" class="group block">
+                                <img src="caltech_logo.jpg" onerror="this.onerror=null; this.src='https://media.licdn.com/dms/image/v2/C510BAQFCGqEmSwrc4w/company-logo_100_100/company-logo_100_100/0/1631338994369?e=1767225600&v=beta&t=jFzx7PWKGuI35R4ntsdcxLIozGENnOwTNF4_P3JB1QA'" alt="Caltech Logo" class="rounded-lg w-12 h-12 object-contain transition-transform duration-300 group-hover:scale-110 bg-white">
                             </a>
                         </div>
-                        <div class="flex-grow pt-1">
-                            <a href="https://www.caltech.edu/" target="_blank" rel="noopener noreferrer" class="font-semibold text-lg text-white hover:underline">California Institute of Technology</a>
-                            <p class="font-medium text-gray-300">Summer Undergraduate Research Fellowships (SURF)</p>
-                            <p class="text-sm text-gray-400">Pasadena, CA, USA &middot; Mar 2025 - Present</p>
-                            <button type="button" onclick="toggleContent('exp1', this, '[Show details]', '[Hide details]')" class="text-blue-400 text-sm hover:underline font-semibold mt-1 inline-block bg-transparent border-0 p-0">[Show details]</button>
-                            <div id="exp1" class="hidden details-content mt-2 font-display-roman text-gray-300 text-base space-y-2">
-                                <ul class="list-disc pl-5">
+                        <div class="flex-grow min-w-0">
+                            <a href="https://www.caltech.edu/" target="_blank" rel="noopener noreferrer" class="font-display-roman text-2xl sm:text-3xl text-white leading-tight hover:underline">California Institute of Technology</a>
+                            <p class="text-base text-gray-300 mt-1">Summer Undergraduate Research Fellowships (SURF)</p>
+                            <p class="text-sm text-gray-500 mt-1 tracking-wide">Pasadena, CA &middot; Mar 2025 — Present</p>
+                            <button type="button" onclick="toggleContent('exp1', this, '[Show details]', '[Hide details]')" class="text-blue-400/80 hover:text-blue-300 text-sm mt-2 inline-block bg-transparent border-0 p-0 transition-colors">[Show details]</button>
+                            <div id="exp1" class="hidden details-content mt-3 text-gray-300 text-sm leading-relaxed space-y-2">
+                                <ul class="list-disc pl-5 space-y-1">
                                     <li>Developed Decoupled Diffusion Inverse Solver (DDIS), a physics-aware, data-efficient generative framework for PDE inverse problems that decouples coefficient prior learning from physics enforcement via neural operators.</li>
                                     <li>Theoretically identified and proved a "guidance attenuation" failure mode in joint-embedding diffusion models under limited paired data, motivating a decoupled design with stronger generalization in scarce-supervision regimes.</li>
                                     <li>Achieved state-of-the-art performance under data scarcity, improving reconstruction error by 11% (L2) and 54% (spectral) over prior best solvers on inverse Helmholtz, Poisson, and Navier-Stokes problems with 1% paired data.</li>
@@ -489,19 +489,19 @@
                         </div>
                     </div>
                     <!-- Northwestern -->
-                    <div class="timeline-item flex space-x-6">
-                        <div class="icon-container flex-shrink-0 w-12 text-center">
-                            <a href="https://www.northwestern.edu/" target="_blank" rel="noopener noreferrer" class="group">
-                                <img src="northwestern_logo.jpg" onerror="this.onerror=null; this.src='https://media.licdn.com/dms/image/v2/C4E0BAQH-sXOOSUF3aA/company-logo_100_100/company-logo_100_100/0/1631319371681?e=1767225600&v=beta&t=3wWunjJgU2Nin4whX5I-J5YFYxMLjxXrTvFV5xKtquc'" alt="Northwestern Logo" class="rounded-lg w-12 h-12 mx-auto object-contain transition-transform duration-300 group-hover:scale-110">
+                    <div class="timeline-item flex gap-5 sm:gap-6">
+                        <div class="icon-container flex-shrink-0 pt-1">
+                            <a href="https://www.northwestern.edu/" target="_blank" rel="noopener noreferrer" class="group block">
+                                <img src="northwestern_logo.jpg" onerror="this.onerror=null; this.src='https://media.licdn.com/dms/image/v2/C4E0BAQH-sXOOSUF3aA/company-logo_100_100/company-logo_100_100/0/1631319371681?e=1767225600&v=beta&t=3wWunjJgU2Nin4whX5I-J5YFYxMLjxXrTvFV5xKtquc'" alt="Northwestern Logo" class="rounded-lg w-12 h-12 object-contain transition-transform duration-300 group-hover:scale-110">
                             </a>
                         </div>
-                        <div class="flex-grow pt-1">
-                           <a href="https://www.northwestern.edu/" target="_blank" rel="noopener noreferrer" class="font-semibold text-lg text-white hover:underline">Northwestern University</a>
-                            <p class="font-medium text-gray-300">Machine Learning Intern</p>
-                            <p class="text-sm text-gray-400">Remote &middot; Apr 2023 - Apr 2025</p>
-                            <button type="button" onclick="toggleContent('exp2', this, '[Show details]', '[Hide details]')" class="text-blue-400 text-sm hover:underline font-semibold mt-1 inline-block bg-transparent border-0 p-0">[Show details]</button>
-                            <div id="exp2" class="hidden details-content mt-2 font-display-roman text-gray-300 text-base space-y-2">
-                                <ul class="list-disc pl-5">
+                        <div class="flex-grow min-w-0">
+                            <a href="https://www.northwestern.edu/" target="_blank" rel="noopener noreferrer" class="font-display-roman text-2xl sm:text-3xl text-white leading-tight hover:underline">Northwestern University</a>
+                            <p class="text-base text-gray-300 mt-1">Machine Learning Intern</p>
+                            <p class="text-sm text-gray-500 mt-1 tracking-wide">Remote &middot; Apr 2023 — Apr 2025</p>
+                            <button type="button" onclick="toggleContent('exp2', this, '[Show details]', '[Hide details]')" class="text-blue-400/80 hover:text-blue-300 text-sm mt-2 inline-block bg-transparent border-0 p-0 transition-colors">[Show details]</button>
+                            <div id="exp2" class="hidden details-content mt-3 text-gray-300 text-sm leading-relaxed space-y-2">
+                                <ul class="list-disc pl-5 space-y-1">
                                     <li>Researched computational hardness by fine-grained complexity analysis of modern Hopfield models; developed efficient approximation algorithms within controllable error, reducing the time complexity from subquadratic to almost linear. Presented at ICML 2024.</li>
                                     <li>Researched latent Bayesian network for portfolio optimization; developed a data-driven Black-Litterman model by learning investor views as latent variables from market data. Presented at ICML 2025.</li>
                                 </ul>
@@ -510,19 +510,19 @@
                         </div>
                     </div>
                     <!-- Gamma Paradigm Capital -->
-                    <div class="timeline-item flex space-x-6">
-                        <div class="icon-container flex-shrink-0 w-12 text-center">
-                            <a href="https://gammaparadigm.com/" target="_blank" rel="noopener noreferrer" class="group">
-                                <img src="gamma_paradigm_logo.jpg" onerror="this.onerror=null; this.src='https://media.licdn.com/dms/image/v2/C4D0BAQEfIYMsq0Jgjg/company-logo_100_100/company-logo_100_100/0/1653123622160/gamma_paradigm_research_logo?e=1767225600&v=beta&t=Fe9kX0abGP5FmUhZIeX8lcPyWaLbamwWFgHL1mMw1m4'" alt="Gamma Paradigm Capital Logo" class="rounded-lg w-12 h-12 mx-auto object-contain transition-transform duration-300 group-hover:scale-110">
+                    <div class="timeline-item flex gap-5 sm:gap-6">
+                        <div class="icon-container flex-shrink-0 pt-1">
+                            <a href="https://gammaparadigm.com/" target="_blank" rel="noopener noreferrer" class="group block">
+                                <img src="gamma_paradigm_logo.jpg" onerror="this.onerror=null; this.src='https://media.licdn.com/dms/image/v2/C4D0BAQEfIYMsq0Jgjg/company-logo_100_100/company-logo_100_100/0/1653123622160/gamma_paradigm_research_logo?e=1767225600&v=beta&t=Fe9kX0abGP5FmUhZIeX8lcPyWaLbamwWFgHL1mMw1m4'" alt="Gamma Paradigm Capital Logo" class="rounded-lg w-12 h-12 object-contain transition-transform duration-300 group-hover:scale-110">
                             </a>
                         </div>
-                        <div class="flex-grow pt-1">
-                            <a href="https://gammaparadigm.com/" target="_blank" rel="noopener noreferrer" class="font-semibold text-lg text-white hover:underline">Gamma Paradigm Capital</a>
-                            <p class="font-medium text-gray-300">Quantitative Analyst Intern</p>
-                             <p class="text-sm text-gray-400">Taipei, Taiwan &middot; Jun 2023 - Jul 2024</p>
-                            <button type="button" onclick="toggleContent('exp3', this, '[Show details]', '[Hide details]')" class="text-blue-400 text-sm hover:underline font-semibold mt-1 inline-block bg-transparent border-0 p-0">[Show details]</button>
-                            <div id="exp3" class="hidden details-content mt-2 font-display-roman text-gray-300 text-base space-y-2">
-                                <ul class="list-disc pl-5">
+                        <div class="flex-grow min-w-0">
+                            <a href="https://gammaparadigm.com/" target="_blank" rel="noopener noreferrer" class="font-display-roman text-2xl sm:text-3xl text-white leading-tight hover:underline">Gamma Paradigm Capital</a>
+                            <p class="text-base text-gray-300 mt-1">Quantitative Analyst Intern</p>
+                            <p class="text-sm text-gray-500 mt-1 tracking-wide">Taipei, Taiwan &middot; Jun 2023 — Jul 2024</p>
+                            <button type="button" onclick="toggleContent('exp3', this, '[Show details]', '[Hide details]')" class="text-blue-400/80 hover:text-blue-300 text-sm mt-2 inline-block bg-transparent border-0 p-0 transition-colors">[Show details]</button>
+                            <div id="exp3" class="hidden details-content mt-3 text-gray-300 text-sm leading-relaxed space-y-2">
+                                <ul class="list-disc pl-5 space-y-1">
                                     <li>Implemented and backtested portfolio strategies based on Distributionally Robust Optimization, achieving superior Sharpe ratios and lower drawdowns compared to SPY and EQW benchmarks.</li>
                                     <li>Developed a data-driven Black-Litterman model, achieving significant improvements in Sharpe ratios and turnover rates over benchmark models and market indices.</li>
                                 </ul>
@@ -535,31 +535,31 @@
             <!-- Education Section -->
             <section id="education" class="timeline-group fade-in-section">
                 <h2 class="font-display-italic text-4xl sm:text-5xl text-white mb-8">Education</h2>
-                <div class="space-y-8">
-                     <!-- University of Washington -->
-                    <div class="timeline-item flex space-x-6">
-                        <div class="icon-container flex-shrink-0 w-12 text-center">
-                             <a href="https://www.washington.edu/" target="_blank" rel="noopener noreferrer" class="group">
-                                <img src="uw_logo.jpg" onerror="this.onerror=null; this.src='https://media.licdn.com/dms/image/v2/C4D0BAQEMmhF9TqUCgA/company-logo_100_100/company-logo_100_100/0/1630545704089/university_of_washington_logo?e=1767225600&v=beta&t=CsuSTIqEb0rt7BwJNYzrKpExW8sq5T-wfWuW9IKr9-U'" alt="UW Logo" class="rounded-lg w-12 h-12 mx-auto object-contain transition-transform duration-300 group-hover:scale-110">
+                <div class="space-y-10">
+                    <!-- University of Washington -->
+                    <div class="timeline-item flex gap-5 sm:gap-6">
+                        <div class="icon-container flex-shrink-0 pt-1">
+                            <a href="https://www.washington.edu/" target="_blank" rel="noopener noreferrer" class="group block">
+                                <img src="uw_logo.jpg" onerror="this.onerror=null; this.src='https://media.licdn.com/dms/image/v2/C4D0BAQEMmhF9TqUCgA/company-logo_100_100/company-logo_100_100/0/1630545704089/university_of_washington_logo?e=1767225600&v=beta&t=CsuSTIqEb0rt7BwJNYzrKpExW8sq5T-wfWuW9IKr9-U'" alt="UW Logo" class="rounded-lg w-12 h-12 object-contain transition-transform duration-300 group-hover:scale-110">
                             </a>
                         </div>
-                        <div class="flex-grow pt-1">
-                             <a href="https://www.washington.edu/" target="_blank" rel="noopener noreferrer" class="font-semibold text-lg text-white hover:underline">University of Washington</a>
-                            <p class="font-medium text-gray-300">B.S. in Physics, Minor in Applied Math</p>
-                            <p class="text-sm text-gray-400">Seattle, WA, USA &middot; 2025 - 2027</p>
+                        <div class="flex-grow min-w-0">
+                            <a href="https://www.washington.edu/" target="_blank" rel="noopener noreferrer" class="font-display-roman text-2xl sm:text-3xl text-white leading-tight hover:underline">University of Washington</a>
+                            <p class="text-base text-gray-300 mt-1">B.S. in Physics, Minor in Applied Math</p>
+                            <p class="text-sm text-gray-500 mt-1 tracking-wide">Seattle, WA &middot; 2025 — 2027</p>
                         </div>
                     </div>
                     <!-- National Taiwan University -->
-                    <div class="timeline-item flex space-x-6">
-                        <div class="icon-container flex-shrink-0 w-12 text-center">
-                            <a href="https://www.ntu.edu.tw/english/" target="_blank" rel="noopener noreferrer" class="group">
-                                <img src="ntu_logo.jpg" onerror="this.onerror=null; this.src='https://media.licdn.com/dms/image/v2/C560BAQGAh08jkWo23Q/company-logo_100_100/company-logo_100_100/0/1679904708552/national_taiwan_university_logo?e=1767225600&v=beta&t=qsit03kDMX6aVDtEPQz3U2Ef8-Y2wV_R45Kckzvf560'" alt="NTU Logo" class="rounded-lg w-12 h-12 mx-auto object-contain transition-transform duration-300 group-hover:scale-110">
+                    <div class="timeline-item flex gap-5 sm:gap-6">
+                        <div class="icon-container flex-shrink-0 pt-1">
+                            <a href="https://www.ntu.edu.tw/english/" target="_blank" rel="noopener noreferrer" class="group block">
+                                <img src="ntu_logo.jpg" onerror="this.onerror=null; this.src='https://media.licdn.com/dms/image/v2/C560BAQGAh08jkWo23Q/company-logo_100_100/company-logo_100_100/0/1679904708552/national_taiwan_university_logo?e=1767225600&v=beta&t=qsit03kDMX6aVDtEPQz3U2Ef8-Y2wV_R45Kckzvf560'" alt="NTU Logo" class="rounded-lg w-12 h-12 object-contain transition-transform duration-300 group-hover:scale-110">
                             </a>
                         </div>
-                        <div class="flex-grow pt-1">
-                            <a href="https://www.ntu.edu.tw/english/" target="_blank" rel="noopener noreferrer" class="font-semibold text-lg text-white hover:underline">National Taiwan University</a>
-                            <p class="font-medium text-gray-300">B.S. in Physics, B.A. in Economics</p>
-                            <p class="text-sm text-gray-400">Taipei, Taiwan &middot; 2023 - Transferred</p>
+                        <div class="flex-grow min-w-0">
+                            <a href="https://www.ntu.edu.tw/english/" target="_blank" rel="noopener noreferrer" class="font-display-roman text-2xl sm:text-3xl text-white leading-tight hover:underline">National Taiwan University</a>
+                            <p class="text-base text-gray-300 mt-1">B.S. in Physics, B.A. in Economics</p>
+                            <p class="text-sm text-gray-500 mt-1 tracking-wide">Taipei, Taiwan &middot; 2023 — Transferred</p>
                         </div>
                     </div>
                 </div>
@@ -575,7 +575,7 @@
                         <img src="yc_ai_sus.jpg" alt="YC AI Startup School" class="w-full h-48 object-cover">
                         <div class="p-6">
                             <h3 class="font-semibold text-lg text-white">YC AI Startup School</h3>
-                            <p class="font-display-roman text-base text-gray-300 mt-1">An exclusive social event with speeches from well-known AI figures and networking with top CS students.</p>
+                            <p class="text-base text-gray-300 mt-1">An exclusive social event with speeches from well-known AI figures and networking with top CS students.</p>
                         </div>
                     </div>
                     <!-- ICML -->
@@ -583,9 +583,9 @@
                         <img src="icml.jpg" alt="ICML Conferences" class="w-full h-48 object-cover">
                         <div class="p-6">
                             <h3 class="font-semibold text-lg text-white">ICML '24 & '25</h3>
-                            <p class="font-display-roman text-base text-gray-300 mt-1">Presenting papers at top-tier ML conferences in Vienna and Vancouver. Connecting with some brilliant minds on Earth.</p>
+                            <p class="text-base text-gray-300 mt-1">Presenting papers at top-tier ML conferences in Vienna and Vancouver. Connecting with some brilliant minds on Earth.</p>
                              <!-- <a href="javascript:void(0)" onclick="toggleContent('com3', this, '[Learn more]', '[Show less]')" class="text-blue-400 text-sm hover:underline font-semibold mt-2 inline-block">[Learn more]</a>
-                             <div id="com3" class="hidden details-content mt-2 font-display-roman text-gray-300 text-base">
+                             <div id="com3" class="hidden details-content mt-2 text-gray-300 text-base">
                                <p>Attended exclusive, invite-only parties hosted by major quantitative finance firms, connecting with leaders in the field.</p>
                             </div> -->
                         </div>
@@ -595,9 +595,9 @@
                         <img src="huap.jpg" alt="HUAP" class="w-full h-48 object-cover">
                         <div class="p-6">
                             <h3 class="font-semibold text-lg text-white">Harvard x NTU (HUAP)</h3>
-                            <p class="font-display-roman text-base text-gray-300 mt-1">A club at National Taiwan University for short-term exchange with Harvard students.</p>
+                            <p class="text-base text-gray-300 mt-1">A club at National Taiwan University for short-term exchange with Harvard students.</p>
                              <button type="button" onclick="toggleContent('com2', this, '[Learn more]', '[Show less]')" class="text-blue-400 text-sm hover:underline font-semibold mt-2 inline-block bg-transparent border-0 p-0">[Learn more]</button>
-                             <div id="com2" class="hidden details-content mt-2 font-display-roman text-gray-300 text-base">
+                             <div id="com2" class="hidden details-content mt-2 text-gray-300 text-base">
                                 <p>As a PR Member, I fundraised a record-high $4,500 USD cash sponsorship and hosted Harvard students for the Spring Conference.</p>
                             </div>
                         </div>
@@ -607,9 +607,9 @@
                         <img src="ntu_abc_lab.jpg" alt="NTU ABC Lab" class="w-full h-48 object-cover">
                         <div class="p-6">
                             <h3 class="font-semibold text-lg text-white">NTU ABC Lab & Prof. Liao</h3>
-                            <p class="font-display-roman text-base text-gray-300 mt-1">Biggest blockchain lab in Taiwan with the legendary Prof. Shih-wei Liao.</p>
+                            <p class="text-base text-gray-300 mt-1">Biggest blockchain lab in Taiwan with the legendary Prof. Shih-wei Liao.</p>
                              <button type="button" onclick="toggleContent('com5-details', this, '[Learn more]', '[Show less]')" class="text-blue-400 text-sm hover:underline font-semibold mt-2 inline-block bg-transparent border-0 p-0">[Learn more]</button>
-                             <div id="com5-details" class="hidden details-content mt-2 font-display-roman text-gray-300 text-base">
+                             <div id="com5-details" class="hidden details-content mt-2 text-gray-300 text-base">
                                 <p>I served for two years as a TA for multiple 150-student courses and as a social assistant hosting his visitors.
                                     <!-- <a href="javascript:void(0)" onclick="toggleContent('com5-footnote', this, '[More on the legend]', '[Less]')" class="text-blue-400 hover:underline font-semibold">[More on the legend]</a> -->
                                 </p>
@@ -624,9 +624,9 @@
                         <img src="phi_epsilon.jpg" alt="NTU Phi-Epsilon-Delta" class="w-full h-48 object-cover">
                         <div class="p-6">
                             <h3 class="font-semibold text-lg text-white">NTU Phi-Epsilon-Delta</h3>
-                            <p class="font-display-roman text-base text-gray-300 mt-1">An unofficial fraternity founded in my house next to NTU campus.</p>
+                            <p class="text-base text-gray-300 mt-1">An unofficial fraternity founded in my house next to NTU campus.</p>
                              <button type="button" onclick="toggleContent('com4', this, '[Learn more]', '[Show less]')" class="text-blue-400 text-sm hover:underline font-semibold mt-2 inline-block bg-transparent border-0 p-0">[Learn more]</button>
-                             <div id="com4" class="hidden details-content mt-2 font-display-roman text-gray-300 text-base">
+                             <div id="com4" class="hidden details-content mt-2 text-gray-300 text-base">
                                 <p>We hosted networking events for NTU, exchange, and overseas Taiwanese students.</p>
                             </div>
                         </div>
@@ -636,9 +636,9 @@
                         <img src="team_taiwan.jpg" alt="EuPhO" class="w-full h-48 object-cover">
                         <div class="p-6">
                             <h3 class="font-semibold text-lg text-white">2022 European Physics Olympiad</h3>
-                            <p class="font-display-roman text-base text-gray-300 mt-1">Team Taiwan at the 2022 European Physics Olympiad at Slovenia.</p>
+                            <p class="text-base text-gray-300 mt-1">Team Taiwan at the 2022 European Physics Olympiad at Slovenia.</p>
                              <button type="button" onclick="toggleContent('com6', this, '[Learn more]', '[Show less]')" class="text-blue-400 text-sm hover:underline font-semibold mt-2 inline-block bg-transparent border-0 p-0">[Learn more]</button>
-                             <div id="com6" class="hidden details-content mt-2 font-display-roman text-gray-300 text-base">
+                             <div id="com6" class="hidden details-content mt-2 text-gray-300 text-base">
                                 <p>I founded the team, fundraised the trip, won a bronze medal, and secured my college admission.</p>
                             </div>
                         </div>
@@ -744,7 +744,8 @@
                 description: 'A data-driven Black-Litterman model that learns investor views as latent variables from market data, with strong improvements in Sharpe ratios over benchmarks.',
                 topics: ['Finance', 'Bayesian ML', 'Portfolio'],
                 links: [
-                    { text: 'Read Paper', url: 'https://arxiv.org/pdf/2505.02185' }
+                    { text: 'Read Paper', url: 'https://arxiv.org/pdf/2505.02185' },
+                    { text: 'GitHub', url: 'https://github.com/thermau5/Latent_Variable_Estimation_Black_Litterman_Model_2025' }
                 ]
             },
             {
@@ -822,9 +823,18 @@
                     return `<span class="${color} text-xs font-medium tracking-wide px-2 py-0.5 rounded">${t}</span>`;
                 }).join('');
 
-                const linksHTML = (item.links || []).map(link =>
-                    `<a href="${link.url}" target="_blank" rel="noopener noreferrer" class="text-gray-300 hover:text-white underline-offset-4 hover:underline transition-colors">${link.text}</a>`
-                ).join('<span class="text-gray-600 mx-2">·</span>');
+                const linkIcons = {
+                    'Read Paper': '<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block align-[-1px] mr-1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>',
+                    'GitHub': '<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block align-[-1px] mr-1.5"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"></path><path d="M9 18c-4.51 2-5-2-7-2"></path></svg>',
+                    'LinkedIn': '<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block align-[-1px] mr-1.5"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>',
+                    'X': '<svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="currentColor" class="inline-block align-[-1px] mr-1.5"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>',
+                    'Website': '<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block align-[-1px] mr-1.5"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>'
+                };
+
+                const linksHTML = (item.links || []).map(link => {
+                    const icon = linkIcons[link.text] || '';
+                    return `<a href="${link.url}" target="_blank" rel="noopener noreferrer" class="text-gray-300 hover:text-white underline-offset-4 hover:underline transition-colors inline-flex items-center">${icon}${link.text}</a>`;
+                }).join('<span class="text-gray-600 mx-2">·</span>');
 
                 const authorsHTML = item.authors
                     ? `<p class="font-display-roman text-base text-gray-400 mt-1">${item.authors}</p>`
@@ -850,7 +860,7 @@
                         <h3 class="font-display-italic text-2xl sm:text-3xl text-white leading-tight">${item.title}</h3>
                         ${authorsHTML}
                         ${metaHTML}
-                        <p class="font-display-roman text-base sm:text-lg text-gray-300 mt-4 leading-relaxed">${item.description}</p>
+                        <p class="text-base sm:text-lg text-gray-300 mt-4 leading-relaxed" style="font-family: 'Newsreader', Georgia, serif;">${item.description}</p>
                         ${linksHTML ? `<div class="mt-5 text-sm">${linksHTML}</div>` : ''}
                     </article>
                 `;
