@@ -1,0 +1,9 @@
+/*
+ * Source file for the production Tailwind build.
+ * Rebuild tailwind.css after adding/changing Tailwind classes in index.html:
+ *
+ *   npx tailwindcss@3.4.17 -i ./tailwind.src.css -o ./tailwind.css --content ./index.html --minify
+ */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
