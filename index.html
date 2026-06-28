@@ -7,7 +7,7 @@
     <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
     <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
     <link rel="canonical" href="https://thermau5.github.io/">
-    <meta name="description" content="Thomas Y.L. Lin — physics at the University of Washington; AI research at Caltech AI4Science, Northwestern MAGICS, and Gamma Paradigm. Bridging physics and AI.">
+    <meta name="description" content="Thomas Y.L. Lin: physics at the University of Washington; AI research at Caltech AI4Science, Northwestern MAGICS, and Gamma Paradigm. Bridging physics and AI.">
     <meta property="og:type" content="website">
     <meta property="og:title" content="Thomas Y.L. Lin | Portfolio">
     <meta property="og:description" content="Bridging physics and AI, building experience machine.">
@@ -45,7 +45,7 @@
             background-color: #0b0b0f; /* Near-black, slightly warm */
             color: #d1d5db; /* Light gray text */
         }
-        /* Subtle film grain — adds editorial texture without distraction */
+        /* Subtle film grain: adds texture without distraction */
         body::before {
             content: '';
             position: fixed;
@@ -55,7 +55,7 @@
             opacity: 0.05;
             background-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
         }
-        /* Soft offstage glow — single warm light source, gives the page depth */
+        /* Soft offstage glow: single warm light source, gives the page depth */
         body::after {
             content: '';
             position: fixed;
@@ -514,6 +514,21 @@
             <section id="experience" class="timeline-group fade-in-section">
                 <h2 class="font-display-italic text-4xl sm:text-5xl text-white mb-8">Experience</h2>
                 <div class="space-y-10">
+                    <!-- MediaTek -->
+                    <div class="timeline-item flex gap-5 sm:gap-6">
+                        <div class="icon-container flex-shrink-0 pt-1">
+                            <a href="https://www.mediatek.com/" target="_blank" rel="noopener noreferrer" class="group block">
+                                <img src="mediatek_logo.jpg" alt="MediaTek Logo" width="48" height="48" class="rounded-lg w-12 h-12 object-contain transition-transform duration-300 group-hover:scale-110">
+                            </a>
+                        </div>
+                        <div class="flex-grow min-w-0">
+                            <a href="https://www.mediatek.com/" target="_blank" rel="noopener noreferrer" class="font-display-roman text-2xl sm:text-3xl text-white leading-tight hover:underline">MediaTek</a>
+                            <p class="text-base text-gray-300 mt-1">Research Intern</p>
+                            <p class="text-sm text-gray-500 mt-1 tracking-wide">San Jose, CA &middot; Jun 2026 - Present</p>
+                            <p class="mt-3 text-gray-300 text-sm leading-relaxed">Building a world model of photonic IC physics.</p>
+                            <p class="text-gray-500 text-xs mt-2 italic">Interviewed by the chairman through a 90-minute pitch.</p>
+                        </div>
+                    </div>
                     <!-- Caltech -->
                     <div class="timeline-item flex gap-5 sm:gap-6">
                         <div class="icon-container flex-shrink-0 pt-1">
@@ -524,13 +539,13 @@
                         <div class="flex-grow min-w-0">
                             <a href="https://www.caltech.edu/" target="_blank" rel="noopener noreferrer" class="font-display-roman text-2xl sm:text-3xl text-white leading-tight hover:underline">California Institute of Technology</a>
                             <p class="text-base text-gray-300 mt-1">Summer Undergraduate Research Fellowships (SURF)</p>
-                            <p class="text-sm text-gray-500 mt-1 tracking-wide">Pasadena, CA &middot; Mar 2025 — Present</p>
+                            <p class="text-sm text-gray-500 mt-1 tracking-wide">Pasadena, CA &middot; Mar 2025 - Present</p>
                             <button type="button" onclick="toggleContent('exp1', this, '[Show details]', '[Hide details]')" class="text-blue-400/80 hover:text-blue-300 text-sm mt-2 inline-block bg-transparent border-0 p-0 transition-colors">[Show details]</button>
                             <div id="exp1" class="hidden details-content mt-3 text-gray-300 text-sm leading-relaxed space-y-2">
                                 <ul class="list-disc pl-5 space-y-1">
-                                    <li>Developed Decoupled Diffusion Inverse Solver (DDIS), a physics-aware, data-efficient generative framework for PDE inverse problems that decouples coefficient prior learning from physics enforcement via neural operators.</li>
-                                    <li>Theoretically identified and proved a "guidance attenuation" failure mode in joint-embedding diffusion models under limited paired data, motivating a decoupled design with stronger generalization in scarce-supervision regimes.</li>
-                                    <li>Achieved state-of-the-art performance under data scarcity, improving reconstruction error by 11% (L2) and 54% (spectral) over prior best solvers on inverse Helmholtz, Poisson, and Navier-Stokes problems with 1% paired data.</li>
+                                    <li>Developed the Decoupled Diffusion Inverse Solver (DDIS), a physics-aware generative framework for PDE inverse problems that decouples coefficient-prior learning from physics enforcement via neural operators.</li>
+                                    <li>Identified and proved a "guidance attenuation" failure mode in joint-embedding diffusion models under limited paired data, motivating the decoupled design.</li>
+                                    <li>Reached state-of-the-art accuracy with only 1% paired data, cutting reconstruction error by 11% (L2) and 54% (spectral) over prior best solvers on inverse Helmholtz, Poisson, and Navier-Stokes problems.</li>
                                 </ul>
                                 <p class="text-gray-500 text-xs mt-2 italic">Intern at AI4Science Lab. Advised by Prof. Anima Anandkumar and PhD student Jiachen Yao.</p>
                             </div>
@@ -546,12 +561,12 @@
                         <div class="flex-grow min-w-0">
                             <a href="https://www.northwestern.edu/" target="_blank" rel="noopener noreferrer" class="font-display-roman text-2xl sm:text-3xl text-white leading-tight hover:underline">Northwestern University</a>
                             <p class="text-base text-gray-300 mt-1">Machine Learning Intern</p>
-                            <p class="text-sm text-gray-500 mt-1 tracking-wide">Remote &middot; Apr 2023 — Apr 2025</p>
+                            <p class="text-sm text-gray-500 mt-1 tracking-wide">Remote &middot; Apr 2023 - Apr 2025</p>
                             <button type="button" onclick="toggleContent('exp2', this, '[Show details]', '[Hide details]')" class="text-blue-400/80 hover:text-blue-300 text-sm mt-2 inline-block bg-transparent border-0 p-0 transition-colors">[Show details]</button>
                             <div id="exp2" class="hidden details-content mt-3 text-gray-300 text-sm leading-relaxed space-y-2">
                                 <ul class="list-disc pl-5 space-y-1">
-                                    <li>Researched computational hardness by fine-grained complexity analysis of modern Hopfield models; developed efficient approximation algorithms within controllable error, reducing the time complexity from subquadratic to almost linear. Presented at ICML 2024.</li>
-                                    <li>Researched latent Bayesian network for portfolio optimization; developed a data-driven Black-Litterman model by learning investor views as latent variables from market data. Presented at ICML 2025.</li>
+                                    <li>Analyzed the fine-grained complexity of modern Hopfield models and developed near-linear-time approximation algorithms with bounded error (ICML 2024).</li>
+                                    <li>Developed a data-driven Black-Litterman model that learns investor views as latent variables from market data (ICML 2025).</li>
                                 </ul>
                                 <p class="text-gray-500 text-xs mt-2 italic">Intern at MAGICS Lab, Dept. of CS. Advised by Prof. Han Liu and PhD candidate Jerry Hu.</p>
                             </div>
@@ -567,12 +582,11 @@
                         <div class="flex-grow min-w-0">
                             <a href="https://gammaparadigm.com/" target="_blank" rel="noopener noreferrer" class="font-display-roman text-2xl sm:text-3xl text-white leading-tight hover:underline">Gamma Paradigm Capital</a>
                             <p class="text-base text-gray-300 mt-1">Quantitative Analyst Intern</p>
-                            <p class="text-sm text-gray-500 mt-1 tracking-wide">Taipei, Taiwan &middot; Jun 2023 — Jul 2024</p>
+                            <p class="text-sm text-gray-500 mt-1 tracking-wide">Taipei, Taiwan &middot; Jun 2023 - Jul 2024</p>
                             <button type="button" onclick="toggleContent('exp3', this, '[Show details]', '[Hide details]')" class="text-blue-400/80 hover:text-blue-300 text-sm mt-2 inline-block bg-transparent border-0 p-0 transition-colors">[Show details]</button>
                             <div id="exp3" class="hidden details-content mt-3 text-gray-300 text-sm leading-relaxed space-y-2">
                                 <ul class="list-disc pl-5 space-y-1">
-                                    <li>Implemented and backtested portfolio strategies based on Distributionally Robust Optimization, achieving superior Sharpe ratios and lower drawdowns compared to SPY and EQW benchmarks.</li>
-                                    <li>Developed a data-driven Black-Litterman model, achieving significant improvements in Sharpe ratios and turnover rates over benchmark models and market indices.</li>
+                                    <li>Implemented and backtested portfolio strategies (Distributionally Robust Optimization and Black-Litterman allocation), achieving higher Sharpe ratios with lower drawdowns and turnover than SPY and EQW benchmarks.</li>
                                 </ul>
                             </div>
                         </div>
@@ -594,7 +608,7 @@
                         <div class="flex-grow min-w-0">
                             <a href="https://www.washington.edu/" target="_blank" rel="noopener noreferrer" class="font-display-roman text-2xl sm:text-3xl text-white leading-tight hover:underline">University of Washington</a>
                             <p class="text-base text-gray-300 mt-1">B.S. in Physics, Minor in Applied Math</p>
-                            <p class="text-sm text-gray-500 mt-1 tracking-wide">Seattle, WA &middot; 2025 — 2027</p>
+                            <p class="text-sm text-gray-500 mt-1 tracking-wide">Seattle, WA &middot; 2025 - 2027</p>
                         </div>
                     </div>
                     <!-- National Taiwan University -->
@@ -607,7 +621,7 @@
                         <div class="flex-grow min-w-0">
                             <a href="https://www.ntu.edu.tw/english/" target="_blank" rel="noopener noreferrer" class="font-display-roman text-2xl sm:text-3xl text-white leading-tight hover:underline">National Taiwan University</a>
                             <p class="text-base text-gray-300 mt-1">B.S. in Physics, B.A. in Economics</p>
-                            <p class="text-sm text-gray-500 mt-1 tracking-wide">Taipei, Taiwan &middot; 2023 — Transferred</p>
+                            <p class="text-sm text-gray-500 mt-1 tracking-wide">Taipei, Taiwan &middot; 2023 - Transferred</p>
                         </div>
                     </div>
                 </div>
@@ -662,7 +676,7 @@
                                     <!-- <a href="javascript:void(0)" onclick="toggleContent('com5-footnote', this, '[More on the legend]', '[Less]')" class="text-blue-400 hover:underline font-semibold">[More on the legend]</a> -->
                                 </p>
                                 <!-- <div id="com5-footnote" class="hidden details-content mt-2 p-3 bg-gray-900/50 rounded-md">
-                                     <p>Prof. Liao has a social-economical background (related to one of Taiwan's richest families) and experience (a main developer of Google Android). He trusts and admires talented young students wholeheartedly, while also being incredibly altruistic—always wearing flip-flops, riding his Ubike to school at max speed, and speaking in hilarious quotes that everyone on campus has heard but no one can fully understand in his class.</p>
+                                     <p>Prof. Liao has a social-economical background (related to one of Taiwan's richest families) and experience (a main developer of Google Android). He trusts and admires talented young students wholeheartedly, while also being incredibly altruistic, always wearing flip-flops, riding his Ubike to school at max speed, and speaking in hilarious quotes that everyone on campus has heard but no one can fully understand in his class.</p>
                                 </div> -->
                             </div>
                         </div>
