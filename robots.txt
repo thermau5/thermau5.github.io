@@ -1,0 +1,2 @@
+User-agent: *
+Disallow: /jepa-isotropy-7ke2vq9x4d.pdf
