@@ -137,6 +137,10 @@
             opacity: 1;
             transform: translateY(0);
         }
+        /* When GSAP drives the reveal, the CSS transition must not fight its per-frame updates */
+        .gsap-motion .fade-in-section {
+            transition: none;
+        }
 
         /* Custom cursor - hide default */
         body {
@@ -769,6 +773,8 @@
 
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
     <script>
         function toggleContent(id, element, showText, hideText) {
             const contentElement = document.getElementById(id);
@@ -1075,22 +1081,55 @@
             // Render publications/projects list
             renderShowcaseItems();
 
-            // Fade-in observer for sections
-            const fadeInObserver = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('is-visible');
-                    }
-                });
-            }, {
-                threshold: 0.15, // Trigger when 15% of the section is visible
-                rootMargin: '0px 0px -50px 0px' // Start animation slightly before the section enters viewport
-            });
+            // Section reveals: GSAP ScrollTrigger, with the old observer as fallback if the CDN is blocked
+            if (window.gsap && window.ScrollTrigger) {
+                document.documentElement.classList.add('gsap-motion');
+                gsap.registerPlugin(ScrollTrigger);
 
-            // Observe all sections with fade-in-section class
-            document.querySelectorAll('.fade-in-section').forEach(section => {
-                fadeInObserver.observe(section);
-            });
+                const mm = gsap.matchMedia();
+
+                mm.add('(prefers-reduced-motion: no-preference)', () => {
+                    // Header entrance
+                    gsap.timeline({ defaults: { ease: 'power2.out' } })
+                        .fromTo('header h1', { autoAlpha: 0, y: 14 }, { autoAlpha: 1, y: 0, duration: 0.7 })
+                        .fromTo('header > p', { autoAlpha: 0, y: 10 }, { autoAlpha: 1, y: 0, duration: 0.6 }, '-=0.45')
+                        .fromTo('header .flex.items-center a', { autoAlpha: 0, y: 6 }, { autoAlpha: 1, y: 0, duration: 0.4, stagger: 0.05 }, '-=0.4');
+
+                    // Scroll reveals: section fades up, its cards/entries follow with a soft stagger
+                    gsap.utils.toArray('.fade-in-section').forEach(section => {
+                        const items = section.querySelectorAll('article, .timeline-item, .community-card');
+                        const tl = gsap.timeline({
+                            defaults: { ease: 'power2.out' },
+                            scrollTrigger: { trigger: section, start: 'top 85%', once: true }
+                        });
+                        tl.fromTo(section, { autoAlpha: 0, y: 24 }, { autoAlpha: 1, y: 0, duration: 0.8 });
+                        if (items.length) {
+                            tl.fromTo(items, { autoAlpha: 0, y: 14 }, { autoAlpha: 1, y: 0, duration: 0.6, stagger: { amount: 0.35 } }, '-=0.5');
+                        }
+                    });
+
+                    // Recalculate trigger positions once images and fonts have settled the layout
+                    window.addEventListener('load', () => ScrollTrigger.refresh());
+                });
+
+                mm.add('(prefers-reduced-motion: reduce)', () => {
+                    gsap.set('.fade-in-section', { clearProps: 'all', autoAlpha: 1 });
+                });
+            } else {
+                const fadeInObserver = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('is-visible');
+                        }
+                    });
+                }, {
+                    threshold: 0.15,
+                    rootMargin: '0px 0px -50px 0px'
+                });
+                document.querySelectorAll('.fade-in-section').forEach(section => {
+                    fadeInObserver.observe(section);
+                });
+            }
 
             // Visitor Map Logic
             const LAUNCH_DATE = new Date(2026, 2, 16);
