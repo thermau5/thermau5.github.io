@@ -142,6 +142,42 @@
             transition: none;
         }
 
+        /* Rail navigation */
+        html {
+            scroll-behavior: smooth;
+        }
+        section[id] {
+            scroll-margin-top: 3rem;
+        }
+        .nav-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.875rem;
+            font-size: 0.6875rem;
+            font-weight: 500;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: #71717a;
+            transition: color 0.3s ease;
+        }
+        .nav-link::before {
+            content: '';
+            display: block;
+            width: 1.75rem;
+            height: 1px;
+            background-color: #3f3f46;
+            transition: width 0.3s ease, background-color 0.3s ease;
+        }
+        .nav-link:hover,
+        .nav-link.active {
+            color: #fff;
+        }
+        .nav-link:hover::before,
+        .nav-link.active::before {
+            width: 3.5rem;
+            background-color: #e4e4e7;
+        }
+
         /* Custom cursor - hide default */
         body {
             cursor: none;
@@ -395,6 +431,13 @@
         }
 
         @media (prefers-reduced-motion: reduce) {
+            html {
+                scroll-behavior: auto;
+            }
+            .nav-link,
+            .nav-link::before {
+                transition: none;
+            }
             .fade-in-section {
                 opacity: 1;
                 transform: none;
@@ -444,13 +487,26 @@
         </button>
     </div>
 
-    <div class="content-wrapper container mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
+    <div class="content-wrapper container mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+      <div class="lg:flex lg:justify-between">
 
-        <!-- Header Section -->
-        <header class="mb-20 sm:mb-24 pt-4 sm:pt-8">
-            <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6 sm:gap-8">
-                <h1 class="font-display-italic text-6xl sm:text-7xl text-white leading-none">Thomas Y.L. Lin</h1>
-                <div class="flex items-center space-x-5 flex-shrink-0">
+        <!-- Header: fixed rail on desktop, stacked header on mobile -->
+        <header class="pt-12 sm:pt-16 lg:w-[40%] lg:sticky lg:top-0 lg:flex lg:h-screen lg:flex-col lg:justify-between lg:py-24">
+            <div>
+                <h1 class="font-display-italic text-5xl sm:text-6xl text-white leading-none">Thomas Y.L. Lin</h1>
+                <p class="font-display-roman mt-6 text-xl sm:text-2xl text-gray-300 leading-snug max-w-md">21, human, bridging physics and AI, building intelligence by dreaming.</p>
+                <nav id="side-nav" class="hidden lg:block mt-16" aria-label="Section navigation">
+                    <ul class="space-y-4">
+                        <li><a href="#about" class="nav-link">About</a></li>
+                        <li><a href="#projects-publications" class="nav-link">Work</a></li>
+                        <li><a href="#experience" class="nav-link">Experience</a></li>
+                        <li><a href="#education" class="nav-link">Education</a></li>
+                        <li><a href="#community" class="nav-link">Community</a></li>
+                        <li><a href="#visitor-map" class="nav-link">Reach</a></li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="flex items-center space-x-5 mt-10 lg:mt-0">
                     <a href="mailto:thermaus@uw.edu" class="text-gray-400 hover:text-white transition-colors" aria-label="Email Thomas Lin">
                         <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
                     </a>
@@ -469,16 +525,17 @@
                     <a href="cv.html" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white transition-colors" aria-label="View CV (PDF)" title="CV">
                         <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
                     </a>
-                </div>
             </div>
-            <p class="font-display-roman mt-6 text-xl sm:text-2xl text-gray-300 leading-snug tracking-tight sm:whitespace-nowrap">21, human, bridging physics and AI, building intelligence by dreaming.</p>
         </header>
+
+        <!-- Scrolling content column -->
+        <div class="pt-16 pb-16 lg:w-[55%] lg:py-24">
 
         <main class="space-y-20 sm:space-y-24">
 
             <!-- About Section -->
             <section id="about" class="fade-in-section">
-                <h2 class="font-display-italic text-4xl sm:text-5xl text-white mb-8">About Me</h2>
+                <h2 class="font-display-italic text-3xl sm:text-4xl text-white mb-8">About Me</h2>
                 <div class="text-gray-200 text-base sm:text-lg leading-relaxed" style="font-family: 'Newsreader', Georgia, serif;">
                     <p class="mb-4">I grew up in Taiwan and bootstrapped my way to the US at 20. My path is a <a href="https://en.wikipedia.org/wiki/Jump_diffusion" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:text-blue-300 hover:underline">jump diffusion</a>, driven by curiosity, a pursuit of impact, and a fear of mediocrity.</p>
                     
@@ -503,7 +560,7 @@
 
             <!-- Projects & Publications Section -->
             <section id="projects-publications" class="fade-in-section">
-                <h2 class="font-display-italic text-4xl sm:text-5xl text-white mb-8">Projects & Publications</h2>
+                <h2 class="font-display-italic text-3xl sm:text-4xl text-white mb-8">Projects & Publications</h2>
                 <div class="relative">
                     <!-- top fade -->
                     <div class="pointer-events-none absolute inset-x-0 top-0 h-8 bg-gradient-to-b from-[#0b0b0f] to-transparent z-10 rounded-t-xl"></div>
@@ -517,7 +574,7 @@
             
             <!-- Experience Section -->
             <section id="experience" class="timeline-group fade-in-section">
-                <h2 class="font-display-italic text-4xl sm:text-5xl text-white mb-8">Experience</h2>
+                <h2 class="font-display-italic text-3xl sm:text-4xl text-white mb-8">Experience</h2>
                 <div class="space-y-10">
                     <!-- MediaTek -->
                     <div class="timeline-item flex gap-5 sm:gap-6">
@@ -601,7 +658,7 @@
 
             <!-- Education Section -->
             <section id="education" class="timeline-group fade-in-section">
-                <h2 class="font-display-italic text-4xl sm:text-5xl text-white mb-8">Education</h2>
+                <h2 class="font-display-italic text-3xl sm:text-4xl text-white mb-8">Education</h2>
                 <div class="space-y-10">
                     <!-- University of Washington -->
                     <div class="timeline-item flex gap-5 sm:gap-6">
@@ -635,7 +692,7 @@
 
             <!-- Ventures & Community Section -->
             <section id="community" class="fade-in-section">
-                <h2 class="font-display-italic text-4xl sm:text-5xl text-white mb-8">Ventures & Community</h2>
+                <h2 class="font-display-italic text-3xl sm:text-4xl text-white mb-8">Ventures & Community</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <!-- YC AI SUS -->
                     <div class="community-card bg-gray-800 rounded-lg overflow-hidden">
@@ -717,7 +774,7 @@
 
         <!-- Visitor Map Section -->
         <section id="visitor-map" class="fade-in-section mt-20">
-            <h2 class="font-display-italic text-4xl sm:text-5xl text-white mb-3">Global Reach</h2>
+            <h2 class="font-display-italic text-3xl sm:text-4xl text-white mb-3">Global Reach</h2>
             <p class="text-gray-400 mb-6" id="visitor-summary">Loading visitor data...</p>
             <div class="bg-gray-800/50 rounded-lg p-6 backdrop-blur-sm border border-gray-700/50">
                 <div id="world-map" class="w-full h-96 rounded-lg border border-gray-700/30"></div>
@@ -771,6 +828,8 @@
             <p>&copy; <span id="copyright-year">2026</span> Thomas Y.L. Lin. All Rights Reserved.</p>
         </footer>
 
+        </div>
+      </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
@@ -1092,7 +1151,8 @@
                     // Header entrance
                     gsap.timeline({ defaults: { ease: 'power2.out' } })
                         .fromTo('header h1', { autoAlpha: 0, y: 14 }, { autoAlpha: 1, y: 0, duration: 0.7 })
-                        .fromTo('header > p', { autoAlpha: 0, y: 10 }, { autoAlpha: 1, y: 0, duration: 0.6 }, '-=0.45')
+                        .fromTo('header p', { autoAlpha: 0, y: 10 }, { autoAlpha: 1, y: 0, duration: 0.6 }, '-=0.45')
+                        .fromTo('#side-nav a', { autoAlpha: 0, x: -12 }, { autoAlpha: 1, x: 0, duration: 0.5, stagger: 0.06 }, '-=0.35')
                         .fromTo('header .flex.items-center a', { autoAlpha: 0, y: 6 }, { autoAlpha: 1, y: 0, duration: 0.4, stagger: 0.05 }, '-=0.4');
 
                     // Scroll reveals: section fades up, its cards/entries follow with a soft stagger
@@ -1128,6 +1188,24 @@
                 });
                 document.querySelectorAll('.fade-in-section').forEach(section => {
                     fadeInObserver.observe(section);
+                });
+            }
+
+            // Rail nav: highlight the section currently in view
+            const navLinks = document.querySelectorAll('#side-nav .nav-link');
+            if (navLinks.length) {
+                const navObserver = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            navLinks.forEach(l => l.classList.remove('active'));
+                            const link = document.querySelector(`#side-nav a[href="#${entry.target.id}"]`);
+                            if (link) link.classList.add('active');
+                        }
+                    });
+                }, { rootMargin: '-25% 0px -65% 0px' });
+                navLinks.forEach(link => {
+                    const section = document.getElementById(link.getAttribute('href').slice(1));
+                    if (section) navObserver.observe(section);
                 });
             }
 
