@@ -15,10 +15,9 @@
     <meta property="og:image" content="https://thermau5.github.io/raccoon_on_jupiter.png">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:image" content="https://thermau5.github.io/raccoon_on_jupiter.png">
-    <link rel="stylesheet" href="tailwind.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=Newsreader:ital,opsz,wght@0,6..72,400;1,6..72,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Martian+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
@@ -40,94 +39,573 @@
     }
     </script>
     <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #0b0b0f; /* Near-black, slightly warm */
-            color: #d1d5db; /* Light gray text */
-        }
-        /* Subtle film grain: adds texture without distraction */
-        body::before {
-            content: '';
-            position: fixed;
-            inset: 0;
-            pointer-events: none;
-            z-index: 0;
-            opacity: 0.05;
-            background-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
-        }
-        /* Soft offstage glow: single warm light source, gives the page depth */
-        body::after {
-            content: '';
-            position: fixed;
-            inset: 0;
-            pointer-events: none;
-            z-index: 0;
-            background:
-                radial-gradient(ellipse 70% 50% at 85% -10%, rgba(255, 170, 90, 0.06), transparent 60%),
-                radial-gradient(ellipse 80% 60% at 0% 100%, rgba(99, 102, 241, 0.05), transparent 65%);
-        }
-        .font-display-italic {
-            font-family: 'Instrument Serif', Georgia, 'Times New Roman', serif;
-            font-style: italic;
-            font-weight: 400;
-            letter-spacing: -0.005em;
-        }
-        .font-display-roman {
-            font-family: 'Instrument Serif', Georgia, 'Times New Roman', serif;
-            font-style: normal;
-            font-weight: 400;
-        }
-        .content-wrapper {
-            position: relative;
-            z-index: 10;
-        }
-        .timeline-item {
-            position: relative;
-        }
-        .timeline-item::before {
-            content: '';
-            position: absolute;
-            left: 24px; /* Center of the 48px logo column */
-            transform: translateX(-50%);
-            top: 60px; /* Just below the logo (4px pt + 48px logo + 8px breath) */
-            bottom: -2.25rem; /* Reach into the 2.5rem gap, leaving a small breath above the next logo */
-            width: 1px;
-            background-color: #2a2f3a; /* Soft, muted line */
-        }
-        .timeline-item:last-child::before {
-            display: none; /* No line below the final entry in each section */
-        }
-        .community-card {
-            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-        }
-        .community-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.15);
-        }
-        .details-content {
-             transition: max-height 0.5s ease-in-out, padding 0.5s ease-in-out;
-             overflow: hidden;
-        }
-        /* Fixed-height scrollable list (Projects & Publications) */
-        .scrollable-list {
-            scrollbar-width: thin;
-            scrollbar-color: rgba(255, 255, 255, 0.12) transparent;
-        }
-        .scrollable-list::-webkit-scrollbar {
-            width: 6px;
-        }
-        .scrollable-list::-webkit-scrollbar-track {
-            background: transparent;
-        }
-        .scrollable-list::-webkit-scrollbar-thumb {
-            background-color: rgba(255, 255, 255, 0.12);
-            border-radius: 3px;
-        }
-        .scrollable-list::-webkit-scrollbar-thumb:hover {
-            background-color: rgba(255, 255, 255, 0.24);
+        :root {
+            --bg: #0b0b0e;
+            --ink: #f2f2f0;
+            --body: #a3a3ab;
+            --faint: #74747d;
+            --line: rgba(255, 255, 255, 0.16);
+            --hair: rgba(255, 255, 255, 0.08);
+            --sand: #f4cf98;
+            --card: #141417;
         }
 
-        /* Fade-in animation for sections */
+        * { box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            margin: 0;
+            font-family: 'Inter', -apple-system, sans-serif;
+            font-size: 16px;
+            line-height: 1.6;
+            color: var(--ink);
+            background-color: #0b0b0e;
+            /* Rama-style diagonal hatch texture, inverted for the dark scene */
+            background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='18' height='18'><path d='M5 13 L13 5' stroke='%23ffffff' stroke-opacity='0.05' stroke-width='1'/></svg>");
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .mono {
+            font-family: 'Martian Mono', monospace;
+            font-weight: 500;
+            letter-spacing: 0.02em;
+            text-transform: uppercase;
+        }
+
+        h1, h2, h3 {
+            font-weight: 500;
+            line-height: 1.12;
+            letter-spacing: -0.03em;
+            margin: 0;
+        }
+
+        a { color: inherit; }
+
+        img { max-width: 100%; display: block; }
+
+        .container {
+            max-width: 1060px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* ---------- Navigation ---------- */
+        .nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: var(--bg);
+            border-bottom: 1px solid var(--hair);
+        }
+        .nav-inner {
+            max-width: 1060px;
+            margin: 0 auto;
+            padding: 0 24px;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+        }
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 26px;
+        }
+        .nav-links a {
+            font-family: 'Martian Mono', monospace;
+            font-size: 10.5px;
+            font-weight: 500;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            text-decoration: none;
+            color: var(--ink);
+            opacity: 0.85;
+            transition: opacity 0.15s ease;
+        }
+        .nav-links a:hover { opacity: 1; }
+        @media (max-width: 820px) {
+            .nav { display: none; }
+        }
+
+        .text-link {
+            font-family: 'Martian Mono', monospace;
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            color: var(--ink);
+            text-decoration: none;
+            border-bottom: 1px solid var(--line);
+            padding-bottom: 3px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: border-color 0.15s ease;
+        }
+        .text-link:hover { border-color: var(--ink); }
+
+        /* ---------- Hero ---------- */
+        .hero {
+            padding: 88px 0 96px;
+        }
+        .hero-top {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: flex-end;
+            justify-content: space-between;
+            gap: 20px 32px;
+        }
+        .hero h1 {
+            font-size: clamp(2.7rem, 6.4vw, 4.4rem);
+            letter-spacing: -0.04em;
+            margin: 0;
+        }
+        .hero .sub {
+            color: var(--body);
+            font-size: clamp(1.05rem, 2vw, 1.25rem);
+            line-height: 1.55;
+            margin: 22px 0 0;
+        }
+        .hero-socials {
+            display: flex;
+            align-items: center;
+            gap: 22px;
+            padding-bottom: 10px;
+        }
+        .hero-socials a {
+            color: var(--ink);
+            opacity: 0.45;
+            transition: opacity 0.15s ease;
+            display: inline-flex;
+        }
+        .hero-socials a:hover { opacity: 1; }
+
+        /* ---------- Stat strip ---------- */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+            padding-bottom: 96px;
+        }
+        .stat-card {
+            padding: 44px 28px;
+            text-align: center;
+            background: var(--ink);
+            color: #fff;
+        }
+        .stat-card.sand {
+            background: var(--sand);
+            color: var(--ink);
+        }
+        .stat-card .num {
+            font-size: clamp(2.2rem, 4vw, 3.1rem);
+            font-weight: 500;
+            letter-spacing: -0.03em;
+            line-height: 1;
+            display: inline-block;
+            padding-bottom: 14px;
+            margin-bottom: 14px;
+            border-bottom: 1px dotted rgba(255, 255, 255, 0.4);
+        }
+        .stat-card.sand .num { border-bottom-color: rgba(10, 10, 10, 0.35); }
+        .stat-card .cap {
+            font-size: 15px;
+            line-height: 1.5;
+            opacity: 0.85;
+            margin: 0 auto;
+            max-width: 240px;
+        }
+        @media (max-width: 760px) {
+            .stats { grid-template-columns: 1fr; }
+        }
+
+        /* ---------- Sections ---------- */
+        section { padding: 0 0 104px; }
+        .eyebrow {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            font-family: 'Martian Mono', monospace;
+            font-size: 10.5px;
+            font-weight: 500;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--ink);
+            margin-bottom: 18px;
+        }
+        .eyebrow .tick { color: #b98d45; }
+        .section-title {
+            text-align: center;
+            font-size: clamp(1.9rem, 4.4vw, 2.9rem);
+            letter-spacing: -0.035em;
+            margin-bottom: 18px;
+        }
+        .section-intro {
+            text-align: center;
+            color: var(--body);
+            max-width: 640px;
+            margin: 0 auto 48px;
+            font-size: 17px;
+        }
+
+        /* ---------- About ---------- */
+        .about-body {
+            max-width: 720px;
+            margin: 0 auto;
+            color: var(--body);
+            font-size: 17px;
+            line-height: 1.75;
+        }
+        .about-body p { margin: 0 0 18px; }
+        .about-body a {
+            color: var(--ink);
+            text-decoration: underline;
+            text-decoration-color: rgba(10, 10, 10, 0.3);
+            text-underline-offset: 3px;
+            transition: background 0.15s ease, color 0.15s ease;
+        }
+        .about-body a:hover { background: var(--sand); color: #0a0a0a; }
+        .toggle-btn {
+            font-family: 'Martian Mono', monospace;
+            font-size: 10.5px;
+            font-weight: 500;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: var(--ink);
+            background: none;
+            border: 1px solid var(--line);
+            padding: 9px 16px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+        }
+        .toggle-btn:hover { background: var(--sand); border-color: var(--sand); color: #0a0a0a; }
+        .toggle-btn svg { transition: transform 0.3s ease; }
+
+        /* ---------- Work cards ---------- */
+        /* Fixed-height scrollable list with edge fades, as on the original site */
+        .work-scroll {
+            position: relative;
+            max-width: 860px;
+            margin: 0 auto;
+        }
+        .work-fade {
+            position: absolute;
+            left: 0;
+            right: 0;
+            height: 34px;
+            z-index: 5;
+            pointer-events: none;
+        }
+        .work-fade.top { top: 0; background: linear-gradient(to bottom, #0b0b0e, transparent); }
+        .work-fade.bottom { bottom: 0; background: linear-gradient(to top, #0b0b0e, transparent); }
+        .work-list {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            max-height: 28rem;
+            overflow-y: auto;
+            padding: 6px 14px 6px 2px;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(255, 255, 255, 0.15) transparent;
+        }
+        @media (min-width: 640px) {
+            .work-list { max-height: 32rem; }
+        }
+        .work-list::-webkit-scrollbar { width: 6px; }
+        .work-list::-webkit-scrollbar-track { background: transparent; }
+        .work-list::-webkit-scrollbar-thumb {
+            background-color: rgba(255, 255, 255, 0.15);
+            border-radius: 3px;
+        }
+        .work-list::-webkit-scrollbar-thumb:hover { background-color: rgba(255, 255, 255, 0.28); }
+        .work-card {
+            background: var(--card);
+            border: 1px solid var(--line);
+            padding: 34px 36px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .work-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 6px 6px 0 rgba(255, 255, 255, 0.07);
+        }
+        .work-card h3 {
+            font-size: clamp(1.25rem, 2.4vw, 1.55rem);
+            letter-spacing: -0.025em;
+        }
+        .work-card .authors {
+            color: var(--faint);
+            font-size: 14.5px;
+            margin: 8px 0 0;
+        }
+        .pill-row {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 8px;
+            margin-top: 16px;
+        }
+        .pill {
+            font-family: 'Martian Mono', monospace;
+            font-size: 9.5px;
+            font-weight: 500;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            border: 1px solid var(--line);
+            border-radius: 999px;
+            padding: 5px 12px;
+            white-space: nowrap;
+        }
+        .pill.venue {
+            background: var(--sand);
+            border-color: transparent;
+            color: #0a0a0a;
+        }
+        .pill.live::before {
+            content: '';
+            display: inline-block;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #16a34a;
+            margin-right: 6px;
+            animation: pulse 2s ease-in-out infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.35; }
+        }
+        .work-card .desc {
+            color: var(--body);
+            font-size: 15.5px;
+            line-height: 1.65;
+            margin: 16px 0 0;
+        }
+        .work-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-top: 22px;
+        }
+        .work-links a {
+            font-family: 'Martian Mono', monospace;
+            font-size: 10px;
+            font-weight: 500;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            text-decoration: none;
+            color: var(--ink);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            border-bottom: 1px solid transparent;
+            padding-bottom: 2px;
+            transition: border-color 0.15s ease;
+        }
+        .work-links a:hover { border-color: var(--ink); }
+        @media (max-width: 640px) {
+            .work-card { padding: 26px 22px; }
+        }
+
+        /* ---------- Experience / Education ---------- */
+        .xp-list {
+            max-width: 860px;
+            margin: 0 auto;
+            border-top: 1px solid var(--line);
+        }
+        .xp-item {
+            display: flex;
+            gap: 24px;
+            padding: 34px 8px;
+            border-bottom: 1px solid var(--line);
+        }
+        .xp-logo img {
+            width: 48px;
+            height: 48px;
+            object-fit: contain;
+            border: 1px solid var(--hair);
+            background: #fff;
+            transition: transform 0.2s ease;
+        }
+        .xp-item:hover .xp-logo img { transform: scale(1.06); }
+        .xp-main { flex: 1; min-width: 0; }
+        .xp-head {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 6px 18px;
+        }
+        .xp-head a.org {
+            font-size: clamp(1.15rem, 2.2vw, 1.4rem);
+            font-weight: 500;
+            letter-spacing: -0.02em;
+            text-decoration: none;
+        }
+        .xp-head a.org:hover { text-decoration: underline; text-underline-offset: 3px; }
+        .xp-date {
+            font-family: 'Martian Mono', monospace;
+            font-size: 10px;
+            font-weight: 500;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            color: var(--faint);
+            white-space: nowrap;
+        }
+        .xp-role { color: var(--body); font-size: 15.5px; margin: 6px 0 0; }
+        .xp-note { color: var(--faint); font-size: 13.5px; font-style: italic; margin: 10px 0 0; }
+        .xp-desc { color: var(--body); font-size: 15px; line-height: 1.65; margin: 10px 0 0; }
+        .xp-toggle {
+            font-family: 'Martian Mono', monospace;
+            font-size: 10px;
+            font-weight: 500;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            color: var(--faint);
+            background: none;
+            border: none;
+            padding: 0;
+            margin-top: 12px;
+            cursor: pointer;
+            transition: color 0.15s ease;
+        }
+        .xp-toggle:hover { color: var(--ink); }
+        .xp-details { margin-top: 12px; }
+        .xp-details ul {
+            margin: 0;
+            padding-left: 20px;
+            color: var(--body);
+            font-size: 15px;
+            line-height: 1.65;
+        }
+        .xp-details li { margin-bottom: 6px; }
+        .hidden { display: none; }
+        @media (max-width: 560px) {
+            .xp-item { gap: 16px; padding: 28px 4px; }
+        }
+
+        /* ---------- Community cards ---------- */
+        .community-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 18px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .community-card {
+            background: var(--card);
+            border: 1px solid var(--line);
+            overflow: hidden;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .community-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 6px 6px 0 rgba(255, 255, 255, 0.07);
+        }
+        .community-card img {
+            width: 100%;
+            height: 190px;
+            object-fit: cover;
+            filter: grayscale(1) contrast(1.03);
+            transition: filter 0.3s ease;
+        }
+        .community-card:hover img { filter: grayscale(0); }
+        .community-card .body { padding: 22px 24px 26px; }
+        .community-card h3 {
+            font-size: 1.1rem;
+            letter-spacing: -0.015em;
+        }
+        .community-card p {
+            color: var(--body);
+            font-size: 14.5px;
+            line-height: 1.6;
+            margin: 8px 0 0;
+        }
+        @media (max-width: 720px) {
+            .community-grid { grid-template-columns: 1fr; }
+        }
+
+        /* ---------- Global reach ---------- */
+        .map-card {
+            max-width: 900px;
+            margin: 0 auto;
+            background: var(--card);
+            border: 1px solid var(--line);
+            padding: 28px;
+        }
+        #world-map {
+            width: 100%;
+            height: 380px;
+            border: 1px solid var(--hair);
+            background: #141417;
+        }
+        .map-privacy {
+            text-align: center;
+            margin-top: 18px;
+            font-family: 'Martian Mono', monospace;
+            font-size: 9.5px;
+            font-weight: 500;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            color: var(--faint);
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 18px;
+            margin-top: 18px;
+        }
+        .stats-panel {
+            border: 1px solid var(--hair);
+            padding: 18px 20px;
+        }
+        .stats-panel h3 {
+            font-family: 'Martian Mono', monospace;
+            font-size: 10.5px;
+            font-weight: 600;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+        .stats-panel .row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            color: var(--body);
+            padding: 3px 0;
+        }
+        .stats-panel .row .count {
+            font-family: 'Martian Mono', monospace;
+            font-size: 11px;
+            color: var(--ink);
+        }
+        @media (max-width: 640px) {
+            .stats-grid { grid-template-columns: 1fr; }
+        }
+
+        /* ---------- Footer ---------- */
+        footer {
+            background: #060608;
+            border-top: 1px solid var(--hair);
+            padding: 30px 0;
+        }
+        .footer-line {
+            margin: 0;
+            text-align: center;
+            font-family: 'Martian Mono', monospace;
+            font-size: 9.5px;
+            font-weight: 500;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.45);
+        }
+
+        /* ---------- Reveal animation ---------- */
         .fade-in-section {
             opacity: 0;
             transform: translateY(30px);
@@ -137,262 +615,7 @@
             opacity: 1;
             transform: translateY(0);
         }
-        /* When GSAP drives the reveal, the CSS transition must not fight its per-frame updates */
-        .gsap-motion .fade-in-section {
-            transition: none;
-        }
-
-        /* Custom cursor - hide default */
-        body {
-            cursor: none;
-        }
-        a, button, [onclick] {
-            cursor: none;
-        }
-
-        /* Custom cursor elements */
-        #cursor-glow {
-            position: fixed;
-            left: 0;
-            top: 0;
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(59, 130, 246, 0.8) 0%, rgba(37, 99, 235, 0.4) 40%, transparent 70%);
-            pointer-events: none;
-            z-index: 9999;
-            box-shadow: 0 0 30px rgba(59, 130, 246, 0.6), 0 0 60px rgba(37, 99, 235, 0.3);
-            will-change: transform;
-            opacity: 0;
-            transition: opacity 0.2s ease;
-        }
-        
-        #cursor-core {
-            position: fixed;
-            left: 0;
-            top: 0;
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.95);
-            pointer-events: none;
-            z-index: 10000;
-            box-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
-            will-change: transform;
-            opacity: 0;
-            transition: opacity 0.2s ease;
-        }
-
-        /* Moon cursor variant - simple white point */
-        #cursor-glow.moon {
-            display: none;
-        }
-        
-        #cursor-core.moon {
-            width: 8px;
-            height: 8px;
-            background: rgba(255, 255, 255, 0.95);
-            box-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
-        }
-
-        /* Black hole cursor variant */
-        #cursor-glow.blackhole {
-            background: radial-gradient(circle, rgba(0, 0, 0, 0.9) 0%, rgba(255, 140, 0, 0.8) 30%, rgba(255, 165, 0, 0.6) 50%, transparent 70%);
-            box-shadow: 0 0 40px rgba(255, 140, 0, 0.8), 0 0 80px rgba(255, 100, 0, 0.4);
-            width: 30px;
-            height: 30px;
-        }
-        
-        #cursor-core.blackhole {
-            background: rgba(0, 0, 0, 1);
-            box-shadow: 0 0 10px rgba(255, 140, 0, 0.9), 0 0 20px rgba(255, 100, 0, 0.6);
-            width: 16px;
-            height: 16px;
-        }
-
-        /* Cursor selector floating bar - collapsible slide-in */
-        .cursor-selector {
-            position: fixed;
-            top: 50%;
-            right: 0.5rem;
-            transform: translateY(-50%);
-            background: rgba(31, 41, 55, 0.6);
-            backdrop-filter: blur(8px);
-            border: 1px solid rgba(75, 85, 99, 0.3);
-            border-radius: 0.75rem;
-            padding: 0.5rem;
-            display: flex;
-            flex-direction: column;
-            gap: 0.4rem;
-            z-index: 9998;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-            cursor: auto !important;
-            /* Collapsed state */
-            width: 0.4rem;
-            overflow: hidden;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .cursor-selector::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 3px;
-            height: 60px;
-            background: linear-gradient(to bottom, 
-                rgba(59, 130, 246, 0.3), 
-                rgba(59, 130, 246, 0.8), 
-                rgba(59, 130, 246, 0.3));
-            border-radius: 2px;
-            opacity: 1;
-            transition: opacity 0.3s ease;
-        }
-
-        .cursor-selector:hover {
-            width: auto;
-            padding: 0.5rem;
-            background: rgba(31, 41, 55, 0.9);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-        }
-
-        .cursor-selector:hover::before {
-            opacity: 0;
-        }
-
-        .cursor-option {
-            appearance: none;
-            width: 2rem;
-            height: 2rem;
-            padding: 0;
-            border-radius: 0.4rem;
-            border: 1.5px solid transparent;
-            background: rgba(55, 65, 81, 0.4);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer !important;
-            position: relative;
-            flex-shrink: 0;
-            opacity: 0;
-            transform: scale(0.8);
-            transition: all 0.2s ease;
-        }
-
-        .cursor-selector:hover .cursor-option {
-            opacity: 1;
-            transform: scale(1);
-        }
-
-        .cursor-option:hover {
-            background: rgba(75, 85, 99, 0.6);
-            transform: scale(1.1) !important;
-        }
-
-        .cursor-option.active {
-            border-color: #3b82f6;
-            background: rgba(59, 130, 246, 0.25);
-            box-shadow: 0 0 8px rgba(59, 130, 246, 0.3);
-        }
-
-        .cursor-option-preview {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        /* Preview styles - scaled down */
-        .preview-normal {
-            width: 0;
-            height: 0;
-            border-left: 3px solid transparent;
-            border-right: 3px solid transparent;
-            border-bottom: 9px solid #d1d5db;
-            transform: rotate(-45deg);
-        }
-
-        .preview-neutron {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(59, 130, 246, 0.8) 0%, rgba(37, 99, 235, 0.4) 40%, transparent 70%);
-            box-shadow: 0 0 6px rgba(59, 130, 246, 0.6);
-        }
-
-        .preview-neutron::after {
-            content: '';
-            position: absolute;
-            width: 3px;
-            height: 3px;
-            background: white;
-            border-radius: 50%;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-        }
-
-        .preview-moon {
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            background: white;
-            box-shadow: 0 0 6px rgba(255, 255, 255, 0.8);
-        }
-
-        .preview-blackhole {
-            width: 14px;
-            height: 14px;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(0, 0, 0, 0.9) 0%, rgba(255, 140, 0, 0.8) 30%, rgba(255, 165, 0, 0.6) 50%, transparent 70%);
-            box-shadow: 0 0 8px rgba(255, 140, 0, 0.8);
-        }
-
-        .preview-blackhole::after {
-            content: '';
-            position: absolute;
-            width: 7px;
-            height: 7px;
-            background: black;
-            border-radius: 50%;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            box-shadow: 0 0 3px rgba(255, 140, 0, 0.9);
-        }
-
-        /* Hide custom cursor when in normal mode */
-        body.cursor-normal #cursor-glow,
-        body.cursor-normal #cursor-core {
-            display: none;
-        }
-
-        body.cursor-normal,
-        body.cursor-normal a,
-        body.cursor-normal button,
-        body.cursor-normal [onclick] {
-            cursor: auto;
-        }
-
-        /* Always show normal cursor on the selector bar */
-        .cursor-selector,
-        .cursor-selector * {
-            cursor: auto !important;
-        }
-        
-        .cursor-option {
-            cursor: pointer !important;
-        }
-
-        /* Touch devices: no mouse cursor to customize, hide the selector */
-        @media (hover: none), (pointer: coarse) {
-            .cursor-selector {
-                display: none;
-            }
-        }
+        .gsap-motion .fade-in-section { transition: none; }
 
         @media (prefers-reduced-motion: reduce) {
             .fade-in-section {
@@ -400,100 +623,76 @@
                 transform: none;
                 transition: none;
             }
-            .community-card,
-            .details-content,
-            .cursor-selector,
-            .cursor-option {
-                transition: none;
-            }
-            .community-card:hover {
-                transform: none;
-            }
-            .animate-pulse {
-                animation: none;
-            }
+            .work-card, .community-card, .chip-btn { transition: none; }
+            .work-card:hover, .community-card:hover, .chip-btn:hover { transform: none; }
+            .pill.live::before { animation: none; }
         }
     </style>
 </head>
-<body class="antialiased">
-    <!-- Black hole cursor effect -->
-    <div id="cursor-glow"></div>
-    <div id="cursor-core"></div>
+<body>
 
-    <!-- Cursor Selector Floating Bar -->
-    <div class="cursor-selector">
-        <button type="button" class="cursor-option active" data-cursor="normal" title="Normal Cursor" aria-label="Use normal cursor">
-            <div class="cursor-option-preview">
-                <div class="preview-normal"></div>
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-inner">
+            <div class="nav-links">
+                <a href="#about">About Me</a>
+                <a href="#work">Projects &amp; Publications</a>
+                <a href="#experience">Experience</a>
+                <a href="#education">Education</a>
+                <a href="#community">Ventures &amp; Community</a>
             </div>
-        </button>
-        <button type="button" class="cursor-option" data-cursor="moon" title="Moon" aria-label="Use moon cursor">
-            <div class="cursor-option-preview">
-                <div class="preview-moon"></div>
-            </div>
-        </button>
-        <button type="button" class="cursor-option" data-cursor="neutron" title="Neutron Star" aria-label="Use neutron star cursor">
-            <div class="cursor-option-preview">
-                <div class="preview-neutron"></div>
-            </div>
-        </button>
-        <button type="button" class="cursor-option" data-cursor="blackhole" title="Black Hole" aria-label="Use black hole cursor">
-            <div class="cursor-option-preview">
-                <div class="preview-blackhole"></div>
-            </div>
-        </button>
-    </div>
+        </div>
+    </nav>
 
-    <div class="content-wrapper container mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
+    <div class="container">
 
-        <!-- Header Section -->
-        <header class="mb-20 sm:mb-24 pt-4 sm:pt-8">
-            <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6 sm:gap-8">
-                <h1 class="font-display-italic text-6xl sm:text-7xl text-white leading-none">Thomas Y.L. Lin</h1>
-                <div class="flex items-center space-x-5 flex-shrink-0">
-                    <a href="mailto:thermaus@uw.edu" class="text-gray-400 hover:text-white transition-colors" aria-label="Email Thomas Lin">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
-                    </a>
-                    <a href="https://github.com/thermau5" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white transition-colors" aria-label="Thomas Lin on GitHub">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"></path><path d="M9 18c-4.51 2-5-2-7-2"></path></svg>
-                    </a>
-                    <a href="https://www.linkedin.com/in/thomaslin0908" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white transition-colors" aria-label="Thomas Lin on LinkedIn">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
-                    </a>
-                    <a href="https://x.com/THERMAU5" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white transition-colors" aria-label="Thomas Lin on X">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-                    </a>
-                    <a href="https://scholar.google.com/citations?user=PvseS74AAAAJ" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white transition-colors" aria-label="Thomas Lin on Google Scholar">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M5.242 13.769L0 9.5L12 0l12 9.5l-5.242 4.269C17.548 11.249 14.978 9 12 9s-5.548 2.249-6.758 4.769zM12 10c-1.381 0-2.5 1.119-2.5 2.5s1.119 2.5 2.5 2.5s2.5-1.119 2.5-2.5s-1.119-2.5-2.5-2.5zM12 15c-2.223 0-4.157 1.21-5.185 3h10.37C16.157 16.21 14.223 15 12 15zm-8.242 4.769L12 24l8.242-4.231C18.452 22.751 15.478 24 12 24s-6.452-1.249-8.242-3.231z"/></svg>
-                    </a>
-                    <a href="cv.html" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white transition-colors" aria-label="View CV (PDF)" title="CV">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
-                    </a>
+        <!-- Hero -->
+        <header class="hero">
+            <div class="hero-top">
+                <h1>Thomas Y.L. Lin</h1>
+                <div class="hero-socials">
+                <a href="mailto:thermaus@uw.edu" aria-label="Email Thomas Lin">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                </a>
+                <a href="https://github.com/thermau5" target="_blank" rel="noopener noreferrer" aria-label="Thomas Lin on GitHub">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"></path><path d="M9 18c-4.51 2-5-2-7-2"></path></svg>
+                </a>
+                <a href="https://www.linkedin.com/in/thomaslin0908" target="_blank" rel="noopener noreferrer" aria-label="Thomas Lin on LinkedIn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+                </a>
+                <a href="https://x.com/THERMAU5" target="_blank" rel="noopener noreferrer" aria-label="Thomas Lin on X">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                </a>
+                <a href="https://scholar.google.com/citations?user=PvseS74AAAAJ" target="_blank" rel="noopener noreferrer" aria-label="Thomas Lin on Google Scholar">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M5.242 13.769L0 9.5L12 0l12 9.5l-5.242 4.269C17.548 11.249 14.978 9 12 9s-5.548 2.249-6.758 4.769zM12 10c-1.381 0-2.5 1.119-2.5 2.5s1.119 2.5 2.5 2.5s2.5-1.119 2.5-2.5s-1.119-2.5-2.5-2.5zM12 15c-2.223 0-4.157 1.21-5.185 3h10.37C16.157 16.21 14.223 15 12 15zm-8.242 4.769L12 24l8.242-4.231C18.452 22.751 15.478 24 12 24s-6.452-1.249-8.242-3.231z"/></svg>
+                </a>
+                <a href="cv.html" target="_blank" rel="noopener noreferrer" aria-label="View CV (PDF)" title="CV">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                </a>
                 </div>
             </div>
-            <p class="font-display-roman mt-6 text-xl sm:text-2xl text-gray-300 leading-snug tracking-tight sm:whitespace-nowrap">21, human, bridging physics and AI, building intelligence by dreaming.</p>
+            <p class="sub">21, human, bridging physics and AI, building intelligence by dreaming.</p>
         </header>
 
-        <main class="space-y-20 sm:space-y-24">
+        <main>
 
             <!-- About Section -->
             <section id="about" class="fade-in-section">
-                <h2 class="font-display-italic text-4xl sm:text-5xl text-white mb-8">About Me</h2>
-                <div class="text-gray-200 text-base sm:text-lg leading-relaxed" style="font-family: 'Newsreader', Georgia, serif;">
-                    <p class="mb-4">I grew up in Taiwan and bootstrapped my way to the US at 20. My path is a <a href="https://en.wikipedia.org/wiki/Jump_diffusion" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:text-blue-300 hover:underline">jump diffusion</a>, driven by curiosity, a pursuit of impact, and a fear of mediocrity.</p>
-                    
+                <h2 class="section-title">About Me</h2>
+                <div class="about-body">
+                    <p>I grew up in Taiwan and bootstrapped my way to the US at 20. My path is a <a href="https://en.wikipedia.org/wiki/Jump_diffusion" target="_blank" rel="noopener noreferrer">jump diffusion</a>, driven by curiosity, a pursuit of impact, and a fear of mediocrity.</p>
+
                     <!-- Collapsible content -->
-                    <div id="about-expandable" class="overflow-hidden transition-all duration-700 ease-in-out" style="max-height: 0; opacity: 0;">
-                        <p class="mb-4">My inspiration traces back to a childhood fascination with chaos theory, where nontrivial phenomena emerge from simple math. The real aspiration is not merely to explain nature, but to engineer artifacts beyond it. That pursuit carried me through competitive physics programs and into founding a national team for the <a href="https://eupho.ee/eupho-2022/" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:text-blue-300 hover:underline">European Physics Olympiad</a>. There, I won medals and earned early, test-free admission to National Taiwan University.</p>
-                        <p class="mb-4">The year I entered college, ChatGPT emerged and prompted me to shift from physics to AI/ML research. I was fortunate to work with <a href="https://magics.cs.northwestern.edu/index.html" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:text-blue-300 hover:underline">Northwestern University (MAGICS Lab)</a>, <a href="https://gammaparadigm.com/" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:text-blue-300 hover:underline">Gamma Paradigm Capital</a>, and <a href="https://www.ai4science.caltech.edu/" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:text-blue-300 hover:underline">Caltech (AI4Science Lab)</a>. Through publications, I attended top conferences and met some of the most brilliant minds on Earth. It became clear the world was bigger than where I started. So I left my home country, applied for transfer, and made it to the University of Washington.</p>
-                        <p class="mb-4">My long-term bet is the <a href="https://en.wikipedia.org/wiki/Experience_machine" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:text-blue-300 hover:underline">experience machine</a> (Nozick, 1974), broadened to any form of life: the right to dream an ego-centric, reversible, and eternal second life. And, in both the <a href="https://worldmodels.github.io/" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:text-blue-300 hover:underline">world model</a> and <a href="https://www.ynharari.com/book/sapiens/" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:text-blue-300 hover:underline">H. sapiens</a> senses, dreaming is not escapism but intelligence itself. For humans, it may be the most Renaissance act after eras of slavery and labor, and the most economically efficient way to turn desire into realized utility.</p>
+                    <div id="about-expandable" style="max-height: 0; opacity: 0; overflow: hidden; transition: max-height 0.7s ease-in-out, opacity 0.7s ease-in-out;">
+                        <p>My inspiration traces back to a childhood fascination with chaos theory, where nontrivial phenomena emerge from simple math. The real aspiration is not merely to explain nature, but to engineer artifacts beyond it. That pursuit carried me through competitive physics programs and into founding a national team for the <a href="https://eupho.ee/eupho-2022/" target="_blank" rel="noopener noreferrer">European Physics Olympiad</a>. There, I won medals and earned early, test-free admission to National Taiwan University.</p>
+                        <p>The year I entered college, ChatGPT emerged and prompted me to shift from physics to AI/ML research. I was fortunate to work with <a href="https://magics.cs.northwestern.edu/index.html" target="_blank" rel="noopener noreferrer">Northwestern University (MAGICS Lab)</a>, <a href="https://gammaparadigm.com/" target="_blank" rel="noopener noreferrer">Gamma Paradigm Capital</a>, and <a href="https://www.ai4science.caltech.edu/" target="_blank" rel="noopener noreferrer">Caltech (AI4Science Lab)</a>. Through publications, I attended top conferences and met some of the most brilliant minds on Earth. It became clear the world was bigger than where I started. So I left my home country, applied for transfer, and made it to the University of Washington.</p>
+                        <p>My long-term bet is the <a href="https://en.wikipedia.org/wiki/Experience_machine" target="_blank" rel="noopener noreferrer">experience machine</a> (Nozick, 1974), broadened to any form of life: the right to dream an ego-centric, reversible, and eternal second life. And, in both the <a href="https://worldmodels.github.io/" target="_blank" rel="noopener noreferrer">world model</a> and <a href="https://www.ynharari.com/book/sapiens/" target="_blank" rel="noopener noreferrer">H. sapiens</a> senses, dreaming is not escapism but intelligence itself. For humans, it may be the most Renaissance act after eras of slavery and labor, and the most economically efficient way to turn desire into realized utility.</p>
                     </div>
-                    
-                    <!-- Toggle Button -->
-                    <div class="text-center -mt-2">
-                        <button id="toggle-about-btn" class="text-xs text-blue-400/70 hover:text-blue-300 transition-colors focus:outline-none focus:ring-1 focus:ring-blue-400/30 rounded px-3 py-1 inline-flex items-center gap-1" aria-expanded="false" aria-controls="about-expandable">
+
+                    <div style="text-align: center; margin-top: 6px;">
+                        <button id="toggle-about-btn" class="toggle-btn" aria-expanded="false" aria-controls="about-expandable">
                             <span id="toggle-about-text">Read more</span>
-                            <svg id="toggle-about-arrow" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transition-transform duration-300">
+                            <svg id="toggle-about-arrow" xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <polyline points="6 9 12 15 18 9"></polyline>
                             </svg>
                         </button>
@@ -502,95 +701,101 @@
             </section>
 
             <!-- Projects & Publications Section -->
-            <section id="projects-publications" class="fade-in-section">
-                <h2 class="font-display-italic text-4xl sm:text-5xl text-white mb-8">Projects & Publications</h2>
-                <div class="relative">
-                    <!-- top fade -->
-                    <div class="pointer-events-none absolute inset-x-0 top-0 h-8 bg-gradient-to-b from-[#0b0b0f] to-transparent z-10 rounded-t-xl"></div>
-                    <!-- bottom fade -->
-                    <div class="pointer-events-none absolute inset-x-0 bottom-0 h-8 bg-gradient-to-t from-[#0b0b0f] to-transparent z-10 rounded-b-xl"></div>
-                    <div id="showcase-list" class="scrollable-list space-y-5 max-h-[28rem] sm:max-h-[32rem] overflow-y-auto pr-3 py-1">
+            <section id="work" class="fade-in-section">
+                <h2 class="section-title">Projects &amp; Publications</h2>
+                <div class="work-scroll">
+                    <div class="work-fade top" aria-hidden="true"></div>
+                    <div class="work-fade bottom" aria-hidden="true"></div>
+                    <div id="showcase-list" class="work-list">
                         <!-- Entries injected here -->
                     </div>
                 </div>
             </section>
-            
+
             <!-- Experience Section -->
-            <section id="experience" class="timeline-group fade-in-section">
-                <h2 class="font-display-italic text-4xl sm:text-5xl text-white mb-8">Experience</h2>
-                <div class="space-y-10">
+            <section id="experience" class="fade-in-section">
+                <h2 class="section-title">Experience</h2>
+                <div class="xp-list">
                     <!-- MediaTek -->
-                    <div class="timeline-item flex gap-5 sm:gap-6">
-                        <div class="icon-container flex-shrink-0 pt-1">
-                            <a href="https://www.mediatek.com/" target="_blank" rel="noopener noreferrer" class="group block">
-                                <img src="mediatek_logo.jpg" alt="MediaTek Logo" width="48" height="48" class="rounded-lg w-12 h-12 object-contain transition-transform duration-300 group-hover:scale-110">
+                    <div class="xp-item">
+                        <div class="xp-logo">
+                            <a href="https://www.mediatek.com/" target="_blank" rel="noopener noreferrer">
+                                <img src="mediatek_logo.jpg" alt="MediaTek Logo" width="48" height="48">
                             </a>
                         </div>
-                        <div class="flex-grow min-w-0">
-                            <a href="https://www.mediatek.com/" target="_blank" rel="noopener noreferrer" class="font-display-roman text-2xl sm:text-3xl text-white leading-tight hover:underline">MediaTek</a>
-                            <p class="text-base text-gray-300 mt-1">Research Intern</p>
-                            <p class="text-sm text-gray-500 mt-1 tracking-wide">San Jose, CA &middot; Jun 2026 - Present</p>
-                            <p class="mt-3 text-gray-300 text-sm leading-relaxed">Building a multi-physics world model for chips.</p>
-                            <p class="text-gray-500 text-xs mt-2 italic">Pitched the Chairman and initiated the project with funding and data.</p>
+                        <div class="xp-main">
+                            <div class="xp-head">
+                                <a class="org" href="https://www.mediatek.com/" target="_blank" rel="noopener noreferrer">MediaTek</a>
+                                <span class="xp-date">San Jose, CA · Jun 2026 - Present</span>
+                            </div>
+                            <p class="xp-role">Research Intern</p>
+                            <p class="xp-desc">Building a multi-physics world model for chips.</p>
+                            <p class="xp-note">Pitched the Chairman and initiated the project with funding and data.</p>
                         </div>
                     </div>
                     <!-- Caltech -->
-                    <div class="timeline-item flex gap-5 sm:gap-6">
-                        <div class="icon-container flex-shrink-0 pt-1">
-                            <a href="https://www.caltech.edu/" target="_blank" rel="noopener noreferrer" class="group block">
-                                <img src="caltech_logo.jpg" alt="Caltech Logo" width="48" height="48" class="rounded-lg w-12 h-12 object-contain transition-transform duration-300 group-hover:scale-110 bg-white">
+                    <div class="xp-item">
+                        <div class="xp-logo">
+                            <a href="https://www.caltech.edu/" target="_blank" rel="noopener noreferrer">
+                                <img src="caltech_logo.jpg" alt="Caltech Logo" width="48" height="48">
                             </a>
                         </div>
-                        <div class="flex-grow min-w-0">
-                            <a href="https://www.caltech.edu/" target="_blank" rel="noopener noreferrer" class="font-display-roman text-2xl sm:text-3xl text-white leading-tight hover:underline">California Institute of Technology</a>
-                            <p class="text-base text-gray-300 mt-1">Summer Undergraduate Research Fellowships (SURF)</p>
-                            <p class="text-sm text-gray-500 mt-1 tracking-wide">Pasadena, CA &middot; Mar 2025 - Present</p>
-                            <button type="button" onclick="toggleContent('exp1', this, '[Show details]', '[Hide details]')" class="text-blue-400/80 hover:text-blue-300 text-sm mt-2 inline-block bg-transparent border-0 p-0 transition-colors">[Show details]</button>
-                            <div id="exp1" class="hidden details-content mt-3 text-gray-300 text-sm leading-relaxed space-y-2">
-                                <ul class="list-disc pl-5 space-y-1">
+                        <div class="xp-main">
+                            <div class="xp-head">
+                                <a class="org" href="https://www.caltech.edu/" target="_blank" rel="noopener noreferrer">California Institute of Technology</a>
+                                <span class="xp-date">Pasadena, CA · Mar 2025 - Present</span>
+                            </div>
+                            <p class="xp-role">Summer Undergraduate Research Fellowships (SURF)</p>
+                            <button type="button" class="xp-toggle" onclick="toggleContent('exp1', this, '[Show details]', '[Hide details]')">[Show details]</button>
+                            <div id="exp1" class="hidden xp-details">
+                                <ul>
                                     <li>Developed the Decoupled Diffusion Inverse Solver (DDIS), a physics-aware generative framework for PDE inverse problems that decouples coefficient-prior learning from physics enforcement via neural operators.</li>
                                     <li>Identified and proved a "guidance attenuation" failure mode in joint-embedding diffusion models under limited paired data, motivating the decoupled design.</li>
                                     <li>Reached state-of-the-art accuracy with only 1% paired data, cutting reconstruction error by 11% (L2) and 54% (spectral) over prior best solvers on inverse Helmholtz, Poisson, and Navier-Stokes problems.</li>
                                 </ul>
-                                <p class="text-gray-500 text-xs mt-2 italic">Intern at AI4Science Lab. Advised by Prof. Anima Anandkumar and PhD student Jiachen Yao.</p>
+                                <p class="xp-note">Intern at AI4Science Lab. Advised by Prof. Anima Anandkumar and PhD student Jiachen Yao.</p>
                             </div>
                         </div>
                     </div>
                     <!-- Northwestern -->
-                    <div class="timeline-item flex gap-5 sm:gap-6">
-                        <div class="icon-container flex-shrink-0 pt-1">
-                            <a href="https://www.northwestern.edu/" target="_blank" rel="noopener noreferrer" class="group block">
-                                <img src="northwestern_logo.jpg" alt="Northwestern Logo" width="48" height="48" class="rounded-lg w-12 h-12 object-contain transition-transform duration-300 group-hover:scale-110">
+                    <div class="xp-item">
+                        <div class="xp-logo">
+                            <a href="https://www.northwestern.edu/" target="_blank" rel="noopener noreferrer">
+                                <img src="northwestern_logo.jpg" alt="Northwestern Logo" width="48" height="48">
                             </a>
                         </div>
-                        <div class="flex-grow min-w-0">
-                            <a href="https://www.northwestern.edu/" target="_blank" rel="noopener noreferrer" class="font-display-roman text-2xl sm:text-3xl text-white leading-tight hover:underline">Northwestern University</a>
-                            <p class="text-base text-gray-300 mt-1">Machine Learning Intern</p>
-                            <p class="text-sm text-gray-500 mt-1 tracking-wide">Remote &middot; Apr 2023 - Apr 2025</p>
-                            <button type="button" onclick="toggleContent('exp2', this, '[Show details]', '[Hide details]')" class="text-blue-400/80 hover:text-blue-300 text-sm mt-2 inline-block bg-transparent border-0 p-0 transition-colors">[Show details]</button>
-                            <div id="exp2" class="hidden details-content mt-3 text-gray-300 text-sm leading-relaxed space-y-2">
-                                <ul class="list-disc pl-5 space-y-1">
+                        <div class="xp-main">
+                            <div class="xp-head">
+                                <a class="org" href="https://www.northwestern.edu/" target="_blank" rel="noopener noreferrer">Northwestern University</a>
+                                <span class="xp-date">Remote · Apr 2023 - Apr 2025</span>
+                            </div>
+                            <p class="xp-role">Machine Learning Intern</p>
+                            <button type="button" class="xp-toggle" onclick="toggleContent('exp2', this, '[Show details]', '[Hide details]')">[Show details]</button>
+                            <div id="exp2" class="hidden xp-details">
+                                <ul>
                                     <li>Analyzed the fine-grained complexity of modern Hopfield models and developed near-linear-time approximation algorithms with bounded error (ICML 2024).</li>
                                     <li>Developed a data-driven Black-Litterman model that learns investor views as latent variables from market data (ICML 2025).</li>
                                 </ul>
-                                <p class="text-gray-500 text-xs mt-2 italic">Intern at MAGICS Lab, Dept. of CS. Advised by Prof. Han Liu and PhD candidate Jerry Hu.</p>
+                                <p class="xp-note">Intern at MAGICS Lab, Dept. of CS. Advised by Prof. Han Liu and PhD candidate Jerry Hu.</p>
                             </div>
                         </div>
                     </div>
                     <!-- Gamma Paradigm Capital -->
-                    <div class="timeline-item flex gap-5 sm:gap-6">
-                        <div class="icon-container flex-shrink-0 pt-1">
-                            <a href="https://gammaparadigm.com/" target="_blank" rel="noopener noreferrer" class="group block">
-                                <img src="gamma_paradigm_logo.jpg" alt="Gamma Paradigm Capital Logo" width="48" height="48" class="rounded-lg w-12 h-12 object-contain transition-transform duration-300 group-hover:scale-110">
+                    <div class="xp-item">
+                        <div class="xp-logo">
+                            <a href="https://gammaparadigm.com/" target="_blank" rel="noopener noreferrer">
+                                <img src="gamma_paradigm_logo.jpg" alt="Gamma Paradigm Capital Logo" width="48" height="48">
                             </a>
                         </div>
-                        <div class="flex-grow min-w-0">
-                            <a href="https://gammaparadigm.com/" target="_blank" rel="noopener noreferrer" class="font-display-roman text-2xl sm:text-3xl text-white leading-tight hover:underline">Gamma Paradigm Capital</a>
-                            <p class="text-base text-gray-300 mt-1">Quantitative Analyst Intern</p>
-                            <p class="text-sm text-gray-500 mt-1 tracking-wide">Taipei, Taiwan &middot; Jun 2023 - Jul 2024</p>
-                            <button type="button" onclick="toggleContent('exp3', this, '[Show details]', '[Hide details]')" class="text-blue-400/80 hover:text-blue-300 text-sm mt-2 inline-block bg-transparent border-0 p-0 transition-colors">[Show details]</button>
-                            <div id="exp3" class="hidden details-content mt-3 text-gray-300 text-sm leading-relaxed space-y-2">
-                                <ul class="list-disc pl-5 space-y-1">
+                        <div class="xp-main">
+                            <div class="xp-head">
+                                <a class="org" href="https://gammaparadigm.com/" target="_blank" rel="noopener noreferrer">Gamma Paradigm Capital</a>
+                                <span class="xp-date">Taipei, Taiwan · Jun 2023 - Jul 2024</span>
+                            </div>
+                            <p class="xp-role">Quantitative Analyst Intern</p>
+                            <button type="button" class="xp-toggle" onclick="toggleContent('exp3', this, '[Show details]', '[Hide details]')">[Show details]</button>
+                            <div id="exp3" class="hidden xp-details">
+                                <ul>
                                     <li>Implemented and backtested portfolio strategies (Distributionally Robust Optimization and Black-Litterman allocation), achieving higher Sharpe ratios with lower drawdowns and turnover than SPY and EQW benchmarks.</li>
                                 </ul>
                             </div>
@@ -600,112 +805,106 @@
             </section>
 
             <!-- Education Section -->
-            <section id="education" class="timeline-group fade-in-section">
-                <h2 class="font-display-italic text-4xl sm:text-5xl text-white mb-8">Education</h2>
-                <div class="space-y-10">
+            <section id="education" class="fade-in-section">
+                <h2 class="section-title">Education</h2>
+                <div class="xp-list">
                     <!-- University of Washington -->
-                    <div class="timeline-item flex gap-5 sm:gap-6">
-                        <div class="icon-container flex-shrink-0 pt-1">
-                            <a href="https://www.washington.edu/" target="_blank" rel="noopener noreferrer" class="group block">
-                                <img src="uw_logo.jpg" alt="UW Logo" width="48" height="48" class="rounded-lg w-12 h-12 object-contain transition-transform duration-300 group-hover:scale-110">
+                    <div class="xp-item">
+                        <div class="xp-logo">
+                            <a href="https://www.washington.edu/" target="_blank" rel="noopener noreferrer">
+                                <img src="uw_logo.jpg" alt="UW Logo" width="48" height="48">
                             </a>
                         </div>
-                        <div class="flex-grow min-w-0">
-                            <a href="https://www.washington.edu/" target="_blank" rel="noopener noreferrer" class="font-display-roman text-2xl sm:text-3xl text-white leading-tight hover:underline">University of Washington</a>
-                            <p class="text-base text-gray-300 mt-1">B.S. in Physics, Minor in Applied Math</p>
-                            <p class="text-sm text-gray-500 mt-1 tracking-wide">Seattle, WA &middot; 2025 - 2027</p>
+                        <div class="xp-main">
+                            <div class="xp-head">
+                                <a class="org" href="https://www.washington.edu/" target="_blank" rel="noopener noreferrer">University of Washington</a>
+                                <span class="xp-date">Seattle, WA · 2025 - 2027</span>
+                            </div>
+                            <p class="xp-role">B.S. in Physics, Minor in Applied Math</p>
                         </div>
                     </div>
                     <!-- National Taiwan University -->
-                    <div class="timeline-item flex gap-5 sm:gap-6">
-                        <div class="icon-container flex-shrink-0 pt-1">
-                            <a href="https://www.ntu.edu.tw/english/" target="_blank" rel="noopener noreferrer" class="group block">
-                                <img src="ntu_logo.jpg" alt="NTU Logo" width="48" height="48" class="rounded-lg w-12 h-12 object-contain transition-transform duration-300 group-hover:scale-110">
+                    <div class="xp-item">
+                        <div class="xp-logo">
+                            <a href="https://www.ntu.edu.tw/english/" target="_blank" rel="noopener noreferrer">
+                                <img src="ntu_logo.jpg" alt="NTU Logo" width="48" height="48">
                             </a>
                         </div>
-                        <div class="flex-grow min-w-0">
-                            <a href="https://www.ntu.edu.tw/english/" target="_blank" rel="noopener noreferrer" class="font-display-roman text-2xl sm:text-3xl text-white leading-tight hover:underline">National Taiwan University</a>
-                            <p class="text-base text-gray-300 mt-1">B.S. in Physics, B.A. in Economics</p>
-                            <p class="text-sm text-gray-500 mt-1 tracking-wide">Taipei, Taiwan &middot; 2023 - Transferred</p>
+                        <div class="xp-main">
+                            <div class="xp-head">
+                                <a class="org" href="https://www.ntu.edu.tw/english/" target="_blank" rel="noopener noreferrer">National Taiwan University</a>
+                                <span class="xp-date">Taipei, Taiwan · 2023 - Transferred</span>
+                            </div>
+                            <p class="xp-role">B.S. in Physics, B.A. in Economics</p>
                         </div>
                     </div>
                 </div>
             </section>
 
-
             <!-- Ventures & Community Section -->
             <section id="community" class="fade-in-section">
-                <h2 class="font-display-italic text-4xl sm:text-5xl text-white mb-8">Ventures & Community</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <h2 class="section-title">Ventures &amp; Community</h2>
+                <div class="community-grid">
                     <!-- YC AI SUS -->
-                    <div class="community-card bg-gray-800 rounded-lg overflow-hidden">
-                        <img src="yc_ai_sus.webp" alt="YC AI Startup School" width="880" height="1174" loading="lazy" decoding="async" class="w-full h-48 object-cover">
-                        <div class="p-6">
-                            <h3 class="font-semibold text-lg text-white">YC AI Startup School</h3>
-                            <p class="text-base text-gray-300 mt-1">An exclusive social event with speeches from well-known AI figures and networking with top CS students.</p>
+                    <div class="community-card">
+                        <img src="yc_ai_sus.webp" alt="YC AI Startup School" width="880" height="1174" loading="lazy" decoding="async">
+                        <div class="body">
+                            <h3>YC AI Startup School</h3>
+                            <p>An exclusive social event with speeches from well-known AI figures and networking with top CS students.</p>
                         </div>
                     </div>
                     <!-- ICML -->
-                    <div class="community-card bg-gray-800 rounded-lg overflow-hidden">
-                        <img src="icml.webp" alt="ICML Conferences" width="880" height="660" loading="lazy" decoding="async" class="w-full h-48 object-cover">
-                        <div class="p-6">
-                            <h3 class="font-semibold text-lg text-white">ICML '24 & '25</h3>
-                            <p class="text-base text-gray-300 mt-1">Presenting papers at top-tier ML conferences in Vienna and Vancouver. Connecting with some brilliant minds on Earth.</p>
-                             <!-- <a href="javascript:void(0)" onclick="toggleContent('com3', this, '[Learn more]', '[Show less]')" class="text-blue-400 text-sm hover:underline font-semibold mt-2 inline-block">[Learn more]</a>
-                             <div id="com3" class="hidden details-content mt-2 text-gray-300 text-base">
-                               <p>Attended exclusive, invite-only parties hosted by major quantitative finance firms, connecting with leaders in the field.</p>
-                            </div> -->
+                    <div class="community-card">
+                        <img src="icml.webp" alt="ICML Conferences" width="880" height="660" loading="lazy" decoding="async">
+                        <div class="body">
+                            <h3>ICML '24 &amp; '25</h3>
+                            <p>Presenting papers at top-tier ML conferences in Vienna and Vancouver. Connecting with some brilliant minds on Earth.</p>
                         </div>
                     </div>
                     <!-- HUAP -->
-                    <div class="community-card bg-gray-800 rounded-lg overflow-hidden">
-                        <img src="huap.webp" alt="HUAP" width="880" height="660" loading="lazy" decoding="async" class="w-full h-48 object-cover">
-                        <div class="p-6">
-                            <h3 class="font-semibold text-lg text-white">Harvard x NTU (HUAP)</h3>
-                            <p class="text-base text-gray-300 mt-1">A club at National Taiwan University for short-term exchange with Harvard students.</p>
-                             <button type="button" onclick="toggleContent('com2', this, '[Learn more]', '[Show less]')" class="text-blue-400 text-sm hover:underline font-semibold mt-2 inline-block bg-transparent border-0 p-0">[Learn more]</button>
-                             <div id="com2" class="hidden details-content mt-2 text-gray-300 text-base">
+                    <div class="community-card">
+                        <img src="huap.webp" alt="HUAP" width="880" height="660" loading="lazy" decoding="async">
+                        <div class="body">
+                            <h3>Harvard x NTU (HUAP)</h3>
+                            <p>A club at National Taiwan University for short-term exchange with Harvard students.</p>
+                            <button type="button" class="xp-toggle" onclick="toggleContent('com2', this, '[Learn more]', '[Show less]')">[Learn more]</button>
+                            <div id="com2" class="hidden">
                                 <p>As a PR Member, I fundraised a record-high $4,500 USD cash sponsorship and hosted Harvard students for the Spring Conference.</p>
                             </div>
                         </div>
                     </div>
-                     <!-- NTU ABC Lab -->
-                    <div class="community-card bg-gray-800 rounded-lg overflow-hidden">
-                        <img src="ntu_abc_lab.webp" alt="NTU ABC Lab" width="880" height="660" loading="lazy" decoding="async" class="w-full h-48 object-cover">
-                        <div class="p-6">
-                            <h3 class="font-semibold text-lg text-white">NTU ABC Lab & Prof. Liao</h3>
-                            <p class="text-base text-gray-300 mt-1">Biggest blockchain lab in Taiwan with the legendary Prof. Shih-wei Liao.</p>
-                             <button type="button" onclick="toggleContent('com5-details', this, '[Learn more]', '[Show less]')" class="text-blue-400 text-sm hover:underline font-semibold mt-2 inline-block bg-transparent border-0 p-0">[Learn more]</button>
-                             <div id="com5-details" class="hidden details-content mt-2 text-gray-300 text-base">
-                                <p>I served for two years as a TA for multiple 150-student courses and as a social assistant hosting his visitors.
-                                    <!-- <a href="javascript:void(0)" onclick="toggleContent('com5-footnote', this, '[More on the legend]', '[Less]')" class="text-blue-400 hover:underline font-semibold">[More on the legend]</a> -->
-                                </p>
-                                <!-- <div id="com5-footnote" class="hidden details-content mt-2 p-3 bg-gray-900/50 rounded-md">
-                                     <p>Prof. Liao has a social-economical background (related to one of Taiwan's richest families) and experience (a main developer of Google Android). He trusts and admires talented young students wholeheartedly, while also being incredibly altruistic, always wearing flip-flops, riding his Ubike to school at max speed, and speaking in hilarious quotes that everyone on campus has heard but no one can fully understand in his class.</p>
-                                </div> -->
+                    <!-- NTU ABC Lab -->
+                    <div class="community-card">
+                        <img src="ntu_abc_lab.webp" alt="NTU ABC Lab" width="880" height="660" loading="lazy" decoding="async">
+                        <div class="body">
+                            <h3>NTU ABC Lab &amp; Prof. Liao</h3>
+                            <p>Biggest blockchain lab in Taiwan with the legendary Prof. Shih-wei Liao.</p>
+                            <button type="button" class="xp-toggle" onclick="toggleContent('com5-details', this, '[Learn more]', '[Show less]')">[Learn more]</button>
+                            <div id="com5-details" class="hidden">
+                                <p>I served for two years as a TA for multiple 150-student courses and as a social assistant hosting his visitors.</p>
                             </div>
                         </div>
                     </div>
                     <!-- NTU Phi-Epsilon-Delta -->
-                    <div class="community-card bg-gray-800 rounded-lg overflow-hidden">
-                        <img src="phi_epsilon.webp" alt="NTU Phi-Epsilon-Delta" width="880" height="660" loading="lazy" decoding="async" class="w-full h-48 object-cover">
-                        <div class="p-6">
-                            <h3 class="font-semibold text-lg text-white">NTU Phi-Epsilon-Delta</h3>
-                            <p class="text-base text-gray-300 mt-1">An unofficial fraternity founded in my house next to NTU campus.</p>
-                             <button type="button" onclick="toggleContent('com4', this, '[Learn more]', '[Show less]')" class="text-blue-400 text-sm hover:underline font-semibold mt-2 inline-block bg-transparent border-0 p-0">[Learn more]</button>
-                             <div id="com4" class="hidden details-content mt-2 text-gray-300 text-base">
+                    <div class="community-card">
+                        <img src="phi_epsilon.webp" alt="NTU Phi-Epsilon-Delta" width="880" height="660" loading="lazy" decoding="async">
+                        <div class="body">
+                            <h3>NTU Phi-Epsilon-Delta</h3>
+                            <p>An unofficial fraternity founded in my house next to NTU campus.</p>
+                            <button type="button" class="xp-toggle" onclick="toggleContent('com4', this, '[Learn more]', '[Show less]')">[Learn more]</button>
+                            <div id="com4" class="hidden">
                                 <p>We hosted networking events for NTU, exchange, and overseas Taiwanese students.</p>
                             </div>
                         </div>
                     </div>
-                     <!-- EuPhO -->
-                    <div class="community-card bg-gray-800 rounded-lg overflow-hidden">
-                        <img src="team_taiwan.webp" alt="EuPhO" width="1400" height="349" loading="lazy" decoding="async" class="w-full h-48 object-cover">
-                        <div class="p-6">
-                            <h3 class="font-semibold text-lg text-white">2022 European Physics Olympiad</h3>
-                            <p class="text-base text-gray-300 mt-1">Team Taiwan at the 2022 European Physics Olympiad at Slovenia.</p>
-                             <button type="button" onclick="toggleContent('com6', this, '[Learn more]', '[Show less]')" class="text-blue-400 text-sm hover:underline font-semibold mt-2 inline-block bg-transparent border-0 p-0">[Learn more]</button>
-                             <div id="com6" class="hidden details-content mt-2 text-gray-300 text-base">
+                    <!-- EuPhO -->
+                    <div class="community-card">
+                        <img src="team_taiwan.webp" alt="EuPhO" width="1400" height="349" loading="lazy" decoding="async">
+                        <div class="body">
+                            <h3>2022 European Physics Olympiad</h3>
+                            <p>Team Taiwan at the 2022 European Physics Olympiad at Slovenia.</p>
+                            <button type="button" class="xp-toggle" onclick="toggleContent('com6', this, '[Learn more]', '[Show less]')">[Learn more]</button>
+                            <div id="com6" class="hidden">
                                 <p>I founded the team, fundraised the trip, won a bronze medal, and secured my college admission.</p>
                             </div>
                         </div>
@@ -713,65 +912,52 @@
                 </div>
             </section>
 
-        </main>
+            <!-- Visitor Map Section -->
+            <section id="visitor-map" class="fade-in-section">
+                <h2 class="section-title">Global Reach</h2>
+                <p class="section-intro" id="visitor-summary">Loading visitor data...</p>
+                <div class="map-card">
+                    <div id="world-map"></div>
 
-        <!-- Visitor Map Section -->
-        <section id="visitor-map" class="fade-in-section mt-20">
-            <h2 class="font-display-italic text-4xl sm:text-5xl text-white mb-3">Global Reach</h2>
-            <p class="text-gray-400 mb-6" id="visitor-summary">Loading visitor data...</p>
-            <div class="bg-gray-800/50 rounded-lg p-6 backdrop-blur-sm border border-gray-700/50">
-                <div id="world-map" class="w-full h-96 rounded-lg border border-gray-700/30"></div>
-                
-                <!-- Statistics Section -->
-                <div class="mt-6">
-                    <button id="toggle-stats-btn" class="text-xs text-blue-400/70 hover:text-blue-300 transition-colors focus:outline-none focus:ring-1 focus:ring-blue-400/30 rounded px-3 py-1 inline-flex items-center gap-1" aria-expanded="false" aria-controls="stats-content">
-                        <span id="toggle-stats-text">Show statistics</span>
-                        <svg id="toggle-stats-arrow" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transition-transform duration-300">
-                            <polyline points="6 9 12 15 18 9"></polyline>
-                        </svg>
-                    </button>
-                    
-                    <div id="stats-content" class="overflow-hidden transition-all duration-500 ease-in-out mt-4" style="max-height: 0; opacity: 0;">
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <!-- Country Rankings -->
-                            <div class="bg-gray-700/30 rounded-lg p-4">
-                                <h3 class="text-white font-semibold mb-3">Top Countries</h3>
-                                <div id="country-rankings" class="space-y-2 text-sm">
-                                    <div class="text-gray-400">Loading...</div>
+                    <div style="margin-top: 18px;">
+                        <button id="toggle-stats-btn" class="toggle-btn" aria-expanded="false" aria-controls="stats-content">
+                            <span id="toggle-stats-text">Show statistics</span>
+                            <svg id="toggle-stats-arrow" xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </button>
+
+                        <div id="stats-content" style="max-height: 0; opacity: 0; overflow: hidden; transition: max-height 0.5s ease-in-out, opacity 0.5s ease-in-out;">
+                            <div class="stats-grid">
+                                <div class="stats-panel">
+                                    <h3>Top Countries</h3>
+                                    <div id="country-rankings">
+                                        <div class="row">Loading...</div>
+                                    </div>
                                 </div>
-                            </div>
-                            
-                            <!-- City Rankings -->
-                            <div class="bg-gray-700/30 rounded-lg p-4">
-                                <h3 class="text-white font-semibold mb-3">Top Cities</h3>
-                                <div id="city-rankings" class="space-y-2 text-sm">
-                                    <div class="text-gray-400">Loading...</div>
+                                <div class="stats-panel">
+                                    <h3>Top Cities</h3>
+                                    <div id="city-rankings">
+                                        <div class="row">Loading...</div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                
-                <!-- Privacy Note -->
-                <div class="mt-4 text-center">
-                    <p class="text-xs text-gray-500">
-                        <span class="inline-flex items-center gap-1">
-                            <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"/>
-                            </svg>
-                            Privacy-friendly: Only location data collected
-                        </span>
-                    </p>
-                </div>
-            </div>
-        </section>
 
-        <!-- Footer -->
-        <footer class="text-center text-gray-500 mt-20">
-            <p>&copy; <span id="copyright-year">2026</span> Thomas Y.L. Lin. All Rights Reserved.</p>
-        </footer>
+                    <p class="map-privacy">Privacy-friendly: Only location data collected</p>
+                </div>
+            </section>
 
+        </main>
     </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p class="footer-line">© <span id="copyright-year">2026</span> Thomas Y.L. Lin. All Rights Reserved.</p>
+        </div>
+    </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
@@ -846,78 +1032,34 @@
             },
         ];
 
-        const topicColors = {
-            'Generative AI': 'bg-blue-900/70 text-blue-200',
-            'AI4Science': 'bg-indigo-900/70 text-indigo-200',
-            'PDEs': 'bg-purple-900/70 text-purple-200',
-            'Theory': 'bg-violet-900/70 text-violet-200',
-            'Complexity': 'bg-rose-900/70 text-rose-200',
-            'Algorithms': 'bg-emerald-900/70 text-emerald-200',
-            'Bayesian ML': 'bg-cyan-900/70 text-cyan-200',
-            'Portfolio': 'bg-amber-900/70 text-amber-200',
-            'Finance': 'bg-amber-900/70 text-amber-200',
-            'AI Agent': 'bg-teal-900/70 text-teal-200',
-            'Perception': 'bg-fuchsia-900/70 text-fuchsia-200',
-            'Supply Chain Finance': 'bg-yellow-900/70 text-yellow-200',
-            'World Models': 'bg-sky-900/70 text-sky-200',
-            'RL': 'bg-lime-900/70 text-lime-200',
-            'Planning': 'bg-red-900/70 text-red-200',
-            'Self-Supervised': 'bg-pink-900/70 text-pink-200',
-            'Representation Learning': 'bg-orange-900/70 text-orange-200',
-            'Fintech': 'bg-amber-900/70 text-amber-200',
-        };
-
         function renderShowcaseItems() {
             const list = document.getElementById('showcase-list');
             if (!list) return;
             list.innerHTML = '';
 
+            const arrowIcon = '<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M7 7h10v10"/></svg>';
+
             showcaseData.forEach(item => {
-                const topicsHTML = (item.topics || []).map(t => {
-                    const color = topicColors[t] || 'bg-gray-700/70 text-gray-200';
-                    return `<span class="${color} text-xs font-medium tracking-wide px-2 py-0.5 rounded">${t}</span>`;
-                }).join('');
+                const venuePill = item.venue
+                    ? `<span class="pill venue${item.status === 'ongoing' ? ' live' : ''}">${item.venue}</span>`
+                    : '';
+                const topicPills = (item.topics || []).map(t => `<span class="pill">${t}</span>`).join('');
 
-                const linkIcons = {
-                    'Read Paper': '<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block align-[-1px] mr-1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>',
-                    'Working Paper': '<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block align-[-1px] mr-1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>',
-                    'GitHub': '<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block align-[-1px] mr-1.5"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"></path><path d="M9 18c-4.51 2-5-2-7-2"></path></svg>',
-                    'LinkedIn': '<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block align-[-1px] mr-1.5"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>',
-                    'X': '<svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="currentColor" class="inline-block align-[-1px] mr-1.5"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>',
-                    'Website': '<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block align-[-1px] mr-1.5"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>'
-                };
-
-                const linksHTML = (item.links || []).map(link => {
-                    const icon = linkIcons[link.text] || '';
-                    return `<a href="${link.url}" target="_blank" rel="noopener noreferrer" class="text-gray-300 hover:text-white underline-offset-4 hover:underline transition-colors inline-flex items-center">${icon}${link.text}</a>`;
-                }).join('<span class="text-gray-600 mx-2">·</span>');
+                const linksHTML = (item.links || []).map(link =>
+                    `<a href="${link.url}" target="_blank" rel="noopener noreferrer">${link.text}${arrowIcon}</a>`
+                ).join('');
 
                 const authorsHTML = item.authors
-                    ? `<p class="font-display-roman text-base text-gray-400 mt-1">${item.authors}</p>`
-                    : '';
-
-                const ongoingDot = item.status === 'ongoing'
-                    ? '<span class="inline-block w-1.5 h-1.5 rounded-full bg-emerald-400 align-middle mr-2 animate-pulse" aria-hidden="true"></span>'
-                    : '';
-                const venueHTML = item.venue
-                    ? `<span class="text-sm text-gray-500 whitespace-nowrap shrink-0">${ongoingDot}${item.venue}</span>`
-                    : '';
-
-                const metaHTML = (item.venue || (item.topics && item.topics.length))
-                    ? `<div class="flex items-center gap-x-3 gap-y-2 mt-3">
-                            ${venueHTML}
-                            ${item.venue && item.topics && item.topics.length ? '<span class="text-gray-600 shrink-0">·</span>' : ''}
-                            <div class="flex flex-wrap gap-1.5">${topicsHTML}</div>
-                       </div>`
+                    ? `<p class="authors">${item.authors}</p>`
                     : '';
 
                 const entryHTML = `
-                    <article class="bg-[#13141a] border border-white/[0.06] hover:border-white/[0.12] rounded-xl px-6 py-6 sm:px-8 sm:py-7 transition-colors">
-                        <h3 class="font-display-italic text-2xl sm:text-3xl text-white leading-tight">${item.title}</h3>
+                    <article class="work-card">
+                        <h3>${item.title}</h3>
                         ${authorsHTML}
-                        ${metaHTML}
-                        <p class="text-base sm:text-lg text-gray-300 mt-4 leading-relaxed" style="font-family: 'Newsreader', Georgia, serif;">${item.description}</p>
-                        ${linksHTML ? `<div class="mt-5 text-sm">${linksHTML}</div>` : ''}
+                        <div class="pill-row">${venuePill}${topicPills}</div>
+                        <p class="desc">${item.description}</p>
+                        ${linksHTML ? `<div class="work-links">${linksHTML}</div>` : ''}
                     </article>
                 `;
                 list.insertAdjacentHTML('beforeend', entryHTML);
@@ -929,7 +1071,6 @@
 
             // About Me Toggle Logic
             const toggleBtn = document.getElementById('toggle-about-btn');
-            const toggleBtnContainer = toggleBtn.parentElement;
             const expandableContent = document.getElementById('about-expandable');
             const toggleText = document.getElementById('toggle-about-text');
             const toggleArrow = document.getElementById('toggle-about-arrow');
@@ -937,146 +1078,21 @@
 
             toggleBtn.addEventListener('click', () => {
                 isExpanded = !isExpanded;
-                
+
                 if (isExpanded) {
-                    // Expand
                     expandableContent.style.maxHeight = expandableContent.scrollHeight + 'px';
                     expandableContent.style.opacity = '1';
                     toggleText.textContent = 'Read less';
                     toggleArrow.style.transform = 'rotate(180deg)';
                     toggleBtn.setAttribute('aria-expanded', 'true');
-                    // Add spacing when expanded
-                    toggleBtnContainer.classList.remove('-mt-2');
-                    toggleBtnContainer.classList.add('mt-2');
                 } else {
-                    // Collapse
                     expandableContent.style.maxHeight = '0';
                     expandableContent.style.opacity = '0';
                     toggleText.textContent = 'Read more';
                     toggleArrow.style.transform = 'rotate(0deg)';
                     toggleBtn.setAttribute('aria-expanded', 'false');
-                    // Keep tight spacing when collapsed
-                    toggleBtnContainer.classList.remove('mt-2');
-                    toggleBtnContainer.classList.add('-mt-2');
                 }
             });
-
-            // Cursor Style Selector Logic
-            const cursorGlow = document.getElementById('cursor-glow');
-            const cursorCore = document.getElementById('cursor-core');
-            const cursorOptions = document.querySelectorAll('.cursor-option');
-            let currentCursorStyle = 'normal'; // Default to normal
-            
-            // Ultra-fast cursor tracking using transform for hardware acceleration
-            let mouseX = 0;
-            let mouseY = 0;
-            let glowOffset = 15;
-            let coreOffset = 3;
-            let rafId = null;
-            let cursorInitialized = false;
-            
-            // Cache cursor offsets to avoid DOM queries on mousemove
-            function updateCursorOffsets() {
-                if (cursorGlow.classList.contains('blackhole')) {
-                    glowOffset = 15; // 30px / 2
-                    coreOffset = 8; // 16px / 2
-                } else if (cursorCore.classList.contains('moon')) {
-                    glowOffset = 15; // Not visible but keep consistent
-                    coreOffset = 4; // 8px / 2
-                } else {
-                    glowOffset = 15; // 30px / 2
-                    coreOffset = 3; // 6px / 2
-                }
-            }
-
-            function setCursorStyle(style) {
-                // Remove all cursor classes from body
-                document.body.classList.remove('cursor-normal', 'cursor-moon', 'cursor-neutron', 'cursor-blackhole');
-                cursorGlow.classList.remove('moon', 'blackhole');
-                cursorCore.classList.remove('moon', 'blackhole');
-                
-                // Apply new cursor style
-                if (style === 'normal') {
-                    document.body.classList.add('cursor-normal');
-                    // Hide custom cursors in normal mode
-                    cursorGlow.style.opacity = '0';
-                    cursorCore.style.opacity = '0';
-                } else if (style === 'moon') {
-                    cursorGlow.classList.add('moon');
-                    cursorCore.classList.add('moon');
-                } else if (style === 'neutron') {
-                    // Default neutron star style (no extra classes needed)
-                } else if (style === 'blackhole') {
-                    cursorGlow.classList.add('blackhole');
-                    cursorCore.classList.add('blackhole');
-                }
-
-                // Update active button
-                cursorOptions.forEach(opt => {
-                    if (opt.getAttribute('data-cursor') === style) {
-                        opt.classList.add('active');
-                    } else {
-                        opt.classList.remove('active');
-                    }
-                });
-                
-                // Update cached cursor offsets after style change
-                updateCursorOffsets();
-            }
-            
-            // Load saved cursor preference
-            const savedCursorStyle = localStorage.getItem('cursorStyle');
-            if (savedCursorStyle) {
-                currentCursorStyle = savedCursorStyle;
-                setCursorStyle(currentCursorStyle);
-            } else {
-                // Set default to normal if no saved preference
-                currentCursorStyle = 'normal';
-                setCursorStyle('normal');
-            }
-
-            // Cursor option click handlers
-            cursorOptions.forEach(option => {
-                option.addEventListener('click', () => {
-                    const cursorType = option.getAttribute('data-cursor');
-                    currentCursorStyle = cursorType;
-                    setCursorStyle(cursorType);
-                    localStorage.setItem('cursorStyle', cursorType);
-                    
-                    // Update active state
-                    cursorOptions.forEach(opt => opt.classList.remove('active'));
-                    option.classList.add('active');
-                });
-            });
-            
-            // Update cursor position using requestAnimationFrame
-            function updateCursorPosition() {
-                cursorGlow.style.transform = `translate(${mouseX - glowOffset}px, ${mouseY - glowOffset}px)`;
-                cursorCore.style.transform = `translate(${mouseX - coreOffset}px, ${mouseY - coreOffset}px)`;
-                
-                // Show cursor on first movement (unless in normal mode)
-                if (!cursorInitialized && !document.body.classList.contains('cursor-normal')) {
-                    cursorGlow.style.opacity = '1';
-                    cursorCore.style.opacity = '1';
-                    cursorInitialized = true;
-                }
-                
-                rafId = null;
-            }
-            
-            // Mousemove handler - just update coordinates
-            document.addEventListener('mousemove', (e) => {
-                mouseX = e.clientX;
-                mouseY = e.clientY;
-                
-                // Only request a new frame if one isn't already pending
-                if (!rafId) {
-                    rafId = requestAnimationFrame(updateCursorPosition);
-                }
-            }, { passive: true });
-            
-            // Initialize offsets
-            updateCursorOffsets();
 
             // Render publications/projects list
             renderShowcaseItems();
@@ -1089,23 +1105,28 @@
                 const mm = gsap.matchMedia();
 
                 mm.add('(prefers-reduced-motion: no-preference)', () => {
-                    // Header entrance
+                    // Hero entrance
                     gsap.timeline({ defaults: { ease: 'power2.out' } })
-                        .fromTo('header h1', { autoAlpha: 0, y: 14 }, { autoAlpha: 1, y: 0, duration: 0.7 })
-                        .fromTo('header > p', { autoAlpha: 0, y: 10 }, { autoAlpha: 1, y: 0, duration: 0.6 }, '-=0.45')
-                        .fromTo('header .flex.items-center a', { autoAlpha: 0, y: 6 }, { autoAlpha: 1, y: 0, duration: 0.4, stagger: 0.05 }, '-=0.4');
+                        .fromTo('.hero h1', { autoAlpha: 0, y: 16 }, { autoAlpha: 1, y: 0, duration: 0.7 })
+                        .fromTo('.hero .sub', { autoAlpha: 0, y: 12 }, { autoAlpha: 1, y: 0, duration: 0.6 }, '-=0.45')
+                        .fromTo('.hero-socials a', { autoAlpha: 0, y: 6 }, { autoAlpha: 1, y: 0, duration: 0.4, stagger: 0.05 }, '-=0.3');
 
-                    // Scroll reveals: section fades up, its cards/entries follow with a soft stagger
+                    // Scroll reveals: section fades up, its cards/entries follow with a soft stagger.
+                    // The timeline is detached from the trigger (paused + onEnter) so a fast jump
+                    // past a section can't kill the tween mid-flight and leave it half-faded.
                     gsap.utils.toArray('.fade-in-section').forEach(section => {
-                        const items = section.querySelectorAll('article, .timeline-item, .community-card');
-                        const tl = gsap.timeline({
-                            defaults: { ease: 'power2.out' },
-                            scrollTrigger: { trigger: section, start: 'top 85%', once: true }
-                        });
+                        const items = section.querySelectorAll('article, .xp-item, .community-card');
+                        const tl = gsap.timeline({ paused: true, defaults: { ease: 'power2.out' } });
                         tl.fromTo(section, { autoAlpha: 0, y: 24 }, { autoAlpha: 1, y: 0, duration: 0.8 });
                         if (items.length) {
                             tl.fromTo(items, { autoAlpha: 0, y: 14 }, { autoAlpha: 1, y: 0, duration: 0.6, stagger: { amount: 0.35 } }, '-=0.5');
                         }
+                        ScrollTrigger.create({
+                            trigger: section,
+                            start: 'top 85%',
+                            once: true,
+                            onEnter: () => tl.play()
+                        });
                     });
 
                     // Recalculate trigger positions once images and fonts have settled the layout
@@ -1133,25 +1154,25 @@
 
             // Visitor Map Logic
             const LAUNCH_DATE = new Date(2026, 2, 16);
-            
+
             // Store map reference for updates
             let mapInstance = null;
-            
+
             // Update map data without re-initializing
             function updateMapData(visitorData) {
                 if (!mapInstance) return;
-                
+
                 // Clear existing markers
                 mapInstance.eachLayer(function(layer) {
                     if (layer instanceof L.CircleMarker) {
                         mapInstance.removeLayer(layer);
                     }
                 });
-                
+
                 // Add new markers
                 addMarkersToMap(mapInstance, visitorData);
             }
-            
+
             // Add markers to map
             function addMarkersToMap(map, visitorData) {
                 const minRadius = 3;
@@ -1171,18 +1192,18 @@
 
                     const marker = L.circleMarker([cityData.lat, cityData.lng], {
                         radius: radius,
-                        fillColor: '#3b82f6',
-                        color: '#1d4ed8',
+                        fillColor: '#f4cf98',
+                        color: '#f4cf98',
                         weight: 2,
                         opacity: 0.8,
-                        fillOpacity: intensity * 0.8
+                        fillOpacity: 0.25 + intensity * 0.6
                     }).addTo(map);
 
                     marker.bindPopup(`
-                        <div class="text-center">
-                            <div class="font-semibold text-gray-800">${cityKey}</div>
-                            <div class="text-sm text-gray-600">${cityData.visits} visit${cityData.visits > 1 ? 's' : ''}</div>
-                            ${cityData.region ? `<div class="text-xs text-gray-500">${cityData.region}</div>` : ''}
+                        <div style="text-align: center;">
+                            <div style="font-weight: 600;">${cityKey}</div>
+                            <div style="font-size: 12px; color: #52525b;">${cityData.visits} visit${cityData.visits > 1 ? 's' : ''}</div>
+                            ${cityData.region ? `<div style="font-size: 11px; color: #8e8e96;">${cityData.region}</div>` : ''}
                         </div>
                     `);
                 });
@@ -1211,7 +1232,7 @@
                 }
                 return response.json();
             }
-            
+
             // Update the summary line above the map (independent of Leaflet)
             function updateSummary(visitorData) {
                 const summaryEl = document.getElementById('visitor-summary');
@@ -1233,14 +1254,14 @@
                     updateMapData(visitorData);
                     return;
                 }
-                
+
                 // Initialize map only if not already initialized
                 const map = L.map('world-map', {
                     zoomControl: false
                 }).setView([20, 0], 2);
                 mapInstance = map;
 
-                // Add dark tile layer
+                // Add dark tile layer to match the theme
                 L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
                     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
                     subdomains: 'abcd',
@@ -1248,33 +1269,23 @@
                 }).addTo(map);
 
                 addMarkersToMap(map, visitorData);
-                
+
                 // Add custom controls
                 const legend = L.control({position: 'bottomright'});
                 legend.onAdd = function(map) {
-                    const div = L.DomUtil.create('div', 'bg-gray-800/90 text-white p-3 rounded-lg text-xs');
+                    const div = L.DomUtil.create('div');
+                    div.style.cssText = 'background: rgba(20,20,23,0.95); color: #f2f2f0; padding: 10px 12px; border: 1px solid rgba(255,255,255,0.16); font-size: 11px; font-family: Inter, sans-serif;';
                     div.innerHTML = `
-                        <div class="font-semibold mb-2">Visit Density</div>
-                        <div class="space-y-1">
-                            <div class="flex items-center gap-2">
-                                <div class="w-1.5 h-1.5 bg-blue-400 rounded-full opacity-30"></div>
-                                <span>Low</span>
-                            </div>
-                            <div class="flex items-center gap-2">
-                                <div class="w-2 h-2 bg-blue-400 rounded-full opacity-60"></div>
-                                <span>Medium</span>
-                            </div>
-                            <div class="flex items-center gap-2">
-                                <div class="w-2.5 h-2.5 bg-blue-400 rounded-full opacity-100"></div>
-                                <span>High</span>
-                            </div>
-                        </div>
+                        <div style="font-weight: 600; margin-bottom: 6px;">Visit Density</div>
+                        <div style="display: flex; align-items: center; gap: 6px; margin: 2px 0;"><span style="width: 5px; height: 5px; background: #f4cf98; border-radius: 50%; opacity: 0.3; display: inline-block;"></span>Low</div>
+                        <div style="display: flex; align-items: center; gap: 6px; margin: 2px 0;"><span style="width: 7px; height: 7px; background: #f4cf98; border-radius: 50%; opacity: 0.6; display: inline-block;"></span>Medium</div>
+                        <div style="display: flex; align-items: center; gap: 6px; margin: 2px 0;"><span style="width: 9px; height: 9px; background: #f4cf98; border-radius: 50%; opacity: 1; display: inline-block;"></span>High</div>
                     `;
                     return div;
                 };
                 legend.addTo(map);
             }
-            
+
             // Populate statistics rankings
             function populateStatistics(visitorData) {
                 // Country rankings (filter out unknown)
@@ -1282,38 +1293,32 @@
                     .filter(([country]) => !country.toLowerCase().includes('unknown'))
                     .sort(([,a], [,b]) => b - a)
                     .slice(0, 10);
-                
+
                 const countryRankingsEl = document.getElementById('country-rankings');
                 countryRankingsEl.innerHTML = countryRankings
                     .map(([country, visits], index) => `
-                        <div class="flex justify-between items-center">
-                            <div class="flex items-center gap-2">
-                                <span class="text-gray-400 text-xs w-4">${index + 1}.</span>
-                                <span class="text-gray-300">${country}</span>
-                            </div>
-                            <span class="text-blue-400 font-semibold">${visits}</span>
+                        <div class="row">
+                            <span>${index + 1}. ${country}</span>
+                            <span class="count">${visits}</span>
                         </div>
                     `).join('');
-                
+
                 // City rankings (filter out unknown)
                 const cityRankings = Object.entries(visitorData.cities)
                     .filter(([cityKey]) => !cityKey.toLowerCase().includes('unknown'))
                     .sort(([,a], [,b]) => b.visits - a.visits)
                     .slice(0, 10);
-                
+
                 const cityRankingsEl = document.getElementById('city-rankings');
                 cityRankingsEl.innerHTML = cityRankings
                     .map(([cityKey, cityData], index) => `
-                        <div class="flex justify-between items-center">
-                            <div class="flex items-center gap-2">
-                                <span class="text-gray-400 text-xs w-4">${index + 1}.</span>
-                                <span class="text-gray-300">${cityKey}</span>
-                            </div>
-                            <span class="text-blue-400 font-semibold">${cityData.visits}</span>
+                        <div class="row">
+                            <span>${index + 1}. ${cityKey}</span>
+                            <span class="count">${cityData.visits}</span>
                         </div>
                     `).join('');
             }
-            
+
             // Statistics toggle functionality
             const statsToggleBtn = document.getElementById('toggle-stats-btn');
             const statsContent = document.getElementById('stats-content');
@@ -1323,7 +1328,7 @@
 
             statsToggleBtn.addEventListener('click', () => {
                 statsExpanded = !statsExpanded;
-                
+
                 if (statsExpanded) {
                     statsContent.style.maxHeight = statsContent.scrollHeight + 'px';
                     statsContent.style.opacity = '1';
@@ -1338,7 +1343,7 @@
                     statsToggleBtn.setAttribute('aria-expanded', 'false');
                 }
             });
-            
+
             // Initialize visitor tracking. The summary and statistics render
             // as soon as data arrives; the map itself waits for Leaflet,
             // which loads only when the section approaches the viewport.
