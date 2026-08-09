@@ -1037,6 +1037,9 @@
                 venue: 'Stealth',
                 description: 'Chip as a physical agent that no longer needs to be programmed.',
                 topics: ['Chip', 'World Model', 'Control'],
+                links: [
+                    { text: 'Why Swallowtail', url: '/why_swallowtail/' }
+                ]
             },
             {
                 title: 'Veridyne (fka VibeVest)',
@@ -1063,9 +1066,13 @@
                     : '';
                 const topicPills = (item.topics || []).map(t => `<span class="pill">${t}</span>`).join('');
 
-                const linksHTML = (item.links || []).map(link =>
-                    `<a href="${link.url}" target="_blank" rel="noopener noreferrer">${link.text}${arrowIcon}</a>`
-                ).join('');
+                const linksHTML = (item.links || []).map(link => {
+                    // Pages on this site open in place; everything else in a new tab.
+                    const newTab = link.url.startsWith('/')
+                        ? ''
+                        : ' target="_blank" rel="noopener noreferrer"';
+                    return `<a href="${link.url}"${newTab}>${link.text}${arrowIcon}</a>`;
+                }).join('');
 
                 const authorsHTML = item.authors
                     ? `<p class="authors">${item.authors}</p>`
