@@ -25,7 +25,7 @@
         "name": "Thomas Y.L. Lin",
         "url": "https://thermau5.github.io/",
         "image": "https://thermau5.github.io/raccoon_on_jupiter.png",
-        "email": "mailto:thermaus@uw.edu",
+        "email": "mailto:linthomasyl@gmail.com",
         "affiliation": {
             "@type": "CollegeOrUniversity",
             "name": "University of Washington"
@@ -334,6 +334,10 @@
             transform: translateY(-3px);
             box-shadow: 6px 6px 0 rgba(255, 255, 255, 0.07);
         }
+        /* Ventures read as unfilled: the page hatch shows through the card. */
+        .work-card.venture {
+            background: transparent;
+        }
         .work-card h3 {
             font-size: clamp(1.25rem, 2.4vw, 1.55rem);
             letter-spacing: -0.025em;
@@ -365,6 +369,11 @@
             background: var(--sand);
             border-color: transparent;
             color: #0a0a0a;
+        }
+        .venture .pill.venue {
+            background: transparent;
+            border-color: var(--sand);
+            color: var(--sand);
         }
         .pill.live::before {
             content: '';
@@ -651,7 +660,7 @@
             <div class="hero-top">
                 <h1>Thomas Y.L. Lin</h1>
                 <div class="hero-socials">
-                <a href="mailto:thermaus@uw.edu" aria-label="Email Thomas Lin">
+                <a href="mailto:linthomasyl@gmail.com" aria-label="Email Thomas Lin">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
                 </a>
                 <a href="https://github.com/thermau5" target="_blank" rel="noopener noreferrer" aria-label="Thomas Lin on GitHub">
@@ -992,7 +1001,7 @@
                 title: 'Latent Variable Black-Litterman Models',
                 authors: 'Thomas Y.L. Lin, Jerry Yao-Chieh Hu, Paul W. Chiou, Peter Lin.',
                 venue: 'ICML 2025',
-                description: 'A data-driven Black-Litterman model that learns investor views as latent variables from market data, with strong improvements in Sharpe ratios over benchmarks.',
+                description: 'A data-driven Black-Litterman model that learns investor views as latent variables from market data.',
                 topics: ['Finance', 'Bayesian ML', 'Portfolio'],
                 links: [
                     { text: 'Read Paper', url: 'https://arxiv.org/pdf/2505.02185' },
@@ -1003,7 +1012,7 @@
                 title: 'On Computational Limits of Modern Hopfield Models',
                 authors: 'Jerry Yao-Chieh Hu*, Thomas Lin*, Zhao Song, Han Liu.',
                 venue: 'ICML 2024',
-                description: 'Fine-grained complexity analysis of modern Hopfield models. Efficient approximation algorithms within controllable error, reducing time complexity from subquadratic to almost linear.',
+                description: 'Efficient algorithms reducing time complexity from subquadratic to almost linear.',
                 topics: ['Theory', 'Complexity', 'Algorithms'],
                 links: [
                     { text: 'Read Paper', url: 'https://arxiv.org/pdf/2402.04520' }
@@ -1013,8 +1022,8 @@
                 title: 'On JEPA Isotropy',
                 authors: 'Thomas Y.L. Lin, Han Liu, Jerry Yao-Chieh Hu.',
                 status: 'ongoing',
-                venue: 'Under review',
-                description: 'A finite-sample error decomposition for JEPA and the optimality conditions of its minimizer. The implied isotropic regularizer justifies existing heuristic designs.',
+                venue: 'NeurIPS Review',
+                description: 'A theory linking isotropy and rank that explains the existing JEPA regularizers and motivates a new one.',
                 topics: ['Self-Supervised', 'Representation Learning', 'Theory'],
                 links: [
                     { text: 'Read Paper', url: 'jepa-isotropy-7ke2vq9x4d.pdf' },
@@ -1022,8 +1031,17 @@
                 ]
             },
             {
+                title: 'Swallowtail',
+                kind: 'venture',
+                status: 'ongoing',
+                venue: 'Stealth',
+                description: 'Chip as a physical agent that no longer needs to be programmed.',
+                topics: ['Chip', 'World Model', 'Control'],
+            },
+            {
                 title: 'Veridyne (fka VibeVest)',
-                venue: 'Startup · YC W26 Interview · Innovex 2026',
+                kind: 'venture',
+                venue: 'YC W26 Interview · Innovex 2026',
                 description: 'Real-time collateral auditor for supply chain finance.',
                 topics: ['AI Agent', 'Perception', 'Fintech'],
                 links: [
@@ -1053,12 +1071,16 @@
                     ? `<p class="authors">${item.authors}</p>`
                     : '';
 
+                const descHTML = item.description
+                    ? `<p class="desc">${item.description}</p>`
+                    : '';
+
                 const entryHTML = `
-                    <article class="work-card">
+                    <article class="work-card${item.kind === 'venture' ? ' venture' : ''}">
                         <h3>${item.title}</h3>
                         ${authorsHTML}
                         <div class="pill-row">${venuePill}${topicPills}</div>
-                        <p class="desc">${item.description}</p>
+                        ${descHTML}
                         ${linksHTML ? `<div class="work-links">${linksHTML}</div>` : ''}
                     </article>
                 `;
