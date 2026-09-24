@@ -1326,10 +1326,13 @@
                 mapInstance = map;
 
                 // Add dark tile layer to match the theme
-                L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-                    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
-                    subdomains: 'abcd',
-                    maxZoom: 18
+                // CARTO now stamps "API KEY REQUIRED" across its keyless basemap
+                // tiles; they still return 200 with a valid PNG, so the failure is
+                // only visible in the pixels. Esri's dark canvas needs no key.
+                // Note Esri orders the path {z}/{y}/{x}, not {z}/{x}/{y}.
+                L.tileLayer('https://services.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
+                    attribution: '&copy; <a href="https://www.esri.com/">Esri</a>',
+                    maxZoom: 16
                 }).addTo(map);
 
                 addMarkersToMap(map, visitorData);
