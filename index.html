@@ -1427,14 +1427,39 @@
                 }
             }
 
-            // One call per view, not two. The POST already returns the full
-            // stats, so firing a GET alongside it doubled the upstream reads
-            // per page view and raced its own write. Only fall back to the
-            // read-only endpoint when recording the visit fails.
-            trackVisitor()
-                .then(handleVisitorData)
+            // The store has no atomic increment, so recording a visit costs two
+            // upstream requests (read the record, write it back) while simply
+            // reading costs one. Record at most once per browser per day and
+            // read on every other view: repeat loads cost half as much, and the
+            // headline figure finally means visitors rather than page loads.
+            const VISIT_KEY = 'thermau5:lastCountedVisit';
+            const VISIT_WINDOW_MS = 24 * 60 * 60 * 1000;
+
+            function countedRecently() {
+                try {
+                    const last = Number(localStorage.getItem(VISIT_KEY));
+                    return Number.isFinite(last) && last > 0 && Date.now() - last < VISIT_WINDOW_MS;
+                } catch (err) {
+                    // Private mode or storage blocked: fall back to counting.
+                    return false;
+                }
+            }
+
+            function markCounted() {
+                try { localStorage.setItem(VISIT_KEY, String(Date.now())); } catch (err) {}
+            }
+
+            const shouldRecord = !countedRecently();
+
+            (shouldRecord ? trackVisitor() : fetchVisitorStats())
+                .then(data => {
+                    if (shouldRecord) markCounted();
+                    handleVisitorData(data);
+                })
                 .catch(error => {
-                    console.log('Error tracking visit:', error);
+                    console.log('Error loading visitor data:', error);
+                    if (!shouldRecord) { updateSummary(EMPTY_VISITOR_DATA); return; }
+                    // Recording failed, so show whatever the store already has.
                     return fetchVisitorStats()
                         .then(handleVisitorData)
                         .catch(statsError => {
