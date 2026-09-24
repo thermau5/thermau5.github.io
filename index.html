@@ -1214,7 +1214,10 @@
             }
 
             // Visitor Map Logic
-            const LAUNCH_DATE = new Date(2026, 2, 16);
+            // Reset 2026-09-24: the stored record had been repeatedly zeroed by the
+            // read-failure bug below, so the count restarts from a known-good date
+            // rather than claiming a total it no longer has.
+            const LAUNCH_DATE = new Date(2026, 8, 24);
 
             // Store map reference for updates
             let mapInstance = null;
@@ -1410,7 +1413,6 @@
             // which loads only when the section approaches the viewport.
             const EMPTY_VISITOR_DATA = { totalVisits: 0, countries: {}, cities: {}, lastVisit: null };
             let latestVisitorData = null;
-            let visitTracked = false;
             let leafletReady = false;
 
             function handleVisitorData(visitorData) {
@@ -1422,29 +1424,21 @@
                 }
             }
 
-            // Record the visit immediately (counts even if the user never
-            // scrolls to the map), and fetch read-only stats in parallel so
-            // the summary can paint without waiting for the write round trip.
+            // One call per view, not two. The POST already returns the full
+            // stats, so firing a GET alongside it doubled the upstream reads
+            // per page view and raced its own write. Only fall back to the
+            // read-only endpoint when recording the visit fails.
             trackVisitor()
-                .then(data => {
-                    visitTracked = true;
-                    handleVisitorData(data);
-                })
+                .then(handleVisitorData)
                 .catch(error => {
                     console.log('Error tracking visit:', error);
-                    if (!latestVisitorData) {
-                        updateSummary(EMPTY_VISITOR_DATA);
-                    }
+                    return fetchVisitorStats()
+                        .then(handleVisitorData)
+                        .catch(statsError => {
+                            console.log('Error fetching visitor stats:', statsError);
+                            updateSummary(EMPTY_VISITOR_DATA);
+                        });
                 });
-
-            fetchVisitorStats()
-                .then(data => {
-                    // Skip if the tracking call already rendered fresher data
-                    if (!visitTracked) {
-                        handleVisitorData(data);
-                    }
-                })
-                .catch(error => console.log('Error fetching visitor stats:', error));
 
             function loadLeaflet() {
                 return new Promise((resolve, reject) => {

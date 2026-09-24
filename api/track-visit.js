@@ -74,9 +74,26 @@ export default async function handler(req, res) {
     let visitorData;
     if (latestResp.ok) {
       const json = await latestResp.json();
-      visitorData = json.record || {};
-    } else {
+      // `json.record || {}` was unsafe: any 200 that omits `record` would also
+      // hand back {} and get written over the real history below.
+      if (json && typeof json.record === 'object' && json.record !== null) {
+        visitorData = json.record;
+      } else {
+        console.error('JSONBin 200 without a record:', JSON.stringify(json).slice(0, 200));
+        return res.status(502).json({ error: 'Unexpected response from visitor store' });
+      }
+    } else if (latestResp.status === 404) {
+      // No record stored yet. This is the only case where an empty object is
+      // the correct starting point.
       visitorData = {};
+    } else {
+      // Anything else (429 rate limit, exhausted quota, 5xx) must NOT fall
+      // through to {}: the PUT below would write that empty object over the
+      // stored history and erase every visit ever recorded. Fail the request
+      // instead and leave the bin untouched.
+      const detail = await latestResp.text().catch(() => '');
+      console.error('JSONBin GET failed:', latestResp.status, detail);
+      return res.status(502).json({ error: 'Failed to read visitor data' });
     }
 
     // 2) Normalize existing structure
