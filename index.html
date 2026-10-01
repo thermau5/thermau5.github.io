@@ -375,6 +375,9 @@
             border-color: var(--sand);
             color: var(--sand);
         }
+        .pill.as-typed {
+            text-transform: none;
+        }
         .pill.live::before {
             content: '';
             display: inline-block;
@@ -1060,7 +1063,8 @@
             {
                 title: 'Swallowtail Labs',
                 kind: 'venture',
-                venue: 'Residency F26',
+                venue: 'residency f26',
+                venueAsTyped: true,
                 description: 'self-improving AI through software-hardware co-learning',
                 topics: ['Chip', 'World Model', 'Control'],
                 links: [
@@ -1088,7 +1092,7 @@
 
             showcaseData.forEach(item => {
                 const venuePill = item.venue
-                    ? `<span class="pill venue${item.status === 'ongoing' ? ' live' : ''}">${item.venue}</span>`
+                    ? `<span class="pill venue${item.status === 'ongoing' ? ' live' : ''}${item.venueAsTyped ? ' as-typed' : ''}">${item.venue}</span>`
                     : '';
                 const topicPills = (item.topics || []).map(t => `<span class="pill">${t}</span>`).join('');
 
